@@ -116,7 +116,15 @@ public class MainActivity extends FragmentActivity implements
             // below) with the page number as its lone argument.
             Fragment fragment = new DummySectionFragment();
             Bundle args = new Bundle();
-            args.putInt(DummySectionFragment.ARG_SECTION_NUMBER, position + 1);
+
+            if (position == 0) {
+                args.putString(DummySectionFragment.ARG_SECTION_TEXT,
+                        "feeds go here");
+            } else if (position == 1) {
+                args.putString(DummySectionFragment.ARG_SECTION_TEXT,
+                        "map view goes here");
+            }
+
             fragment.setArguments(args);
             return fragment;
         }
@@ -148,7 +156,7 @@ public class MainActivity extends FragmentActivity implements
          * The fragment argument representing the section number for this
          * fragment.
          */
-        public static final String ARG_SECTION_NUMBER = "section_number";
+        public static final String ARG_SECTION_TEXT = "section-text";
 
         public DummySectionFragment() {
         }
@@ -160,8 +168,7 @@ public class MainActivity extends FragmentActivity implements
             // number argument value.
             TextView textView = new TextView(getActivity());
             textView.setGravity(Gravity.CENTER);
-            textView.setText(Integer.toString(getArguments().getInt(
-                    ARG_SECTION_NUMBER)));
+            textView.setText(getArguments().getString(ARG_SECTION_TEXT));
             return textView;
         }
     }
