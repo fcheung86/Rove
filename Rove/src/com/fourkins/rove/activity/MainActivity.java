@@ -1,4 +1,4 @@
-package com.fourkins.rove;
+package com.fourkins.rove.activity;
 
 import android.app.ActionBar;
 import android.app.FragmentTransaction;
@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
 
+import com.fourkins.rove.R;
 import com.fourkins.rove.fragments.FeedFragment;
 import com.fourkins.rove.fragments.MapFragment;
 
@@ -61,10 +62,10 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 
         switch (tab.getPosition()) {
         case 0:
-            fragment = new FeedFragment();
+            fragment = new FeedFragment(this);
             break;
         case 1:
-            fragment = new MapFragment();
+            fragment = new MapFragment(this);
             break;
         default:
             return;

@@ -1,5 +1,6 @@
 package com.fourkins.rove.fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -10,7 +11,15 @@ import android.widget.TextView;
 import com.fourkins.rove.R;
 
 public class MapFragment extends Fragment {
+
+    private Context mContext;
+
     public MapFragment() {
+
+    }
+
+    public MapFragment(Context context) {
+        mContext = context;
     }
 
     @Override
