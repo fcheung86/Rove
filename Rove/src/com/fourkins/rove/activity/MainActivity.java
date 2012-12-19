@@ -10,6 +10,7 @@ import android.view.Menu;
 import com.fourkins.rove.R;
 import com.fourkins.rove.fragments.FeedFragment;
 import com.fourkins.rove.fragments.MapFragment;
+import com.google.android.gms.maps.SupportMapFragment;
 
 public class MainActivity extends FragmentActivity implements ActionBar.TabListener {
 
@@ -59,20 +60,23 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         // container view.
 
         Fragment fragment = null;
-
+        SupportMapFragment mapfragment = null;
+        //Fragment mapfragment = null;
+        
         switch (tab.getPosition()) {
         case 0:
             fragment = new FeedFragment(this);
+            getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
             break;
         case 1:
-            fragment = new MapFragment(this);
+            mapfragment = new MapFragment(this);
+            getSupportFragmentManager().beginTransaction().replace(R.id.container, mapfragment).commit();
             break;
         default:
             return;
         }
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
-
+       
     }
 
     @Override

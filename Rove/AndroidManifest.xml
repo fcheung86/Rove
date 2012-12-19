@@ -3,7 +3,21 @@
     package="com.fourkins.rove"
     android:versionCode="1"
     android:versionName="1.0" >
-
+	<permission
+        android:name="com.pinmedown.permission.MAPS_RECEIVE"
+        android:protectionLevel="signature"/>
+    
+    <uses-permission android:name="com.pinmedown.permission.MAPS_RECEIVE"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+	<uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES"/>
+	<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+	
+	<uses-feature
+	  android:glEsVersion="0x00020000"
+	  android:required="true"/>
+	
     <uses-sdk
         android:minSdkVersion="14"
         android:targetSdkVersion="16" />
@@ -22,6 +36,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <meta-data
+		    android:name="com.google.android.maps.v2.API_KEY"
+		    android:value="AIzaSyC6drAWYZEazED0CunrY2aX98rGvQDlJVk"/>
     </application>
 
 </manifest>
