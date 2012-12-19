@@ -59,24 +59,19 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         // When the given tab is selected, show the tab contents in the
         // container view.
 
-        Fragment fragment = null;
-        SupportMapFragment mapfragment = null;
-        //Fragment mapfragment = null;
-        
         switch (tab.getPosition()) {
         case 0:
-            fragment = new FeedFragment(this);
+            Fragment fragment = new FeedFragment(this);
             getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
             break;
         case 1:
-            mapfragment = new MapFragment(this);
-            getSupportFragmentManager().beginTransaction().replace(R.id.container, mapfragment).commit();
+            SupportMapFragment mapFragment = new MapFragment();
+            getSupportFragmentManager().beginTransaction().replace(R.id.container, mapFragment).commit();
             break;
         default:
             return;
         }
 
-       
     }
 
     @Override
