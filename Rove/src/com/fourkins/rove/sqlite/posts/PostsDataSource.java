@@ -57,6 +57,8 @@ public class PostsDataSource {
     }
 
     private void populateTable() {
+        database.delete(RoveSQLiteHelper.POSTS_TABLE, null, null);
+
         for (int i = 1; i <= 20; i++) {
             ContentValues values = new ContentValues();
             values.put(RoveSQLiteHelper.POSTS_USER_NAME, "user" + i);
