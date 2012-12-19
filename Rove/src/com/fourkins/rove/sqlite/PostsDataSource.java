@@ -1,4 +1,4 @@
-package com.fourkins.rove.sqlite.posts;
+package com.fourkins.rove.sqlite;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,39 +9,40 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.fourkins.rove.sqlite.RoveSQLiteHelper;
+import com.fourkins.rove.sqlite.posts.Post;
 
 public class PostsDataSource {
 
-    private boolean isPopulated = false;
-
     // Database fields
     private SQLiteDatabase database;
-    private RoveSQLiteHelper dbHelper;
-    private String[] allColumns = { RoveSQLiteHelper.POSTS_ID, RoveSQLiteHelper.POSTS_USER_NAME, RoveSQLiteHelper.POSTS_LATITUDE,
-            RoveSQLiteHelper.POSTS_LONGITUDE, RoveSQLiteHelper.POSTS_MESSAGE };
+    private PostsSQLiteHelper dbHelper;
+    private String[] allColumns = { PostsSQLiteHelper.COLUMN_ID, PostsSQLiteHelper.COLUMN_USER_NAME, PostsSQLiteHelper.COLUMN_LATITUDE,
+            PostsSQLiteHelper.COLUMN_LONGITUDE, PostsSQLiteHelper.COLUMN_MESSAGE };
 
     public PostsDataSource(Context context) {
-        dbHelper = new RoveSQLiteHelper(context);
+        dbHelper = new PostsSQLiteHelper(context);
     }
 
     public void open() throws SQLException {
         database = dbHelper.getWritableDatabase();
-
-        if (!isPopulated) {
-            // randomly populate table for now
-            populateTable();
-        }
     }
 
     public void close() {
         dbHelper.close();
     }
 
+    public void deleteAllPosts() {
+        database.delete(PostsSQLiteHelper.TABLE_POSTS, null, null);
+    }
+
+    public void insertPost(ContentValues values) {
+        database.insert(PostsSQLiteHelper.TABLE_POSTS, null, values);
+    }
+
     public List<Post> getAllPosts() {
         List<Post> posts = new ArrayList<Post>();
 
-        Cursor cursor = database.query(RoveSQLiteHelper.POSTS_TABLE, allColumns, null, null, null, null, null);
+        Cursor cursor = database.query(PostsSQLiteHelper.TABLE_POSTS, allColumns, null, null, null, null, null);
 
         cursor.moveToFirst();
 
@@ -54,22 +55,6 @@ public class PostsDataSource {
         cursor.close();
 
         return posts;
-    }
-
-    private void populateTable() {
-        database.delete(RoveSQLiteHelper.POSTS_TABLE, null, null);
-
-        for (int i = 1; i <= 20; i++) {
-            ContentValues values = new ContentValues();
-            values.put(RoveSQLiteHelper.POSTS_USER_NAME, "user" + i);
-            values.put(RoveSQLiteHelper.POSTS_LATITUDE, i * 10);
-            values.put(RoveSQLiteHelper.POSTS_LONGITUDE, i * 100);
-            values.put(RoveSQLiteHelper.POSTS_MESSAGE, "message" + i);
-
-            database.insert(RoveSQLiteHelper.POSTS_TABLE, null, values);
-        }
-
-        isPopulated = true;
     }
 
     private Post cursorToPost(Cursor cursor) {

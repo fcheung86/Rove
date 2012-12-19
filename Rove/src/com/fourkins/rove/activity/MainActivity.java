@@ -61,7 +61,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 
         switch (tab.getPosition()) {
         case 0:
-            Fragment fragment = new FeedFragment(this);
+            Fragment fragment = new FeedFragment();
             getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
             break;
         case 1:

@@ -2,7 +2,7 @@ package com.fourkins.rove.fragments;
 
 import java.util.List;
 
-import android.content.Context;
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -14,20 +14,20 @@ import android.widget.TextView;
 
 import com.fourkins.rove.R;
 import com.fourkins.rove.sqlite.posts.Post;
-import com.fourkins.rove.sqlite.posts.PostsDataSource;
+import com.fourkins.rove.sqlite.posts.PostsManager;
 
 public class FeedFragment extends Fragment {
 
-    private Context mContext;
-
-    private PostsDataSource mDataSource;
+    private PostsManager mPostsManager;
 
     public FeedFragment() {
 
     }
 
-    public FeedFragment(Context context) {
-        mContext = context;
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        mPostsManager = new PostsManager(activity);
     }
 
     @Override
@@ -43,12 +43,9 @@ public class FeedFragment extends Fragment {
         TextView t = (TextView) view.findViewById(R.id.textView1);
         t.setText("Some sample feeds");
 
-        mDataSource = new PostsDataSource(mContext);
-        mDataSource.open();
+        List<Post> posts = mPostsManager.getAllPosts();
 
-        List<Post> posts = mDataSource.getAllPosts();
-
-        ArrayAdapter<Post> adapter = new ArrayAdapter<Post>(mContext, android.R.layout.simple_list_item_1, posts);
+        ArrayAdapter<Post> adapter = new ArrayAdapter<Post>(getActivity(), android.R.layout.simple_list_item_1, posts);
 
         ListView listView = (ListView) view.findViewById(R.id.feed);
         listView.setAdapter(adapter);
