@@ -67,8 +67,8 @@ public class PostsDataSource {
 
         post.setId(cursor.getLong(0));
         post.setUserName(cursor.getString(1));
-        post.setLatitude(cursor.getLong(2));
-        post.setLongitude(cursor.getLong(3));
+        post.setLatitude(cursor.getDouble(2));
+        post.setLongitude(cursor.getDouble(3));
         post.setMessage(cursor.getString(4));
 
         return post;
