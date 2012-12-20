@@ -28,17 +28,25 @@ public class FeedFragment extends Fragment {
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         mPostsManager = new PostsManager(activity);
+        // TODO populate table here for now
+        mPostsManager.populateTable();
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.activity_feed, container, false);
+
+        /*
+         * final Button button = (Button) view.findViewById(R.id.button_new); button.setOnClickListener(new
+         * View.OnClickListener() { public void onClick(View v) { // Perform action on click } });
+         */
 
         TextView t = (TextView) view.findViewById(R.id.textView1);
         t.setText("Some sample feeds");
@@ -52,4 +60,5 @@ public class FeedFragment extends Fragment {
 
         return view;
     }
+
 }

@@ -18,4 +18,15 @@
         android:layout_height="wrap_content" 
         android:layout_below="@+id/textView1"/>
 
+    <Button
+        android:id="@+id/button_new"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/textView1"
+        android:layout_alignBottom="@+id/textView1"
+        android:layout_alignParentRight="true"
+        android:onClick="addFeed"
+        android:text="New"
+        android:textSize="10dp" />
+
 </RelativeLayout>
