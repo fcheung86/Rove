@@ -30,8 +30,8 @@ public class PostsManager {
 
     public void insertPost(Post post) {
         String user = post.getUserName();
-        long latitude = post.getLatitude();
-        long longitude = post.getLongitude();
+        double latitude = post.getLatitude();
+        double longitude = post.getLongitude();
         String message = post.getMessage();
 
         ds.open();

@@ -28,8 +28,8 @@ public class NewFeedActivity extends Activity {
         final EditText message_text = (EditText) findViewById(R.id.edit_message);
 
         String user = (String) user_text.getText().toString();
-        long latitude = Long.parseLong(latitude_text.getText().toString());
-        long longitude = Long.parseLong(longitude_text.getText().toString());
+        double latitude = Long.parseLong(latitude_text.getText().toString());
+        double longitude = Long.parseLong(longitude_text.getText().toString());
         String message = (String) message_text.getText().toString();
 
         Post new_post = new Post(user, latitude, longitude, message);
