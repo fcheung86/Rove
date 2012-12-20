@@ -28,8 +28,6 @@ public class FeedFragment extends Fragment {
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         mPostsManager = new PostsManager(activity);
-        // TODO populate table here for now
-        mPostsManager.populateTable();
     }
 
     @Override
