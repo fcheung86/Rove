@@ -37,8 +37,8 @@ public class PostsManager {
         for (int i = 1; i <= 20; i++) {
             ContentValues values = new ContentValues();
             values.put(PostsSQLiteHelper.COLUMN_USER_NAME, "user" + i);
-            values.put(PostsSQLiteHelper.COLUMN_LATITUDE, i * 10);
-            values.put(PostsSQLiteHelper.COLUMN_LONGITUDE, i * 100);
+            values.put(PostsSQLiteHelper.COLUMN_LATITUDE, i * 4.5);
+            values.put(PostsSQLiteHelper.COLUMN_LONGITUDE, i * 9);
             values.put(PostsSQLiteHelper.COLUMN_MESSAGE, "message" + i);
 
             ds.insertPost(values);
