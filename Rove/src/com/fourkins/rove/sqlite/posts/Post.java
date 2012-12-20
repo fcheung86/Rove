@@ -21,6 +21,14 @@ public class Post {
         this.message = message;
     }
 
+    public Post(String name, long latitude, long longitude, String message) {
+        super();
+        this.userName = name;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.message = message;
+    }
+
     public long getId() {
         return id;
     }
