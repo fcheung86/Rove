@@ -18,6 +18,8 @@ import com.fourkins.rove.sqlite.posts.PostsManager;
 
 public class FeedFragment extends Fragment {
 
+    private ArrayAdapter<Post> adapter;
+
     private PostsManager mPostsManager;
 
     public FeedFragment() {
@@ -51,7 +53,7 @@ public class FeedFragment extends Fragment {
 
         List<Post> posts = mPostsManager.getAllPosts();
 
-        ArrayAdapter<Post> adapter = new ArrayAdapter<Post>(getActivity(), android.R.layout.simple_list_item_1, posts);
+        adapter = new ArrayAdapter<Post>(getActivity(), android.R.layout.simple_list_item_1, posts);
 
         ListView listView = (ListView) view.findViewById(R.id.feed);
         listView.setAdapter(adapter);
@@ -59,4 +61,12 @@ public class FeedFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        List<Post> posts = mPostsManager.getAllPosts();
+        adapter.clear();
+        adapter.addAll(posts);
+        adapter.notifyDataSetChanged();
+    }
 }
