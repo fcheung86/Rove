@@ -6,6 +6,7 @@ import java.util.List;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.DatabaseUtils;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 
@@ -39,6 +40,10 @@ public class PostsDataSource {
         database.insert(PostsSQLiteHelper.TABLE_POSTS, null, values);
     }
 
+    public long getAllPostsCount() {
+        return DatabaseUtils.queryNumEntries(database, PostsSQLiteHelper.TABLE_POSTS);
+    }
+
     public List<Post> getAllPosts() {
         List<Post> posts = new ArrayList<Post>();
 
@@ -62,8 +67,8 @@ public class PostsDataSource {
 
         post.setId(cursor.getLong(0));
         post.setUserName(cursor.getString(1));
-        post.setLatitude(cursor.getLong(2));
-        post.setLongitude(cursor.getLong(3));
+        post.setLatitude(cursor.getDouble(2));
+        post.setLongitude(cursor.getDouble(3));
         post.setMessage(cursor.getString(4));
 
         return post;

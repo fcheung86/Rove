@@ -23,16 +23,16 @@ public class MapFragment extends SupportMapFragment {
     public MapFragment() {
 
     }
-    
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup viewGroup, Bundle bundle) {
         View view = super.onCreateView(inflater, viewGroup, bundle);
-        
+
         setUpMapIfNeeded();
 
         return view;
     }
-    
+
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
@@ -51,19 +51,14 @@ public class MapFragment extends SupportMapFragment {
     }
 
     private void setUpMap() {
-    	List<Post> posts = mPostsManager.getAllPosts();
-    	
-    	for (int x = 0; x < posts.size(); x++) {
-    		
-    		Post temppost = posts.get(x);
-    		
-    		if(temppost.getLatitude() < 90 && temppost.getLatitude() < 180 ) {
-    			mMap.addMarker(new MarkerOptions().
-    					position(new LatLng(temppost.getLatitude(), temppost.getLatitude())).
-    					title(temppost.getUserName())
-    					.snippet(temppost.getMessage()));
-    		}
-    	}
+        List<Post> posts = mPostsManager.getAllPosts();
+
+        for (Post post : posts) {
+            if (post.getLatitude() < 90 && post.getLatitude() < 180) {
+                mMap.addMarker(new MarkerOptions().position(new LatLng(post.getLatitude(), post.getLongitude())).title(post.getUserName())
+                        .snippet(post.getMessage() + " " + post.getLatitude() + "," + post.getLongitude()));
+            }
+        }
     }
 
 }
