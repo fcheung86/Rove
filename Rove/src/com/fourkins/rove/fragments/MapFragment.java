@@ -12,10 +12,12 @@ import com.fourkins.rove.sqlite.posts.Post;
 import com.fourkins.rove.sqlite.posts.PostsManager;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.OnCameraChangeListener;
+import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 public class MapFragment extends SupportMapFragment {
@@ -24,6 +26,7 @@ public class MapFragment extends SupportMapFragment {
     private PostsManager mPostsManager;
     private LatLngBounds bounds;
     private List<Post> posts;
+    private boolean clearFlag = true;
 
     public MapFragment() {
 
@@ -48,6 +51,7 @@ public class MapFragment extends SupportMapFragment {
         if (mMap == null) {
             mMap = getMap();
             mMap.setOnCameraChangeListener(getCameraChangeListener());
+            mMap.setOnMarkerClickListener(getMarkerClickListener());
             // Check if we were successful in obtaining the map.
             if (mMap != null) {
                 setUpMap();
@@ -65,13 +69,28 @@ public class MapFragment extends SupportMapFragment {
         };
     }
 
+    public OnMarkerClickListener getMarkerClickListener() {
+        return new OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(Marker marker) {
+                if (!marker.getTitle().isEmpty()) {
+                    clearFlag = false;
+                    return false;
+                }
+                else return true;
+            }
+        };
+
+    }
+
     private void setUpMap() {
         posts = mPostsManager.getAllPosts();
     }
 
     public void addMarkers(LatLngBounds latLngBounds) {
-
-        mMap.clear();
+        if (clearFlag == true) {
+            mMap.clear();
+        }
 
         for (Post item : posts) {
 
@@ -82,5 +101,7 @@ public class MapFragment extends SupportMapFragment {
                 }
             }
         }
+        
+        clearFlag = true;
     }
 }
