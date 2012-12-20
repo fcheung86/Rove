@@ -16,8 +16,6 @@ public class PostsManager {
     public PostsManager(Context context) {
         ds = new PostsDataSource(context);
 
-        // TODO populate table here for now
-        populateTable();
     }
 
     public List<Post> getAllPosts() {
@@ -30,7 +28,25 @@ public class PostsManager {
         return posts;
     }
 
-    private void populateTable() {
+    public void insertPost(Post post) {
+        String user = post.getUserName();
+        double latitude = post.getLatitude();
+        double longitude = post.getLongitude();
+        String message = post.getMessage();
+
+        ds.open();
+
+        ContentValues values = new ContentValues();
+        values.put(PostsSQLiteHelper.COLUMN_USER_NAME, user);
+        values.put(PostsSQLiteHelper.COLUMN_LATITUDE, latitude);
+        values.put(PostsSQLiteHelper.COLUMN_LONGITUDE, longitude);
+        values.put(PostsSQLiteHelper.COLUMN_MESSAGE, message);
+
+        ds.insertPost(values);
+        ds.close();
+    }
+
+    public void populateTable() {
         ds.open();
 
         ds.deleteAllPosts();

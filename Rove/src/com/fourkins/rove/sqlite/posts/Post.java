@@ -12,9 +12,17 @@ public class Post {
 
     }
 
-    public Post(long id, String name, long latitude, long longitude, String message) {
+    public Post(long id, String name, double latitude, double longitude, String message) {
         super();
         this.id = id;
+        this.userName = name;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.message = message;
+    }
+
+    public Post(String name, double latitude, double longitude, String message) {
+        super();
         this.userName = name;
         this.latitude = latitude;
         this.longitude = longitude;

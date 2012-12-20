@@ -2,10 +2,12 @@ package com.fourkins.rove.activity;
 
 import android.app.ActionBar;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
+import android.view.View;
 
 import com.fourkins.rove.R;
 import com.fourkins.rove.fragments.FeedFragment;
@@ -80,6 +82,11 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 
     @Override
     public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
+    }
+    
+    public void addFeed(View view) {
+		Intent intent = new Intent(this, NewFeedActivity.class);
+		startActivity(intent);
     }
 
 }
