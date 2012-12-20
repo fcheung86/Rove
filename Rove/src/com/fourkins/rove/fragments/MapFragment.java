@@ -81,15 +81,6 @@ public class MapFragment extends SupportMapFragment {
                             .snippet(item.getMessage()));
                 }
             }
-
-            List<Post> posts = mPostsManager.getAllPosts();
-
-            for (Post post : posts) {
-                if (post.getLatitude() < 90 && post.getLatitude() < 180) {
-                    mMap.addMarker(new MarkerOptions().position(new LatLng(post.getLatitude(), post.getLongitude())).title(post.getUserName())
-                            .snippet(post.getMessage() + " " + post.getLatitude() + "," + post.getLongitude()));
-                }
-            }
         }
     }
 }
