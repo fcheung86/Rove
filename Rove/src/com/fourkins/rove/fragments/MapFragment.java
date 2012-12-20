@@ -70,11 +70,11 @@ public class MapFragment extends SupportMapFragment {
     }
 
     public void addMarkers(LatLngBounds latLngBounds) {
-        
+
         mMap.clear();
-        
+
         for (Post item : posts) {
-            
+
             if (latLngBounds.southwest.latitude < item.getLatitude() && latLngBounds.southwest.longitude < item.getLongitude()) {
                 if (latLngBounds.northeast.latitude > item.getLatitude() && latLngBounds.northeast.longitude > item.getLongitude()) {
                     mMap.addMarker(new MarkerOptions().position(new LatLng(item.getLatitude(), item.getLongitude())).title(item.getUserName())
@@ -82,7 +82,14 @@ public class MapFragment extends SupportMapFragment {
                 }
             }
 
+            List<Post> posts = mPostsManager.getAllPosts();
+
+            for (Post post : posts) {
+                if (post.getLatitude() < 90 && post.getLatitude() < 180) {
+                    mMap.addMarker(new MarkerOptions().position(new LatLng(post.getLatitude(), post.getLongitude())).title(post.getUserName())
+                            .snippet(post.getMessage() + " " + post.getLatitude() + "," + post.getLongitude()));
+                }
+            }
         }
     }
-
 }
