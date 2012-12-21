@@ -4,6 +4,7 @@ import java.util.List;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.location.Location;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,8 @@ import android.view.ViewGroup;
 import com.fourkins.rove.activity.NewPostActivity;
 import com.fourkins.rove.sqlite.posts.Post;
 import com.fourkins.rove.sqlite.posts.PostsManager;
+import com.fourkins.rove.util.LocationUtil;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.OnCameraChangeListener;
 import com.google.android.gms.maps.GoogleMap.OnMapLongClickListener;
@@ -67,6 +70,13 @@ public class MapFragment extends SupportMapFragment {
             mMap.setOnCameraChangeListener(getCameraChangeListener());
             mMap.setOnMarkerClickListener(getMarkerClickListener());
             mMap.setOnMapLongClickListener(getMapLongClickListener());
+            mMap.setMyLocationEnabled(true);
+
+            Location currentLocation = LocationUtil.getInstance(getActivity()).getCurrentLocation();
+            if (currentLocation != null) {
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()), 12));
+            }
+
             // Check if we were successful in obtaining the map.
             if (mMap != null) {
                 posts = mPostsManager.getAllPosts();
