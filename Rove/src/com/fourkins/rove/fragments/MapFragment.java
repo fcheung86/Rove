@@ -3,15 +3,18 @@ package com.fourkins.rove.fragments;
 import java.util.List;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.fourkins.rove.activity.NewPostActivity;
 import com.fourkins.rove.sqlite.posts.Post;
 import com.fourkins.rove.sqlite.posts.PostsManager;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.OnCameraChangeListener;
+import com.google.android.gms.maps.GoogleMap.OnMapLongClickListener;
 import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
@@ -27,6 +30,10 @@ public class MapFragment extends SupportMapFragment {
     private LatLngBounds bounds;
     private List<Post> posts;
     private boolean clearFlag = true;
+
+    public static final String intentLat = "com.example.LATITUDE";
+    public static final String intentLong = "com.example.LONGITUDE";
+    public static final String fromMap = "com.example.FROMMAP";
 
     public MapFragment() {
 
@@ -47,12 +54,19 @@ public class MapFragment extends SupportMapFragment {
         return view;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        posts = mPostsManager.getAllPosts();
+        addMarkers(mMap.getProjection().getVisibleRegion().latLngBounds);
+    }
+
     private void setUpMapIfNeeded() {
         if (mMap == null) {
             mMap = getMap();
             mMap.setOnCameraChangeListener(getCameraChangeListener());
             mMap.setOnMarkerClickListener(getMarkerClickListener());
-
+            mMap.setOnMapLongClickListener(getMapLongClickListener());
             // Check if we were successful in obtaining the map.
             if (mMap != null) {
                 posts = mPostsManager.getAllPosts();
@@ -82,7 +96,19 @@ public class MapFragment extends SupportMapFragment {
                 }
             }
         };
+    }
 
+    public OnMapLongClickListener getMapLongClickListener() {
+        return new OnMapLongClickListener() {
+            @Override
+            public void onMapLongClick(LatLng latlng) {
+                Intent intent = new Intent(getActivity(), NewPostActivity.class);
+                intent.putExtra(intentLat, latlng.latitude);
+                intent.putExtra(intentLong, latlng.longitude);
+                intent.putExtra(fromMap, 1);
+                startActivity(intent);
+            }
+        };
     }
 
     public void addMarkers(LatLngBounds latLngBounds) {
