@@ -1,5 +1,6 @@
 package com.fourkins.rove.activity;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
@@ -19,21 +20,26 @@ public class NewPostActivity extends Activity {
         setContentView(R.layout.activity_new_post);
 
         mPostsManager = new PostsManager(this);
+
+        // hide the action bar
+        ActionBar actionBar = getActionBar();
+        actionBar.hide();
     }
 
     public void submitMessage(View view) {
-        final EditText user_text = (EditText) findViewById(R.id.edit_user);
-        final EditText latitude_text = (EditText) findViewById(R.id.edit_latitude);
-        final EditText longitude_text = (EditText) findViewById(R.id.edit_longitude);
-        final EditText message_text = (EditText) findViewById(R.id.edit_message);
+        final EditText userText = (EditText) findViewById(R.id.edit_user);
+        final EditText latitudeText = (EditText) findViewById(R.id.edit_latitude);
+        final EditText longitudeText = (EditText) findViewById(R.id.edit_longitude);
+        final EditText messageText = (EditText) findViewById(R.id.edit_message);
 
-        String user = (String) user_text.getText().toString();
-        double latitude = Long.parseLong(latitude_text.getText().toString());
-        double longitude = Long.parseLong(longitude_text.getText().toString());
-        String message = (String) message_text.getText().toString();
+        String user = (String) userText.getText().toString();
+        double latitude = Long.parseLong(latitudeText.getText().toString());
+        double longitude = Long.parseLong(longitudeText.getText().toString());
+        String message = (String) messageText.getText().toString();
 
-        Post new_post = new Post(user, latitude, longitude, message);
-        mPostsManager.insertPost(new_post);
+        Post post = new Post(user, latitude, longitude, message);
+        mPostsManager.insertPost(post);
+
         finish();
     }
 }
