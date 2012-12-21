@@ -35,14 +35,21 @@ public class PostsDataSource {
         database.delete(PostsSQLiteHelper.TABLE_POSTS, null, null);
     }
 
-    public void insertPost(ContentValues values) {
+    public void insertPost(Post post) {
+        ContentValues values = new ContentValues();
+
+        values.put(PostsSQLiteHelper.COLUMN_USER_NAME, post.getUserName());
+        values.put(PostsSQLiteHelper.COLUMN_LATITUDE, post.getLatitude());
+        values.put(PostsSQLiteHelper.COLUMN_LONGITUDE, post.getLongitude());
+        values.put(PostsSQLiteHelper.COLUMN_MESSAGE, post.getMessage());
+
         database.insert(PostsSQLiteHelper.TABLE_POSTS, null, values);
     }
 
     public List<Post> getAllPosts() {
         List<Post> posts = new ArrayList<Post>();
 
-        Cursor cursor = database.query(PostsSQLiteHelper.TABLE_POSTS, allColumns, null, null, null, null, null);
+        Cursor cursor = getAllPostsCursor();
 
         cursor.moveToFirst();
 
@@ -55,6 +62,10 @@ public class PostsDataSource {
         cursor.close();
 
         return posts;
+    }
+
+    public Cursor getAllPostsCursor() {
+        return database.query(PostsSQLiteHelper.TABLE_POSTS, allColumns, null, null, null, null, null);
     }
 
     private Post cursorToPost(Cursor cursor) {

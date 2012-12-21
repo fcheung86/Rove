@@ -1,23 +1,20 @@
 package com.fourkins.rove.fragments;
 
-import java.util.List;
-
 import android.app.Activity;
+import android.database.Cursor;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import android.support.v4.app.ListFragment;
+import android.support.v4.widget.SimpleCursorAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
+import android.widget.ListAdapter;
 
 import com.fourkins.rove.R;
-import com.fourkins.rove.sqlite.posts.Post;
+import com.fourkins.rove.sqlite.PostsSQLiteHelper;
 import com.fourkins.rove.sqlite.posts.PostsManager;
 
-public class FeedFragment extends Fragment {
-
-    private ArrayAdapter<Post> adapter;
+public class FeedFragment extends ListFragment {
 
     private PostsManager mPostsManager;
 
@@ -40,14 +37,17 @@ public class FeedFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.activity_feed, container, false);
+        View view = super.onCreateView(inflater, container, savedInstanceState);
 
-        List<Post> posts = mPostsManager.getAllPosts();
+        Cursor postCursor = mPostsManager.getAllPostsCursor();
 
-        adapter = new ArrayAdapter<Post>(getActivity(), android.R.layout.simple_list_item_1, posts);
+        String[] from = new String[] { PostsSQLiteHelper.COLUMN_MESSAGE, PostsSQLiteHelper.COLUMN_LATITUDE, PostsSQLiteHelper.COLUMN_USER_NAME,
+                PostsSQLiteHelper.COLUMN_LONGITUDE };
+        int[] to = new int[] { R.id.row_message, R.id.row_latitude, R.id.row_username, R.id.row_longitude };
 
-        ListView listView = (ListView) view.findViewById(R.id.feed);
-        listView.setAdapter(adapter);
+        ListAdapter adapter = new SimpleCursorAdapter(getActivity(), R.layout.list_feed_row, postCursor, from, to, 0);
+
+        setListAdapter(adapter);
 
         return view;
     }
@@ -55,9 +55,7 @@ public class FeedFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        List<Post> posts = mPostsManager.getAllPosts();
-        adapter.clear();
-        adapter.addAll(posts);
+        SimpleCursorAdapter adapter = (SimpleCursorAdapter) this.getListAdapter();
         adapter.notifyDataSetChanged();
     }
 }
