@@ -1,5 +1,7 @@
 package com.fourkins.rove.sqlite.posts;
 
+import java.sql.Timestamp;
+
 public class Post {
 
     private long id;
@@ -7,26 +9,29 @@ public class Post {
     private double latitude;
     private double longitude;
     private String message;
+    private Timestamp timestamp;
 
     public Post() {
 
     }
 
-    public Post(long id, String name, double latitude, double longitude, String message) {
+    public Post(long id, String name, double latitude, double longitude, String message, Timestamp timestamp) {
         super();
         this.id = id;
         this.userName = name;
         this.latitude = latitude;
         this.longitude = longitude;
         this.message = message;
+        this.timestamp = timestamp;
     }
 
-    public Post(String name, double latitude, double longitude, String message) {
+    public Post(String name, double latitude, double longitude, String message, Timestamp timestamp) {
         super();
         this.userName = name;
         this.latitude = latitude;
         this.longitude = longitude;
         this.message = message;
+        this.timestamp = timestamp;
     }
 
     public long getId() {
@@ -69,6 +74,14 @@ public class Post {
         this.message = message;
     }
 
+    public Timestamp getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(Timestamp timestamp) {
+        this.timestamp = timestamp;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -77,6 +90,7 @@ public class Post {
         sb.append(", Latitude=").append(latitude);
         sb.append(", Longitude=").append(longitude);
         sb.append(", Message=").append(message);
+        sb.append(", Timestamp=").append(timestamp);
 
         return sb.toString();
     }

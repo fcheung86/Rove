@@ -1,5 +1,7 @@
 package com.fourkins.rove.activity;
 
+import java.sql.Timestamp;
+
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
@@ -76,7 +78,7 @@ public class NewPostActivity extends Activity {
         String user = (String) userText.getText().toString();
         String message = (String) messageText.getText().toString();
 
-        Post post = new Post(user, latitude, longitude, message);
+        Post post = new Post(user, latitude, longitude, message, new Timestamp(System.currentTimeMillis()));
         mPostsManager.insertPost(post);
 
         finish();

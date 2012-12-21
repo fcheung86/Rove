@@ -1,5 +1,6 @@
 package com.fourkins.rove.sqlite;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +18,7 @@ public class PostsDataSource {
     private SQLiteDatabase database;
     private PostsSQLiteHelper dbHelper;
     private String[] allColumns = { PostsSQLiteHelper.COLUMN_ID, PostsSQLiteHelper.COLUMN_USER_NAME, PostsSQLiteHelper.COLUMN_LATITUDE,
-            PostsSQLiteHelper.COLUMN_LONGITUDE, PostsSQLiteHelper.COLUMN_MESSAGE };
+            PostsSQLiteHelper.COLUMN_LONGITUDE, PostsSQLiteHelper.COLUMN_MESSAGE, PostsSQLiteHelper.COLUMN_TIMESTAMP };
 
     public PostsDataSource(Context context) {
         dbHelper = new PostsSQLiteHelper(context);
@@ -42,6 +43,7 @@ public class PostsDataSource {
         values.put(PostsSQLiteHelper.COLUMN_LATITUDE, post.getLatitude());
         values.put(PostsSQLiteHelper.COLUMN_LONGITUDE, post.getLongitude());
         values.put(PostsSQLiteHelper.COLUMN_MESSAGE, post.getMessage());
+        values.put(PostsSQLiteHelper.COLUMN_TIMESTAMP, post.getTimestamp().getTime());
 
         database.insert(PostsSQLiteHelper.TABLE_POSTS, null, values);
     }
@@ -65,7 +67,7 @@ public class PostsDataSource {
     }
 
     public Cursor getAllPostsCursor() {
-        return database.query(PostsSQLiteHelper.TABLE_POSTS, allColumns, null, null, null, null, null);
+        return database.query(PostsSQLiteHelper.TABLE_POSTS, allColumns, null, null, null, null, PostsSQLiteHelper.COLUMN_TIMESTAMP + " DESC");
     }
 
     private Post cursorToPost(Cursor cursor) {
@@ -76,6 +78,7 @@ public class PostsDataSource {
         post.setLatitude(cursor.getDouble(2));
         post.setLongitude(cursor.getDouble(3));
         post.setMessage(cursor.getString(4));
+        post.setTimestamp(new Timestamp(cursor.getLong(5)));
 
         return post;
     }

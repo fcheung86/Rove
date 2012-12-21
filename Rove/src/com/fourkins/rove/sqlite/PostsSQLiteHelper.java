@@ -13,6 +13,7 @@ public class PostsSQLiteHelper extends SQLiteOpenHelper {
     public static final String COLUMN_LONGITUDE = "longitude";
     public static final String COLUMN_LATITUDE = "latitude";
     public static final String COLUMN_MESSAGE = "message";
+    public static final String COLUMN_TIMESTAMP = "timestamp";
 
     private static final String DATABASE_NAME = "rove.db";
     private static final int VERSION = 1;
@@ -22,11 +23,12 @@ public class PostsSQLiteHelper extends SQLiteOpenHelper {
     private static final String CREATE_POSTS_TABLE = 
             "create table " + TABLE_POSTS + 
             "(" + 
-            COLUMN_ID + " integer primary key autoincrement, " +
-            COLUMN_USER_NAME + " text not null, " +
-            COLUMN_LATITUDE + " real not null, " +
-            COLUMN_LONGITUDE + " real not null, " +
-            COLUMN_MESSAGE+ " text not null " +
+                COLUMN_ID + " integer primary key autoincrement, " +
+                COLUMN_USER_NAME + " text not null, " +
+                COLUMN_LATITUDE + " real not null, " +
+                COLUMN_LONGITUDE + " real not null, " +
+                COLUMN_MESSAGE + " text not null, " +
+                COLUMN_TIMESTAMP + " integer not null " +
             ");";    
     //@formatter:on
 
