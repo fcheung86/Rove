@@ -9,14 +9,14 @@ import com.fourkins.rove.R;
 import com.fourkins.rove.sqlite.posts.Post;
 import com.fourkins.rove.sqlite.posts.PostsManager;
 
-public class NewFeedActivity extends Activity {
+public class NewPostActivity extends Activity {
 
     private PostsManager mPostsManager;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_new);
+        setContentView(R.layout.activity_new_post);
 
         mPostsManager = new PostsManager(this);
     }

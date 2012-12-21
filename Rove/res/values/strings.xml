@@ -6,5 +6,12 @@
     <string name="map_section">Map</string>
     <string name="hello_world">Hello world!</string>
     <string name="menu_settings">Settings</string>
+    
+    <!-- activity_new.xml -->
+    <string name="username">Username</string>
+    <string name="lat">Latitude</string>
+    <string name="lng">Longitude</string>
+    <string name="msg">Message</string>
+    <string name="submit">Submit</string>
 
 </resources>

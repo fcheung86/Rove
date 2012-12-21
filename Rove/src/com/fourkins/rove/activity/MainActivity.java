@@ -85,7 +85,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
     }
     
     public void addFeed(View view) {
-		Intent intent = new Intent(this, NewFeedActivity.class);
+		Intent intent = new Intent(this, NewPostActivity.class);
 		startActivity(intent);
     }
 

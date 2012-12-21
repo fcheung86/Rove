@@ -10,25 +10,22 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="Username" />
+        android:hint="@string/username" />
 
     <EditText
         android:id="@+id/edit_latitude"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="Latitude"
-        android:inputType="numberSigned" >
-
-        <requestFocus />
-    </EditText>
+        android:hint="@string/lat"
+        android:inputType="numberSigned" />
 
     <EditText
         android:id="@+id/edit_longitude"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="Longitude"
+        android:hint="@string/lng"
         android:inputType="numberSigned" />
 
     <EditText
@@ -36,13 +33,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="Message" />
+        android:hint="@string/msg" />
 
     <Button
         android:id="@+id/button_submit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
         android:onClick="submitMessage"
-        android:text="Submit" />
+        android:text="@string/submit" />
 
 </LinearLayout>

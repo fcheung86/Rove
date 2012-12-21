@@ -37,7 +37,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.fourkins.rove.activity.NewFeedActivity"
+            android:name="com.fourkins.rove.activity.NewPostActivity"
             android:label="@string/app_name" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
