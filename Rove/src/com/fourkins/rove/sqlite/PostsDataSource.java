@@ -6,7 +6,6 @@ import java.util.List;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.DatabaseUtils;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 
@@ -38,10 +37,6 @@ public class PostsDataSource {
 
     public void insertPost(ContentValues values) {
         database.insert(PostsSQLiteHelper.TABLE_POSTS, null, values);
-    }
-
-    public long getAllPostsCount() {
-        return DatabaseUtils.queryNumEntries(database, PostsSQLiteHelper.TABLE_POSTS);
     }
 
     public List<Post> getAllPosts() {

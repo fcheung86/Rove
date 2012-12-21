@@ -33,6 +33,12 @@ public class MapFragment extends SupportMapFragment {
     }
 
     @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        mPostsManager = new PostsManager(activity);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup viewGroup, Bundle bundle) {
         View view = super.onCreateView(inflater, viewGroup, bundle);
 
@@ -41,20 +47,15 @@ public class MapFragment extends SupportMapFragment {
         return view;
     }
 
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        mPostsManager = new PostsManager(activity);
-    }
-
     private void setUpMapIfNeeded() {
         if (mMap == null) {
             mMap = getMap();
             mMap.setOnCameraChangeListener(getCameraChangeListener());
             mMap.setOnMarkerClickListener(getMarkerClickListener());
+
             // Check if we were successful in obtaining the map.
             if (mMap != null) {
-                setUpMap();
+                posts = mPostsManager.getAllPosts();
             }
         }
     }
@@ -76,15 +77,12 @@ public class MapFragment extends SupportMapFragment {
                 if (!marker.getTitle().isEmpty()) {
                     clearFlag = false;
                     return false;
+                } else {
+                    return true;
                 }
-                else return true;
             }
         };
 
-    }
-
-    private void setUpMap() {
-        posts = mPostsManager.getAllPosts();
     }
 
     public void addMarkers(LatLngBounds latLngBounds) {
@@ -101,7 +99,7 @@ public class MapFragment extends SupportMapFragment {
                 }
             }
         }
-        
+
         clearFlag = true;
     }
 }
