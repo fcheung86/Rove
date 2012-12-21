@@ -35,6 +35,11 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         actionBar.addTab(actionBar.newTab().setText(R.string.map_section).setTabListener(this));
     }
 
+    protected void onStart() {
+        super.onStart();
+
+    }
+
     @Override
     public void onRestoreInstanceState(Bundle savedInstanceState) {
         // Restore the previously serialized current tab position.
