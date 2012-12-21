@@ -2,12 +2,8 @@ package com.fourkins.rove.fragments;
 
 import android.app.Activity;
 import android.database.Cursor;
-import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.support.v4.widget.SimpleCursorAdapter;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ListAdapter;
 
 import com.fourkins.rove.R;
@@ -29,15 +25,8 @@ public class FeedFragment extends ListFragment {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
-        View view = super.onCreateView(inflater, container, savedInstanceState);
+    public void onResume() {
+        super.onResume();
 
         Cursor postCursor = mPostsManager.getAllPostsCursor();
 
@@ -48,14 +37,5 @@ public class FeedFragment extends ListFragment {
         ListAdapter adapter = new SimpleCursorAdapter(getActivity(), R.layout.list_feed_row, postCursor, from, to, 0);
 
         setListAdapter(adapter);
-
-        return view;
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        SimpleCursorAdapter adapter = (SimpleCursorAdapter) this.getListAdapter();
-        adapter.notifyDataSetChanged();
     }
 }
