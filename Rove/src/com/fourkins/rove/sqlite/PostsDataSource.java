@@ -48,6 +48,10 @@ public class PostsDataSource {
         database.insert(PostsSQLiteHelper.TABLE_POSTS, null, values);
     }
 
+    public Cursor getAllPostsCursor() {
+        return database.query(PostsSQLiteHelper.TABLE_POSTS, allColumns, null, null, null, null, PostsSQLiteHelper.COLUMN_TIMESTAMP + " DESC");
+    }
+
     public List<Post> getAllPosts() {
         List<Post> posts = new ArrayList<Post>();
 
@@ -66,8 +70,19 @@ public class PostsDataSource {
         return posts;
     }
 
-    public Cursor getAllPostsCursor() {
-        return database.query(PostsSQLiteHelper.TABLE_POSTS, allColumns, null, null, null, null, PostsSQLiteHelper.COLUMN_TIMESTAMP + " DESC");
+    public Post getPost(long id) {
+        String where = PostsSQLiteHelper.COLUMN_ID + "=?";
+        String whereArgs[] = new String[] { String.valueOf(id) };
+
+        Cursor cursor = database.query(PostsSQLiteHelper.TABLE_POSTS, allColumns, where, whereArgs, null, null, null);
+
+        cursor.moveToFirst();
+
+        if (!cursor.isAfterLast()) {
+            return cursorToPost(cursor);
+        } else {
+            return null;
+        }
     }
 
     private Post cursorToPost(Cursor cursor) {

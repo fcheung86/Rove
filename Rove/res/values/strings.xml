@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- main strings -->
     <string name="app_name">Rove</string>
     <string name="feed_section">Feed</string>
     <string name="map_section">Map</string>
@@ -15,5 +16,8 @@
     <string name="msg">Message</string>
     <string name="submit">Submit</string>
     <string name="get_location">Get Location</string>
+    
+    <!-- list_feed_row.xml -->
+    <string name="ic_pin">Pin Icon</string>
 
 </resources>

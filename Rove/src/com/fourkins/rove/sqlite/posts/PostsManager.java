@@ -31,6 +31,14 @@ public class PostsManager {
         return posts;
     }
 
+    public Post getPost(long id) {
+        ds.open();
+        Post post = ds.getPost(id);
+        ds.close();
+
+        return post;
+    }
+
     public void insertPost(Post post) {
         ds.open();
         ds.insertPost(post);
