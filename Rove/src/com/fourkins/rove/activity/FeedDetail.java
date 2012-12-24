@@ -12,16 +12,15 @@ import com.fourkins.rove.sqlite.posts.Post;
 import com.fourkins.rove.sqlite.posts.PostsManager;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.GoogleMap.OnCameraChangeListener;
-import com.google.android.gms.maps.GoogleMap.OnMapClickListener;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 public class FeedDetail extends FragmentActivity {
     
     private GoogleMap mMap = null;
+    private UiSettings mUiSettings;
     private PostsManager mPostsManager;
     private Post post = null;
     
@@ -50,12 +49,14 @@ public class FeedDetail extends FragmentActivity {
         if (mMap == null) {
             // Try to obtain the map from the SupportMapFragment.
             mMap = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.detailmap)).getMap();
+            mUiSettings = mMap.getUiSettings();
             // Check if we were successful in obtaining the map.
             if (mMap != null) {
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(post.getLatitude(), post.getLongitude()), 14));
                 mMap.addMarker(new MarkerOptions().position(new LatLng(post.getLatitude(), post.getLongitude())));
-                mMap.setOnCameraChangeListener(getCameraChangeListener());
-                mMap.stopAnimation();
+                mUiSettings.setTiltGesturesEnabled(false);
+                mUiSettings.setScrollGesturesEnabled(false);
+                mUiSettings.setRotateGesturesEnabled(false);
                 
                 final TextView user = (TextView) findViewById(R.id.detail_user_display);
                 final TextView latitudeDisplay = (TextView) findViewById(R.id.detail_latitude_display);
@@ -67,16 +68,6 @@ public class FeedDetail extends FragmentActivity {
                 comment.setText(post.getMessage());
             }
         }
-    }
-    
-    public OnCameraChangeListener getCameraChangeListener() {
-        return new OnCameraChangeListener() {
-            @Override
-            public void onCameraChange(CameraPosition position) {
-                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(post.getLatitude(), post.getLongitude()), 14));
-                mMap.stopAnimation();
-            }
-        };
     }
     
 }
