@@ -9,8 +9,10 @@ import android.location.Location;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.fourkins.rove.R;
+import com.fourkins.rove.application.Rove;
 import com.fourkins.rove.fragments.MapFragment;
 import com.fourkins.rove.sqlite.posts.Post;
 import com.fourkins.rove.sqlite.posts.PostsManager;
@@ -19,6 +21,8 @@ import com.fourkins.rove.util.LocationUtil;
 public class NewPostActivity extends Activity {
 
     private PostsManager mPostsManager;
+    private Rove mApp;
+    private String mUserName;
 
     double latitudefromMap = 0;
     double longitudefromMap = 0;
@@ -43,13 +47,19 @@ public class NewPostActivity extends Activity {
 
         mPostsManager = new PostsManager(this);
 
+        mApp = (Rove) getApplicationContext();
+        mUserName = mApp.getUserName();
+
+        final TextView userText2 = (TextView) findViewById(R.id.edit_user);
+        userText2.setText(mUserName);
+
         // hide the action bar
         ActionBar actionBar = getActionBar();
         actionBar.hide();
     }
 
     public void submitMessage(View view) {
-        final EditText userText = (EditText) findViewById(R.id.edit_user);
+        // final EditText userText = (EditText) findViewById(R.id.edit_user);
         final EditText latitudeText = (EditText) findViewById(R.id.edit_latitude);
         final EditText longitudeText = (EditText) findViewById(R.id.edit_longitude);
         final EditText messageText = (EditText) findViewById(R.id.edit_message);
@@ -65,10 +75,10 @@ public class NewPostActivity extends Activity {
             longitude = Double.parseDouble(longitudeText.getText().toString());
         }
 
-        String user = (String) userText.getText().toString();
+        // String user = (String) userText.getText().toString();
         String message = (String) messageText.getText().toString();
 
-        Post post = new Post(user, latitude, longitude, message, new Timestamp(System.currentTimeMillis()));
+        Post post = new Post(mUserName, latitude, longitude, message, new Timestamp(System.currentTimeMillis()));
         mPostsManager.insertPost(post);
 
         finish();

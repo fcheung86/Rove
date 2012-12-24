@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.fourkins.rove.R;
+import com.fourkins.rove.application.Rove;
 import com.fourkins.rove.fragments.FeedFragment;
 import com.fourkins.rove.fragments.MapFragment;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -20,13 +21,18 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
      * The serialization (saved instance state) Bundle key representing the current tab position.
      */
     private static final String STATE_SELECTED_NAVIGATION_ITEM = "selected_navigation_item";
+    Rove mApp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         Intent loginIntent = new Intent(this, LoginActivity.class);
-        startActivity(loginIntent);
+
+        mApp = (Rove) getApplicationContext();
+        if (mApp.getUserName() == null) {
+            startActivity(loginIntent);
+        }
 
         setContentView(R.layout.activity_main);
 

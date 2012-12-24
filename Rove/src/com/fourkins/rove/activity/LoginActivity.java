@@ -16,6 +16,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.fourkins.rove.R;
+import com.fourkins.rove.application.Rove;
 
 /**
  * Activity which displays a login screen to the user, offering registration as well.
@@ -25,9 +26,10 @@ public class LoginActivity extends Activity {
      * A dummy authentication store containing known user names and passwords. TODO: remove after connecting to a real
      * authentication system.
      */
-    private static final String[] DUMMY_CREDENTIALS = new String[] { "mark.sk.ho@gmail.com:password", "iceheat710@gmail.com:password",
-            "fcheung86@gmail.com:password" };
-
+    private static final String[] DUMMY_CREDENTIALS = new String[] { "mark.sk.ho@gmail.com:password:Mark", "iceheat710@gmail.com:password:Faggot",
+            "fcheung86@gmail.com:password:Farran" };
+    private Rove mApp;
+    private String userName = "";
     /**
      * The default email to populate the email field with.
      */
@@ -54,6 +56,7 @@ public class LoginActivity extends Activity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_login);
+        mApp = (Rove) getApplicationContext();
 
         // Set up the login form.
         mEmail = getIntent().getStringExtra(EXTRA_EMAIL);
@@ -200,12 +203,13 @@ public class LoginActivity extends Activity {
                 String[] pieces = credential.split(":");
                 if (pieces[0].equals(mEmail)) {
                     // Account exists, return true if the password matches.
+                    userName = pieces[2];
                     return pieces[1].equals(mPassword);
                 }
             }
 
             // TODO: register the new account here.
-            return true;
+            return false;
         }
 
         @Override
@@ -214,6 +218,7 @@ public class LoginActivity extends Activity {
             showProgress(false);
 
             if (success) {
+                mApp.setUserName(userName);
                 finish();
             } else {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));

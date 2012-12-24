@@ -5,13 +5,13 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <EditText
+    <TextView
         android:id="@+id/edit_user"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="@string/username"
-        android:inputType="textCapSentences" />
+        android:textSize="18dp" />
 
     <EditText
         android:id="@+id/edit_latitude"
