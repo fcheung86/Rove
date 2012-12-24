@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:background="#FFFFFF"
+  android:orientation="vertical"
+  android:weightSum="2">
+
+    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+	    android:id="@+id/detailmap"
+	    android:layout_width="match_parent"
+	    android:layout_height="match_parent"
+	    android:layout_weight="1.25"
+	    class="com.google.android.gms.maps.SupportMapFragment">
+    </fragment>
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/detailinfo"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="0.75"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/detail_user"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/username"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/detail_user_display"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:textSize="18sp" />
+        
+        <TextView
+            android:id="@+id/detail_latitude"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/lat"
+            android:paddingTop="10dp"
+            android:textSize="18sp" />
+        
+        <TextView
+	        android:id="@+id/detail_latitude_display"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:ems="10"
+	        android:textSize="18sp" />
+        
+        <TextView
+            android:id="@+id/detail_longitude"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/lng"
+            android:paddingTop="10dp"
+            android:textSize="18sp" />
+        
+        <TextView
+	        android:id="@+id/detail_longitude_display"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:ems="10"
+	        android:textSize="18sp" />
+        
+        <TextView
+            android:id="@+id/detail_message"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/msg"
+            android:paddingTop="10dp"
+            android:textSize="18sp" />
+        
+        <TextView
+	        android:id="@+id/detail_message_display"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:ems="10"
+	        android:textSize="18sp" />
+        
+    </LinearLayout>
+
+</LinearLayout>
