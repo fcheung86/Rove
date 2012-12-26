@@ -12,7 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.fourkins.rove.R;
-import com.fourkins.rove.activity.FeedDetail;
+import com.fourkins.rove.activity.PostDetailActivity;
 import com.fourkins.rove.sqlite.PostsSQLiteHelper;
 import com.fourkins.rove.sqlite.posts.PostsManager;
 
@@ -56,17 +56,10 @@ public class FeedFragment extends ListFragment {
 
         try {
             postId = Long.parseLong(idView.getText().toString());
-            
-            Intent intent = new Intent(getActivity(), FeedDetail.class);
+
+            Intent intent = new Intent(getActivity(), PostDetailActivity.class);
             intent.putExtra(postIdValue, postId);
             startActivity(intent);
-            
-            /*Post post = mPostsManager.getPost(postId);
-
-            if (post != null) {
-                String str = post.getUserName() + ": " + post.getMessage();
-                Toast.makeText(getActivity(), str, Toast.LENGTH_SHORT).show();
-            }*/
 
         } catch (NumberFormatException e) {
             Toast.makeText(getActivity(), "Invalid Post", Toast.LENGTH_SHORT).show();

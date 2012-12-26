@@ -7,7 +7,7 @@ import android.view.MotionEvent;
 
 import com.fourkins.rove.R;
 
-public class SplashScreen extends Activity {
+public class SplashScreenActivity extends Activity {
 
     protected int _splashTime = 5000;
     private Thread splashThread;
@@ -18,7 +18,7 @@ public class SplashScreen extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // Apparently need to use activity_main, want to use something else
-        setContentView(R.layout.splashscreen);
+        setContentView(R.layout.activity_splash_screen);
 
         splashThread = new Thread() {
             @Override
@@ -33,7 +33,7 @@ public class SplashScreen extends Activity {
                 } finally {
                     finish();
                     // NOTE: Splashscreen.this because current context is set to run() function
-                    Intent myIntent = new Intent(SplashScreen.this, com.fourkins.rove.activity.MainActivity.class);
+                    Intent myIntent = new Intent(SplashScreenActivity.this, com.fourkins.rove.activity.MainActivity.class);
                     startActivity(myIntent);
 
                 }

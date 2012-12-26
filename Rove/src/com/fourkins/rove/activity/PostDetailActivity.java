@@ -17,34 +17,33 @@ import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-public class FeedDetail extends FragmentActivity {
-    
+public class PostDetailActivity extends FragmentActivity {
+
     private GoogleMap mMap = null;
     private UiSettings mUiSettings;
     private PostsManager mPostsManager;
     private Post post = null;
-    
+
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_page);
-        
+
         Intent intent = getIntent();
-        
+
         mPostsManager = new PostsManager(this);
-        
+
         long postId = intent.getLongExtra(FeedFragment.postIdValue, 0);
         post = mPostsManager.getPost(postId);
-        
+
         // hide the action bar
         ActionBar actionBar = getActionBar();
         actionBar.hide();
-        
+
         setUpMapIfNeeded();
     }
-    
+
     private void setUpMapIfNeeded() {
-        
-        
+
         // Do a null check to confirm that we have not already instantiated the map.
         if (mMap == null) {
             // Try to obtain the map from the SupportMapFragment.
@@ -57,7 +56,7 @@ public class FeedDetail extends FragmentActivity {
                 mUiSettings.setTiltGesturesEnabled(false);
                 mUiSettings.setScrollGesturesEnabled(false);
                 mUiSettings.setRotateGesturesEnabled(false);
-                
+
                 final TextView user = (TextView) findViewById(R.id.detail_user_display);
                 final TextView latitudeDisplay = (TextView) findViewById(R.id.detail_latitude_display);
                 final TextView longitudeDisplay = (TextView) findViewById(R.id.detail_longitude_display);
@@ -69,5 +68,5 @@ public class FeedDetail extends FragmentActivity {
             }
         }
     }
-    
+
 }
