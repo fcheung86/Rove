@@ -5,9 +5,16 @@
     <string name="app_name">Rove</string>
     <string name="feed_section">Feed</string>
     <string name="map_section">Map</string>
-    <string name="hello_world">Hello world!</string>
     <string name="menu_settings">Settings</string>
     <string name="menu_add">Add</string>
+    
+    <!-- activity_splash_screen.xml -->
+    <string name="rove_logo">Logo</string>
+    <string name="brought_to_you_by">Brought to you by:</string>
+    <string name="farran">Farran</string>
+    <string name="justin">Justin</string>
+    <string name="mark">Mark</string>
+    <string name="phong">Phong</string>
     
     <!-- activity_new_post.xml -->
     <string name="username">Username:</string>

@@ -2,60 +2,62 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:layout_centerInParent="true" 
+    android:layout_centerInParent="true"
     android:background="#626363" >
 
-    	<ImageView
-    	    android:id="@+id/Splash01"
-    	    android:layout_width="wrap_content"
-    	    android:layout_height="wrap_content"
-    	    android:layout_alignParentTop="true"
-    	    android:layout_centerHorizontal="true"
-    	    android:layout_marginTop="82dp"
-    	    android:src="@drawable/splash" />
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:contentDescription="@string/rove_logo"
+        android:src="@drawable/splash" />
 
-    	<TextView
-    	    android:id="@+id/SplashText1"
-    	    android:layout_width="wrap_content"
-    	    android:layout_height="wrap_content"
-    	    android:layout_below="@id/Splash01"
-    	    android:layout_centerHorizontal="true"
-    	    android:layout_marginTop="72dp"
-    	    android:maxLines="4"
-    	    android:text="Farran"
-    	    android:textColor="#ffffffff" />
-    	
-    	<TextView
-    	    android:id="@+id/SplashText2"
-    	    android:layout_width="wrap_content"
-    	    android:layout_height="wrap_content"
-    	    android:layout_below="@id/Splash01"
-    	    android:layout_centerHorizontal="true"
-    	    android:layout_marginTop="86dp"
-    	    android:maxLines="4"
-    	    android:text="Justin"
-    	    android:textColor="#ffffffff" />
-    	  
-    	<TextView
-    	    android:id="@+id/SplashText3"
-    	    android:layout_width="wrap_content"
-    	    android:layout_height="wrap_content"
-    	    android:layout_below="@id/Splash01"
-    	    android:layout_centerHorizontal="true"
-    	    android:layout_marginTop="102dp"
-    	    android:maxLines="4"
-    	    android:text="Phong"
-    	    android:textColor="#ffffffff" />
+    <TextView
+        android:id="@+id/brought_to_you"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/author1"
+        android:layout_centerHorizontal="true"
+        android:text="@string/brought_to_you_by"
+        android:textColor="#ffffffff" />
 
-    	<TextView
-    	    android:id="@+id/SplashText"
-    	    android:layout_width="wrap_content"
-    	    android:layout_height="wrap_content"
-    	    android:layout_below="@+id/Splash01"
-    	    android:layout_centerHorizontal="true"
-    	    android:layout_marginTop="40dp"
-    	    android:maxLines="4"
-    	    android:text="Brought to you by:"
-    	    android:textColor="#ffffffff" />
-  
-</RelativeLayout>
+    <TextView
+        android:id="@+id/author1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/author2"
+        android:layout_centerHorizontal="true"
+        android:text="@string/farran"
+        android:textColor="#ffffffff" />
+
+    <TextView
+        android:id="@+id/author2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/author3"
+        android:layout_centerHorizontal="true"
+        android:text="@string/justin"
+        android:textColor="#ffffffff" />
+
+    <TextView
+        android:id="@+id/author3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/author4"
+        android:layout_centerHorizontal="true"
+        android:text="@string/mark"
+        android:textColor="#ffffffff" />
+
+    <TextView
+        android:id="@+id/author4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/author2"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="20dp"
+        android:text="@string/phong"
+        android:textColor="#ffffffff" />
+
+</RelativeLayout>
