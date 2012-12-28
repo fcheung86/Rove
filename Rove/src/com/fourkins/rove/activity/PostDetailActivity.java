@@ -1,6 +1,5 @@
 package com.fourkins.rove.activity;
 
-import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -35,10 +34,6 @@ public class PostDetailActivity extends FragmentActivity {
         long postId = intent.getLongExtra(FeedFragment.postIdValue, 0);
         post = mPostsManager.getPost(postId);
 
-        // hide the action bar
-        ActionBar actionBar = getActionBar();
-        actionBar.hide();
-
         setUpMapIfNeeded();
     }
 
@@ -56,6 +51,7 @@ public class PostDetailActivity extends FragmentActivity {
                 mUiSettings.setTiltGesturesEnabled(false);
                 mUiSettings.setScrollGesturesEnabled(false);
                 mUiSettings.setRotateGesturesEnabled(false);
+                mUiSettings.setZoomGesturesEnabled(false);
 
                 final TextView user = (TextView) findViewById(R.id.detail_user_display);
                 final TextView latitudeDisplay = (TextView) findViewById(R.id.detail_latitude_display);
