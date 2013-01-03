@@ -8,6 +8,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.LinearLayout;
+import android.widget.LinearLayout.LayoutParams;
 
 import com.fourkins.rove.R;
 import com.fourkins.rove.application.Rove;
@@ -90,6 +92,15 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 
         switch (tab.getPosition()) {
         case 0:
+            LinearLayout linearLayout =  (LinearLayout) findViewById(R.id.detailmapinfo);
+            LinearLayout mapLayout =  (LinearLayout) findViewById(R.id.emptyView);
+            
+            LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT, 2f);
+            LayoutParams mapParams = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT, 0f);
+            
+            mapLayout.setLayoutParams(mapParams);
+            linearLayout.setLayoutParams(params);
+            
             Fragment fragment = new FeedFragment();
             getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
             break;
