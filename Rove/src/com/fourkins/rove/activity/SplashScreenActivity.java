@@ -6,17 +6,21 @@ import android.os.Bundle;
 import android.view.MotionEvent;
 
 import com.fourkins.rove.R;
+import com.fourkins.rove.application.AppPreferences;
 
 public class SplashScreenActivity extends Activity {
 
     protected int _splashTime = 5000;
     private Thread splashThread;
+    private AppPreferences mAppPrefs;
 
     // Trying to make a splash screen here
     @Override
     // wtf is a savedInstanceState
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mAppPrefs = new AppPreferences(getApplicationContext());
+        final String user = mAppPrefs.getUser();
         // Apparently need to use activity_main, want to use something else
         setContentView(R.layout.activity_splash_screen);
 
@@ -33,7 +37,12 @@ public class SplashScreenActivity extends Activity {
                 } finally {
                     finish();
                     // NOTE: Splashscreen.this because current context is set to run() function
-                    Intent myIntent = new Intent(SplashScreenActivity.this, com.fourkins.rove.activity.MainActivity.class);
+                    Intent myIntent;
+                    if (user == "") {
+                        myIntent = new Intent(SplashScreenActivity.this, com.fourkins.rove.activity.LoginActivity.class);
+                    } else {
+                        myIntent = new Intent(SplashScreenActivity.this, com.fourkins.rove.activity.MainActivity.class);
+                    }
                     startActivity(myIntent);
 
                 }

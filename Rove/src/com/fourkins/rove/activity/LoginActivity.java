@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -16,7 +17,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.fourkins.rove.R;
-import com.fourkins.rove.application.Rove;
+import com.fourkins.rove.application.AppPreferences;
 
 /**
  * Activity which displays a login screen to the user, offering registration as well.
@@ -27,8 +28,8 @@ public class LoginActivity extends Activity {
      * authentication system.
      */
     private static final String[] DUMMY_CREDENTIALS = new String[] { "mark.sk.ho@gmail.com:password:Mark", "iceheat710@gmail.com:password:Faggot",
-            "fcheung86@gmail.com:password:Farran" };
-    private Rove mApp;
+            "fcheung86@gmail.com:password:Farran", "pthieu@gmail.com:faggot:Phong" };
+    private AppPreferences mAppPrefs;
     private String userName = "";
     /**
      * The default email to populate the email field with.
@@ -56,7 +57,7 @@ public class LoginActivity extends Activity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_login);
-        mApp = (Rove) getApplicationContext();
+        mAppPrefs = new AppPreferences(getApplicationContext());
 
         // Set up the login form.
         mEmail = getIntent().getStringExtra(EXTRA_EMAIL);
@@ -218,8 +219,10 @@ public class LoginActivity extends Activity {
             showProgress(false);
 
             if (success) {
-                mApp.setUserName(userName);
+                mAppPrefs.saveUser(userName);
+                Intent mainIntent = new Intent(LoginActivity.this, com.fourkins.rove.activity.MainActivity.class);
                 finish();
+                startActivity(mainIntent);
             } else {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
                 mPasswordView.requestFocus();

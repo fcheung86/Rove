@@ -12,7 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 
 import com.fourkins.rove.R;
-import com.fourkins.rove.application.Rove;
+import com.fourkins.rove.application.AppPreferences;
 import com.fourkins.rove.fragments.FeedFragment;
 import com.fourkins.rove.fragments.MapFragment;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -23,18 +23,13 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
      * The serialization (saved instance state) Bundle key representing the current tab position.
      */
     private static final String STATE_SELECTED_NAVIGATION_ITEM = "selected_navigation_item";
-    Rove mApp;
+    private AppPreferences mAppPrefs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        mAppPrefs = new AppPreferences(getApplicationContext());
         Intent loginIntent = new Intent(this, LoginActivity.class);
-
-        mApp = (Rove) getApplicationContext();
-        if (mApp.getUserName() == null) {
-            startActivity(loginIntent);
-        }
 
         setContentView(R.layout.activity_main);
 
@@ -80,6 +75,12 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
             Intent intent = new Intent(this, NewPostActivity.class);
             startActivity(intent);
             return true;
+        case R.id.menu_logout:
+            mAppPrefs.saveUser("");
+            Intent loginIntent = new Intent(MainActivity.this, com.fourkins.rove.activity.LoginActivity.class);
+            finish();
+            startActivity(loginIntent);
+            return true;
         default:
             return super.onOptionsItemSelected(item);
         }
@@ -92,15 +93,15 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 
         switch (tab.getPosition()) {
         case 0:
-            LinearLayout linearLayout =  (LinearLayout) findViewById(R.id.detailmapinfo);
-            LinearLayout mapLayout =  (LinearLayout) findViewById(R.id.emptyView);
-            
+            LinearLayout linearLayout = (LinearLayout) findViewById(R.id.detailmapinfo);
+            LinearLayout mapLayout = (LinearLayout) findViewById(R.id.emptyView);
+
             LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT, 2f);
             LayoutParams mapParams = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT, 0f);
-            
+
             mapLayout.setLayoutParams(mapParams);
             linearLayout.setLayoutParams(params);
-            
+
             Fragment fragment = new FeedFragment();
             getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
             break;

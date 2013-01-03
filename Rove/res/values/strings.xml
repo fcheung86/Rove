@@ -26,5 +26,6 @@
     
     <!-- list_feed_row.xml -->
     <string name="ic_pin">Pin Icon</string>
+    <string name="menu_logout">Logout</string>
 
 </resources>

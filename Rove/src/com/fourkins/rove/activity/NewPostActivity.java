@@ -12,7 +12,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.fourkins.rove.R;
-import com.fourkins.rove.application.Rove;
+import com.fourkins.rove.application.AppPreferences;
 import com.fourkins.rove.fragments.MapFragment;
 import com.fourkins.rove.sqlite.posts.Post;
 import com.fourkins.rove.sqlite.posts.PostsManager;
@@ -21,7 +21,7 @@ import com.fourkins.rove.util.LocationUtil;
 public class NewPostActivity extends Activity {
 
     private PostsManager mPostsManager;
-    private Rove mApp;
+    private AppPreferences mAppPrefs;
     private String mUserName;
 
     double latitudefromMap = 0;
@@ -47,8 +47,8 @@ public class NewPostActivity extends Activity {
 
         mPostsManager = new PostsManager(this);
 
-        mApp = (Rove) getApplicationContext();
-        mUserName = mApp.getUserName();
+        mAppPrefs = new AppPreferences(getApplicationContext());
+        mUserName = mAppPrefs.getUser();
 
         final TextView userText2 = (TextView) findViewById(R.id.edit_user);
         userText2.setText(mUserName);
