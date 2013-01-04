@@ -38,9 +38,9 @@ public class SplashScreenActivity extends Activity {
                     finish();
                     // NOTE: Splashscreen.this because current context is set to run() function
                     Intent myIntent;
-                    if (user == "") {
+                    if (user == "") { // If not logged in, bring user to login screen
                         myIntent = new Intent(SplashScreenActivity.this, com.fourkins.rove.activity.LoginActivity.class);
-                    } else {
+                    } else { // If already logged in, bring to main screen
                         myIntent = new Intent(SplashScreenActivity.this, com.fourkins.rove.activity.MainActivity.class);
                     }
                     startActivity(myIntent);

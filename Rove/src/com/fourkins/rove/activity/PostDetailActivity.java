@@ -16,6 +16,10 @@ import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+/**
+ * Detailed page displayed when clicking on specific post, either from feed list or from the map Details include Name,
+ * location, message, category, etc
+ */
 public class PostDetailActivity extends FragmentActivity {
 
     private GoogleMap mMap = null;

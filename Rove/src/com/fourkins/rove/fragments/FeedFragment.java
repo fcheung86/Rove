@@ -16,6 +16,10 @@ import com.fourkins.rove.activity.PostDetailActivity;
 import com.fourkins.rove.sqlite.PostsSQLiteHelper;
 import com.fourkins.rove.sqlite.posts.PostsManager;
 
+/**
+ * "Feed" Tab (under Main Screen) Displays list of posts for a given area.
+ * 
+ */
 public class FeedFragment extends ListFragment {
 
     private PostsManager mPostsManager;

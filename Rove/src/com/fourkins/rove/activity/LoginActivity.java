@@ -20,7 +20,7 @@ import com.fourkins.rove.R;
 import com.fourkins.rove.application.AppPreferences;
 
 /**
- * Activity which displays a login screen to the user, offering registration as well.
+ * Activity which displays a login screen to the user. (Code is from SDK template)
  */
 public class LoginActivity extends Activity {
     /**
@@ -194,7 +194,7 @@ public class LoginActivity extends Activity {
             // TODO: attempt authentication against a network service.
 
             try {
-                // Simulate network access.
+                // Simulate network access. ****Remove when accessing real server****
                 Thread.sleep(2000);
             } catch (InterruptedException e) {
                 return false;
@@ -218,6 +218,7 @@ public class LoginActivity extends Activity {
             mAuthTask = null;
             showProgress(false);
 
+            // If login successful, set AppPrefernce "user", so user is permanently logged in.
             if (success) {
                 mAppPrefs.saveUser(userName);
                 Intent mainIntent = new Intent(LoginActivity.this, com.fourkins.rove.activity.MainActivity.class);

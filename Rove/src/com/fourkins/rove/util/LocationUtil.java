@@ -4,6 +4,10 @@ import android.content.Context;
 import android.location.Location;
 import android.location.LocationManager;
 
+/**
+ * Tool to detect current location through GPS or network provider
+ * 
+ */
 public class LocationUtil {
 
     private static LocationUtil instance;

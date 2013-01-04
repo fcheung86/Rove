@@ -5,6 +5,11 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 
+/**
+ * Helper Class to store Application Preferences
+ * 
+ * - User: current logged in user; also used to determine if login is required
+ */
 public class AppPreferences {
     private static final String APP_SHARED_PREFS = "com.fourkins.rove_preferences"; // Name of the file -.xml
     private SharedPreferences appSharedPrefs;

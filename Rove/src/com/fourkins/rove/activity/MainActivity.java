@@ -17,6 +17,13 @@ import com.fourkins.rove.fragments.FeedFragment;
 import com.fourkins.rove.fragments.MapFragment;
 import com.google.android.gms.maps.SupportMapFragment;
 
+/**
+ * Main Screen for the app. Contains two tabs: - Feed: Displays lists of posts from other users, in a given area - Map:
+ * Displays the Map (powered by Google Map) and plots "pins" for other users' posts
+ * 
+ * Also configures menu option - Add: Add new posts for current location (shows on Action Bar) - Logout: Log out from
+ * current user, redirects to login screen (sub-menu) - Settings (sub-menu)
+ */
 public class MainActivity extends FragmentActivity implements ActionBar.TabListener {
 
     /**
@@ -29,7 +36,6 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mAppPrefs = new AppPreferences(getApplicationContext());
-        Intent loginIntent = new Intent(this, LoginActivity.class);
 
         setContentView(R.layout.activity_main);
 
@@ -75,7 +81,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
             Intent intent = new Intent(this, NewPostActivity.class);
             startActivity(intent);
             return true;
-        case R.id.menu_logout:
+        case R.id.menu_logout: // Logout: Simply remove AppPreference "user", and redirect back to login screen
             mAppPrefs.saveUser("");
             Intent loginIntent = new Intent(MainActivity.this, com.fourkins.rove.activity.LoginActivity.class);
             finish();
@@ -92,7 +98,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         // container view.
 
         switch (tab.getPosition()) {
-        case 0:
+        case 0: // "Feed"
             LinearLayout linearLayout = (LinearLayout) findViewById(R.id.detailmapinfo);
             LinearLayout mapLayout = (LinearLayout) findViewById(R.id.emptyView);
 
@@ -105,7 +111,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
             Fragment fragment = new FeedFragment();
             getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
             break;
-        case 1:
+        case 1: // "Map"
             SupportMapFragment mapFragment = new MapFragment();
             getSupportFragmentManager().beginTransaction().replace(R.id.container, mapFragment).commit();
             break;

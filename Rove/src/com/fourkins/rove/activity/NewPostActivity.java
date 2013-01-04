@@ -18,6 +18,11 @@ import com.fourkins.rove.sqlite.posts.Post;
 import com.fourkins.rove.sqlite.posts.PostsManager;
 import com.fourkins.rove.util.LocationUtil;
 
+/**
+ * Screen to submit new post. Can be initiated by clicking on "Add" menu button, or initiated from the map (ie. press
+ * and hold location on the map). If triggered from "Add" button, location is populated with "Current location" (ie.
+ * GPS)
+ */
 public class NewPostActivity extends Activity {
 
     private PostsManager mPostsManager;
@@ -47,6 +52,7 @@ public class NewPostActivity extends Activity {
 
         mPostsManager = new PostsManager(this);
 
+        // Automatically populate "Username" field with current logged in user
         mAppPrefs = new AppPreferences(getApplicationContext());
         mUserName = mAppPrefs.getUser();
 
@@ -67,10 +73,11 @@ public class NewPostActivity extends Activity {
         double latitude = 0;
         double longitude = 0;
 
+        // If new post initiated from Map (ie. by holding location on the map)
         if (fromMap == 1) {
             latitude = latitudefromMap;
             longitude = longitudefromMap;
-        } else {
+        } else { // If new post initiated from "Add" menu option
             latitude = Double.parseDouble(latitudeText.getText().toString());
             longitude = Double.parseDouble(longitudeText.getText().toString());
         }
