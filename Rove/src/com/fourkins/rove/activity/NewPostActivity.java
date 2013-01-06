@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.fourkins.rove.R;
 import com.fourkins.rove.application.AppPreferences;
+import com.fourkins.rove.application.Rove;
 import com.fourkins.rove.fragments.MapFragment;
 import com.fourkins.rove.sqlite.posts.Post;
 import com.fourkins.rove.sqlite.posts.PostsManager;
@@ -126,20 +127,17 @@ public class NewPostActivity extends Activity {
             AsyncHttpClient client = new AsyncHttpClient();
 
             // POSTs to the specified URL with the entity, with text/plain as the content type
-            // Note: this URL is done with the ip of the server, which could be different
-            // depending on the setup and the network settings, change accordingly
-            client.post(this, "http://192.168.2.25:8080/RoveServer/posts", entity, "text/plain",
-                    new AsyncHttpResponseHandler() {
+            client.post(this, Rove.BASE_URL + "/posts", entity, "text/plain", new AsyncHttpResponseHandler() {
 
-                        @Override
-                        public void onSuccess(String response) {
-                            // this is the async callback, for now we aren't doing anything with it
-                            // going forward, we can use this to know that the post is updated and add
-                            // it to the feed list
-                            System.out.println(response);
-                        }
+                @Override
+                public void onSuccess(String response) {
+                    // this is the async callback, for now we aren't doing anything with it
+                    // going forward, we can use this to know that the post is updated and add
+                    // it to the feed list
+                    System.out.println(response);
+                }
 
-                    });
+            });
         } catch (UnsupportedEncodingException e) {
 
         }
