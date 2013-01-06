@@ -127,7 +127,7 @@ public class NewPostActivity extends Activity {
             AsyncHttpClient client = new AsyncHttpClient();
 
             // POSTs to the specified URL with the entity, with text/plain as the content type
-            client.post(this, Rove.BASE_URL + "/posts", entity, "text/plain", new AsyncHttpResponseHandler() {
+            client.post(this, Rove.SERVER_BASE_URL + "/posts", entity, "text/plain", new AsyncHttpResponseHandler() {
 
                 @Override
                 public void onSuccess(String response) {
