@@ -44,8 +44,16 @@
         android:layout_gravity="center_horizontal"
         android:onClick="submitMessage"
         android:text="@string/submit" />
-    
-   <Button
+
+    <Button
+        android:id="@+id/button_submit_to_server"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:onClick="submitMessageToServer"
+        android:text="@string/submit_to_server" />
+
+    <Button
         android:id="@+id/button_location"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

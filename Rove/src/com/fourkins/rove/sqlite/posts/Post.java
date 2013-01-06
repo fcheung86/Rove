@@ -2,6 +2,9 @@ package com.fourkins.rove.sqlite.posts;
 
 import java.sql.Timestamp;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class Post {
 
     private long id;
@@ -80,6 +83,21 @@ public class Post {
 
     public void setTimestamp(Timestamp timestamp) {
         this.timestamp = timestamp;
+    }
+
+    public JSONObject getJson() {
+        JSONObject jObj = new JSONObject();
+
+        try {
+            jObj.put("userId", 1); // TODO need to put in the real userId
+            jObj.put("latitude", latitude);
+            jObj.put("longitude", longitude);
+            jObj.put("message", message);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return jObj;
     }
 
     @Override

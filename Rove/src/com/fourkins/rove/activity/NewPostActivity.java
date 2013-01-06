@@ -1,6 +1,9 @@
 package com.fourkins.rove.activity;
 
+import java.io.UnsupportedEncodingException;
 import java.sql.Timestamp;
+
+import org.apache.http.entity.StringEntity;
 
 import android.app.ActionBar;
 import android.app.Activity;
@@ -17,6 +20,8 @@ import com.fourkins.rove.fragments.MapFragment;
 import com.fourkins.rove.sqlite.posts.Post;
 import com.fourkins.rove.sqlite.posts.PostsManager;
 import com.fourkins.rove.util.LocationUtil;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
 
 /**
  * Screen to submit new post. Can be initiated by clicking on "Add" menu button, or initiated from the map (ie. press
@@ -83,10 +88,61 @@ public class NewPostActivity extends Activity {
         }
 
         // String user = (String) userText.getText().toString();
-        String message = (String) messageText.getText().toString();
+        String message = messageText.getText().toString();
 
         Post post = new Post(mUserName, latitude, longitude, message, new Timestamp(System.currentTimeMillis()));
         mPostsManager.insertPost(post);
+
+        finish();
+    }
+
+    public void submitMessageToServer(View view) {
+        final EditText latitudeText = (EditText) findViewById(R.id.edit_latitude);
+        final EditText longitudeText = (EditText) findViewById(R.id.edit_longitude);
+        final EditText messageText = (EditText) findViewById(R.id.edit_message);
+
+        double latitude = 0;
+        double longitude = 0;
+
+        if (fromMap == 1) {
+            // If new post initiated from Map (ie. by holding location on the map)
+            latitude = latitudefromMap;
+            longitude = longitudefromMap;
+        } else {
+            // If new post initiated from "Add" menu option
+            latitude = Double.parseDouble(latitudeText.getText().toString());
+            longitude = Double.parseDouble(longitudeText.getText().toString());
+        }
+
+        String message = messageText.getText().toString();
+
+        Post post = new Post(mUserName, latitude, longitude, message, new Timestamp(System.currentTimeMillis()));
+
+        try {
+            // creates the Entity used for POST, converting the Post object into JSON
+            // and getting the string value of the JSON
+            StringEntity entity = new StringEntity(post.getJson().toString());
+
+            AsyncHttpClient client = new AsyncHttpClient();
+
+            // POSTs to the specified URL with the entity, with text/plain as the content type
+            // Note: this URL is done with the ip of the server, which could be different
+            // depending on the setup and the network settings, change accordingly
+            client.post(this, "http://192.168.2.25:8080/RoveServer/posts", entity, "text/plain",
+                    new AsyncHttpResponseHandler() {
+
+                        @Override
+                        public void onSuccess(String response) {
+                            // this is the async callback, for now we aren't doing anything with it
+                            // going forward, we can use this to know that the post is updated and add
+                            // it to the feed list
+                            System.out.println(response);
+                        }
+
+                    });
+        } catch (UnsupportedEncodingException e) {
+
+        }
 
         finish();
     }
