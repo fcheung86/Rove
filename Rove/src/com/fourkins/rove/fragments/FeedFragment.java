@@ -42,7 +42,10 @@ public class FeedFragment extends ListFragment {
         int[] to = new int[] { R.id.row_id, R.id.row_message, R.id.row_latitude, R.id.row_username, R.id.row_longitude };
 
         ListAdapter adapter = new SimpleCursorAdapter(getActivity(), R.layout.list_feed_row, postCursor, from, to, 0);
-
+        
+        getListView().setDivider(null);
+        getListView().setDividerHeight(0);
+        
         setListAdapter(adapter);
     }
 
