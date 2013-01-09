@@ -1,18 +1,14 @@
 package com.fourkins.rove.fragments;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.database.Cursor;
 import android.support.v4.app.ListFragment;
 import android.support.v4.widget.SimpleCursorAdapter;
 import android.view.View;
 import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.fourkins.rove.R;
-import com.fourkins.rove.activity.PostDetailActivity;
 import com.fourkins.rove.sqlite.PostsSQLiteHelper;
 import com.fourkins.rove.sqlite.posts.PostsManager;
 
@@ -54,19 +50,25 @@ public class FeedFragment extends ListFragment {
     public void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
 
-        TextView idView = (TextView) v.findViewById(R.id.row_id);
+        // when the list item is clicked, smooth scroll to the top with 10 pixels of spacing from the top
+        // and also take 50ms to animate the scroll
+        this.getListView().smoothScrollToPositionFromTop(position, 10, 50);
 
-        long postId;
+        // commented out the code below, so it won't open the post detail screen
 
-        try {
-            postId = Long.parseLong(idView.getText().toString());
-
-            Intent intent = new Intent(getActivity(), PostDetailActivity.class);
-            intent.putExtra(postIdValue, postId);
-            startActivity(intent);
-
-        } catch (NumberFormatException e) {
-            Toast.makeText(getActivity(), "Invalid Post", Toast.LENGTH_SHORT).show();
-        }
+        // TextView idView = (TextView) v.findViewById(R.id.row_id);
+        //
+        // long postId;
+        //
+        // try {
+        // postId = Long.parseLong(idView.getText().toString());
+        //
+        // Intent intent = new Intent(getActivity(), PostDetailActivity.class);
+        // intent.putExtra(postIdValue, postId);
+        // startActivity(intent);
+        //
+        // } catch (NumberFormatException e) {
+        // Toast.makeText(getActivity(), "Invalid Post", Toast.LENGTH_SHORT).show();
+        // }
     }
 }
