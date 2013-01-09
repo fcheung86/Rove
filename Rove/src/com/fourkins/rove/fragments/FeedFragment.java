@@ -52,6 +52,9 @@ public class FeedFragment extends ListFragment {
         super.onResume();
 
         loadFromLocal();
+
+        getListView().setDivider(null);
+        getListView().setDividerHeight(0);
     }
 
     @Override
