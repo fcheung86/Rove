@@ -27,7 +27,7 @@ public class LoginActivity extends Activity {
      * A dummy authentication store containing known user names and passwords. TODO: remove after connecting to a real
      * authentication system.
      */
-    private static final String[] DUMMY_CREDENTIALS = new String[] { "mark.sk.ho@gmail.com:password:Mark", "iceheat710@gmail.com:password:Faggot",
+    private static final String[] DUMMY_CREDENTIALS = new String[] { "mark.sk.ho@gmail.com:password:Mark", "iceheat710@gmail.com:password:Justin",
             "fcheung86@gmail.com:password:Farran", "pthieu@gmail.com:faggot:Phong" };
     private AppPreferences mAppPrefs;
     private String userName = "";
