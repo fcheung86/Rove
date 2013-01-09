@@ -1,16 +1,27 @@
 package com.fourkins.rove.fragments;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.app.Activity;
 import android.database.Cursor;
+import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.support.v4.widget.SimpleCursorAdapter;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
 import com.fourkins.rove.R;
+import com.fourkins.rove.application.Rove;
 import com.fourkins.rove.sqlite.PostsSQLiteHelper;
+import com.fourkins.rove.sqlite.posts.Post;
 import com.fourkins.rove.sqlite.posts.PostsManager;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
 
 /**
  * "Feed" Tab (under Main Screen) Displays list of posts for a given area.
@@ -32,18 +43,15 @@ public class FeedFragment extends ListFragment {
     }
 
     @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_feed, container, false);
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
 
-        Cursor postCursor = mPostsManager.getAllPostsCursor();
-
-        String[] from = new String[] { PostsSQLiteHelper.COLUMN_ID, PostsSQLiteHelper.COLUMN_MESSAGE, PostsSQLiteHelper.COLUMN_LATITUDE,
-                PostsSQLiteHelper.COLUMN_USER_NAME, PostsSQLiteHelper.COLUMN_LONGITUDE };
-        int[] to = new int[] { R.id.row_id, R.id.row_message, R.id.row_latitude, R.id.row_username, R.id.row_longitude };
-
-        ListAdapter adapter = new SimpleCursorAdapter(getActivity(), R.layout.list_feed_row, postCursor, from, to, 0);
-
-        setListAdapter(adapter);
+        loadFromLocal();
     }
 
     @Override
@@ -71,4 +79,42 @@ public class FeedFragment extends ListFragment {
         // Toast.makeText(getActivity(), "Invalid Post", Toast.LENGTH_SHORT).show();
         // }
     }
+
+    public void loadFromLocal() {
+        Cursor postCursor = mPostsManager.getAllPostsCursor();
+
+        String[] from = new String[] { PostsSQLiteHelper.COLUMN_ID, PostsSQLiteHelper.COLUMN_MESSAGE, PostsSQLiteHelper.COLUMN_LATITUDE,
+                PostsSQLiteHelper.COLUMN_USER_NAME, PostsSQLiteHelper.COLUMN_LONGITUDE };
+        int[] to = new int[] { R.id.row_id, R.id.row_message, R.id.row_latitude, R.id.row_username, R.id.row_longitude };
+
+        ListAdapter adapter = new SimpleCursorAdapter(getActivity(), R.layout.list_feed_row, postCursor, from, to, 0);
+
+        setListAdapter(adapter);
+    }
+
+    public void loadFromServer() {
+        AsyncHttpClient client = new AsyncHttpClient();
+
+        // POSTs to the specified URL with the entity, with text/plain as the content type
+        client.get(Rove.SERVER_BASE_URL + "/posts?lat=44&lng=44&dist=200", new AsyncHttpResponseHandler() {
+
+            @Override
+            public void onSuccess(String response) {
+                // this is the async callback
+                try {
+                    JSONArray jsonArray = new JSONArray(response);
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject jsonObject = jsonArray.getJSONObject(i);
+                        Post post = new Post(jsonObject);
+
+                        // TODO fill out the listview with these posts
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+        });
+    }
+
 }
