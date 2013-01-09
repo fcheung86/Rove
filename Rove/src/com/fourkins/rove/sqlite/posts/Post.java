@@ -18,6 +18,19 @@ public class Post {
 
     }
 
+    public Post(JSONObject jsonObject) {
+        try {
+            long postId = jsonObject.getLong("postId");
+            long userId = jsonObject.getLong("userId");
+            double lat = jsonObject.getDouble("latitude");
+            double lng = jsonObject.getDouble("longitude");
+            String message = jsonObject.getString("message");
+            String time = jsonObject.getString("timestamp");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
     public Post(long id, String name, double latitude, double longitude, String message, Timestamp timestamp) {
         super();
         this.id = id;

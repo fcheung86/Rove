@@ -7,6 +7,8 @@
     <string name="map_section">Map</string>
     <string name="menu_settings">Settings</string>
     <string name="menu_add">Add</string>
+    <string name="local">Local</string>
+    <string name="server">Server</string>
     <color name="grey">#626363</color>
     <color name="white">#ffffffff</color>
     
@@ -17,7 +19,7 @@
     <string name="justin">Justin</string>
     <string name="mark">Mark</string>
     <string name="phong">Phong</string>
-    
+
     <!-- activity_new_post.xml -->
     <string name="username">Username:</string>
     <string name="lat">Latitude:</string>
@@ -26,7 +28,7 @@
     <string name="submit">Submit</string>
     <string name="submit_to_server">Submit to Server</string>
     <string name="get_location">Get Location</string>
-    
+
     <!-- list_feed_row.xml -->
     <string name="ic_pin">Pin Icon</string>
     <string name="menu_logout">Logout</string>
