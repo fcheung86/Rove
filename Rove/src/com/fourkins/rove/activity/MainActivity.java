@@ -3,6 +3,7 @@ package com.fourkins.rove.activity;
 import android.app.ActionBar;
 import android.app.FragmentTransaction;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
@@ -42,8 +43,10 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 
         // Set up the action bar to show tabs.
         final ActionBar actionBar = getActionBar();
+        actionBar.setStackedBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.grey_background)));
+        actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.black)));
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-
+        
         // For each of the sections in the app, add a tab to the action bar.
         actionBar.addTab(actionBar.newTab().setText(R.string.feed_section).setTabListener(this));
         actionBar.addTab(actionBar.newTab().setText(R.string.map_section).setTabListener(this));
