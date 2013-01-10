@@ -9,7 +9,7 @@ public class Post {
 
     private long postId;
     private long userId;
-    private String userName;
+    private String username;
     private double latitude;
     private double longitude;
     private String message;
@@ -23,6 +23,7 @@ public class Post {
         try {
             postId = jsonObject.getLong("postId");
             userId = jsonObject.getLong("userId");
+            username = jsonObject.getString("username");
             latitude = jsonObject.getDouble("latitude");
             longitude = jsonObject.getDouble("longitude");
             message = jsonObject.getString("message");
@@ -35,16 +36,16 @@ public class Post {
     public Post(long postId, String userName, double latitude, double longitude, String message, Timestamp timestamp) {
         super();
         this.postId = postId;
-        this.userName = userName;
+        this.username = userName;
         this.latitude = latitude;
         this.longitude = longitude;
         this.message = message;
         this.timestamp = timestamp;
     }
 
-    public Post(String userName, double latitude, double longitude, String message, Timestamp timestamp) {
+    public Post(String username, double latitude, double longitude, String message, Timestamp timestamp) {
         super();
-        this.userName = userName;
+        this.username = username;
         this.latitude = latitude;
         this.longitude = longitude;
         this.message = message;
@@ -67,12 +68,12 @@ public class Post {
         return userId;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public double getLatitude() {
@@ -128,7 +129,7 @@ public class Post {
 
         sb.append("postId=").append(postId);
         sb.append(", userId=").append(userId);
-        sb.append(", userName=").append(userName);
+        sb.append(", userName=").append(username);
         sb.append(", latitude=").append(latitude);
         sb.append(", longitude=").append(longitude);
         sb.append(", message=").append(message);

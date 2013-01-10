@@ -38,7 +38,7 @@ public class PostsDataSource {
     public void insertPost(Post post) {
         ContentValues values = new ContentValues();
 
-        values.put(PostsSQLiteHelper.COLUMN_USER_NAME, post.getUserName());
+        values.put(PostsSQLiteHelper.COLUMN_USER_NAME, post.getUsername());
         values.put(PostsSQLiteHelper.COLUMN_LATITUDE, post.getLatitude());
         values.put(PostsSQLiteHelper.COLUMN_LONGITUDE, post.getLongitude());
         values.put(PostsSQLiteHelper.COLUMN_MESSAGE, post.getMessage());
@@ -88,7 +88,7 @@ public class PostsDataSource {
         Post post = new Post();
 
         post.setPostId(cursor.getLong(0));
-        post.setUserName(cursor.getString(1));
+        post.setUsername(cursor.getString(1));
         post.setLatitude(cursor.getDouble(2));
         post.setLongitude(cursor.getDouble(3));
         post.setMessage(cursor.getString(4));

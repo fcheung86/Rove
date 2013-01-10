@@ -8,19 +8,16 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
-import android.database.Cursor;
 import android.support.v4.app.ListFragment;
-import android.support.v4.widget.SimpleCursorAdapter;
 import android.view.View;
 import android.widget.AbsListView;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 
 import com.fourkins.rove.R;
 import com.fourkins.rove.application.Rove;
 import com.fourkins.rove.posts.Post;
+import com.fourkins.rove.posts.PostAdapter;
 import com.fourkins.rove.posts.PostsManager;
-import com.fourkins.rove.posts.PostsSQLiteHelper;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 
@@ -93,14 +90,8 @@ public class FeedFragment extends ListFragment {
     }
 
     public void loadFromLocal() {
-        Cursor postCursor = mPostsManager.getAllPostsCursor();
-
-        String[] from = new String[] { PostsSQLiteHelper.COLUMN_ID, PostsSQLiteHelper.COLUMN_MESSAGE, PostsSQLiteHelper.COLUMN_LATITUDE,
-                PostsSQLiteHelper.COLUMN_USER_NAME, PostsSQLiteHelper.COLUMN_LONGITUDE };
-        int[] to = new int[] { R.id.row_id, R.id.row_message, R.id.row_latitude, R.id.row_username, R.id.row_longitude };
-
-        ListAdapter adapter = new SimpleCursorAdapter(getActivity(), R.layout.list_feed_row, postCursor, from, to, 0);
-
+        List<Post> posts = mPostsManager.getAllPosts();
+        PostAdapter adapter = new PostAdapter(getActivity(), R.layout.list_feed_row, posts);
         setListAdapter(adapter);
     }
 
@@ -126,7 +117,8 @@ public class FeedFragment extends ListFragment {
                     e.printStackTrace();
                 }
 
-                // TODO make a new ArrayAdapter for the posts
+                PostAdapter adapter = new PostAdapter(getActivity(), R.layout.list_feed_row, posts);
+                setListAdapter(adapter);
             }
 
         });

@@ -61,7 +61,7 @@ public class PostDetailActivity extends FragmentActivity {
                 final TextView latitudeDisplay = (TextView) findViewById(R.id.detail_latitude_display);
                 final TextView longitudeDisplay = (TextView) findViewById(R.id.detail_longitude_display);
                 final TextView comment = (TextView) findViewById(R.id.detail_message_display);
-                user.setText(post.getUserName());
+                user.setText(post.getUsername());
                 latitudeDisplay.setText(Double.toString(post.getLatitude()));
                 longitudeDisplay.setText(Double.toString(post.getLongitude()));
                 comment.setText(post.getMessage());
