@@ -6,12 +6,9 @@ import org.json.JSONObject;
 
 import android.app.Activity;
 import android.database.Cursor;
-import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.support.v4.widget.SimpleCursorAdapter;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -46,11 +43,6 @@ public class FeedFragment extends ListFragment {
         footerView = new View(this.getActivity().getApplicationContext());
         AbsListView.LayoutParams lp = new AbsListView.LayoutParams(0, 0);
         footerView.setLayoutParams(lp);
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_feed, container, false);
     }
 
     @Override

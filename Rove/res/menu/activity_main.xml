@@ -6,6 +6,16 @@
         android:showAsAction="ifRoom|withText"
         android:title="@string/menu_add"/>
     <item
+        android:id="@+id/menu_load_local"
+        android:orderInCategory="80"
+        android:showAsAction="never"
+        android:title="@string/local"/>
+    <item
+        android:id="@+id/menu_load_server"
+        android:orderInCategory="80"
+        android:showAsAction="never"
+        android:title="@string/server"/>
+    <item
         android:id="@+id/menu_settings"
         android:orderInCategory="90"
         android:showAsAction="never"

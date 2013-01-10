@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 
@@ -83,12 +82,22 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
             Intent intent = new Intent(this, NewPostActivity.class);
             startActivity(intent);
             return true;
+
         case R.id.menu_logout: // Logout: Simply remove AppPreference "user", and redirect back to login screen
             mAppPrefs.saveUser("");
             Intent loginIntent = new Intent(MainActivity.this, com.fourkins.rove.activity.LoginActivity.class);
             finish();
             startActivity(loginIntent);
             return true;
+
+        case R.id.menu_load_local:
+            mFeedFragment.loadFromLocal();
+            return true;
+
+        case R.id.menu_load_server:
+            mFeedFragment.loadFromServer();
+            return true;
+
         default:
             return super.onOptionsItemSelected(item);
         }
@@ -129,14 +138,6 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 
     @Override
     public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
-    }
-
-    public void loadFromLocal(View view) {
-        mFeedFragment.loadFromLocal();
-    }
-
-    public void loadFromServer(View view) {
-        mFeedFragment.loadFromServer();
     }
 
 }
