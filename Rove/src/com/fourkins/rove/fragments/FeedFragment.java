@@ -1,5 +1,8 @@
 package com.fourkins.rove.fragments;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -110,17 +113,20 @@ public class FeedFragment extends ListFragment {
             @Override
             public void onSuccess(String response) {
                 // this is the async callback
+                List<Post> posts = new ArrayList<Post>();
+
                 try {
                     JSONArray jsonArray = new JSONArray(response);
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
                         Post post = new Post(jsonObject);
-
-                        // TODO fill out the listview with these posts
+                        posts.add(post);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+
+                // TODO make a new ArrayAdapter for the posts
             }
 
         });
