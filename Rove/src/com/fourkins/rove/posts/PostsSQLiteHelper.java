@@ -1,4 +1,4 @@
-package com.fourkins.rove.sqlite;
+package com.fourkins.rove.posts;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

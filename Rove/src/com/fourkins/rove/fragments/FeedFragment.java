@@ -18,9 +18,9 @@ import android.widget.ListView;
 
 import com.fourkins.rove.R;
 import com.fourkins.rove.application.Rove;
-import com.fourkins.rove.sqlite.PostsSQLiteHelper;
-import com.fourkins.rove.sqlite.posts.Post;
-import com.fourkins.rove.sqlite.posts.PostsManager;
+import com.fourkins.rove.posts.Post;
+import com.fourkins.rove.posts.PostsManager;
+import com.fourkins.rove.posts.PostsSQLiteHelper;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 

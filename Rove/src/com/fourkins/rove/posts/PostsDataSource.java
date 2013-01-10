@@ -1,4 +1,4 @@
-package com.fourkins.rove.sqlite;
+package com.fourkins.rove.posts;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -10,7 +10,6 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.fourkins.rove.sqlite.posts.Post;
 
 public class PostsDataSource {
 

@@ -1,11 +1,10 @@
-package com.fourkins.rove.sqlite.posts;
+package com.fourkins.rove.posts;
 
 import java.util.List;
 
 import android.content.Context;
 import android.database.Cursor;
 
-import com.fourkins.rove.sqlite.PostsDataSource;
 
 public class PostsManager {
 

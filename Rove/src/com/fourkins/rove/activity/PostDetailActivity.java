@@ -7,8 +7,8 @@ import android.widget.TextView;
 
 import com.fourkins.rove.R;
 import com.fourkins.rove.fragments.FeedFragment;
-import com.fourkins.rove.sqlite.posts.Post;
-import com.fourkins.rove.sqlite.posts.PostsManager;
+import com.fourkins.rove.posts.Post;
+import com.fourkins.rove.posts.PostsManager;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;

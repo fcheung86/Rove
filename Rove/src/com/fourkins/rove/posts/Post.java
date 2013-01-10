@@ -1,4 +1,4 @@
-package com.fourkins.rove.sqlite.posts;
+package com.fourkins.rove.posts;
 
 import java.sql.Timestamp;
 
