@@ -57,29 +57,17 @@ public class FeedFragment extends ListFragment {
     public void onResume() {
         super.onResume();
 
-        Cursor postCursor = mPostsManager.getAllPostsCursor();
-
-        String[] from = new String[] { PostsSQLiteHelper.COLUMN_ID, PostsSQLiteHelper.COLUMN_MESSAGE, PostsSQLiteHelper.COLUMN_LATITUDE,
-                PostsSQLiteHelper.COLUMN_USER_NAME, PostsSQLiteHelper.COLUMN_LONGITUDE };
-        int[] to = new int[] { R.id.row_id, R.id.row_message, R.id.row_latitude, R.id.row_username, R.id.row_longitude };
-
-        ListAdapter adapter = new SimpleCursorAdapter(getActivity(), R.layout.list_feed_row, postCursor, from, to, 0);
-
         getListView().setDivider(null);
         getListView().setDividerHeight(0);
 
         getListView().addFooterView(footerView);
 
-        setListAdapter(adapter);
-
+        loadFromLocal();
     }
 
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
-
-        // when the list item is clicked, smooth scroll to the top with 10 pixels of spacing from the top
-        // and also take 50ms to animate the scroll
 
         if (position < 2) {
             footerView.setLayoutParams(new AbsListView.LayoutParams(0, 0)); // footer temporarily "removed" here (proof
@@ -89,7 +77,7 @@ public class FeedFragment extends ListFragment {
             footerView.setLayoutParams(new AbsListView.LayoutParams(0, 1400)); // Arbitrary large height, but should be
                                                                                // "smarter" to get screen height
         }
-        this.getListView().smoothScrollToPositionFromTop(position, 10, 50);
+        this.getListView().smoothScrollToPositionFromTop(position, 0, 250);
 
         // commented out the code below, so it won't open the post detail screen
 

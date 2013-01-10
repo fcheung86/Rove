@@ -9,8 +9,8 @@
     <string name="menu_add">Add</string>
     <string name="local">Local</string>
     <string name="server">Server</string>
-    <color name="grey">#626363</color>
-    <color name="white">#ffffffff</color>
+    <color name="grey_background">#E5E5E5</color>
+    <color name="feed_item">#ffffff</color>
     
     <!-- activity_splash_screen.xml -->
     <string name="rove_logo">Logo</string>
