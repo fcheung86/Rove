@@ -1,17 +1,17 @@
 package com.fourkins.rove.fragments;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
 import android.database.Cursor;
-import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.support.v4.widget.SimpleCursorAdapter;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -46,11 +46,6 @@ public class FeedFragment extends ListFragment {
         footerView = new View(this.getActivity().getApplicationContext());
         AbsListView.LayoutParams lp = new AbsListView.LayoutParams(0, 0);
         footerView.setLayoutParams(lp);
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_feed, container, false);
     }
 
     @Override
@@ -118,17 +113,20 @@ public class FeedFragment extends ListFragment {
             @Override
             public void onSuccess(String response) {
                 // this is the async callback
+                List<Post> posts = new ArrayList<Post>();
+
                 try {
                     JSONArray jsonArray = new JSONArray(response);
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
                         Post post = new Post(jsonObject);
-
-                        // TODO fill out the listview with these posts
+                        posts.add(post);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+
+                // TODO make a new ArrayAdapter for the posts
             }
 
         });

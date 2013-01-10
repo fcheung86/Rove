@@ -88,7 +88,7 @@ public class PostsDataSource {
     private Post cursorToPost(Cursor cursor) {
         Post post = new Post();
 
-        post.setId(cursor.getLong(0));
+        post.setPostId(cursor.getLong(0));
         post.setUserName(cursor.getString(1));
         post.setLatitude(cursor.getDouble(2));
         post.setLongitude(cursor.getDouble(3));

@@ -7,7 +7,8 @@ import org.json.JSONObject;
 
 public class Post {
 
-    private long id;
+    private long postId;
+    private long userId;
     private String userName;
     private double latitude;
     private double longitude;
@@ -20,50 +21,58 @@ public class Post {
 
     public Post(JSONObject jsonObject) {
         try {
-            long postId = jsonObject.getLong("postId");
-            long userId = jsonObject.getLong("userId");
-            double lat = jsonObject.getDouble("latitude");
-            double lng = jsonObject.getDouble("longitude");
-            String message = jsonObject.getString("message");
-            String time = jsonObject.getString("timestamp");
+            postId = jsonObject.getLong("postId");
+            userId = jsonObject.getLong("userId");
+            latitude = jsonObject.getDouble("latitude");
+            longitude = jsonObject.getDouble("longitude");
+            message = jsonObject.getString("message");
+            timestamp = new Timestamp(jsonObject.getLong("timestamp"));
         } catch (JSONException e) {
             e.printStackTrace();
         }
     }
 
-    public Post(long id, String name, double latitude, double longitude, String message, Timestamp timestamp) {
+    public Post(long postId, String userName, double latitude, double longitude, String message, Timestamp timestamp) {
         super();
-        this.id = id;
-        this.userName = name;
+        this.postId = postId;
+        this.userName = userName;
         this.latitude = latitude;
         this.longitude = longitude;
         this.message = message;
         this.timestamp = timestamp;
     }
 
-    public Post(String name, double latitude, double longitude, String message, Timestamp timestamp) {
+    public Post(String userName, double latitude, double longitude, String message, Timestamp timestamp) {
         super();
-        this.userName = name;
+        this.userName = userName;
         this.latitude = latitude;
         this.longitude = longitude;
         this.message = message;
         this.timestamp = timestamp;
     }
 
-    public long getId() {
-        return id;
+    public long getPostId() {
+        return postId;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setPostId(long postId) {
+        this.postId = postId;
+    }
+
+    public void setUserId(long userId) {
+        this.userId = userId;
+    }
+
+    public long getUserId() {
+        return userId;
     }
 
     public String getUserName() {
         return userName;
     }
 
-    public void setUserName(String name) {
-        this.userName = name;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public double getLatitude() {
@@ -117,11 +126,13 @@ public class Post {
     public String toString() {
         StringBuilder sb = new StringBuilder();
 
-        sb.append("UserName=").append(userName);
-        sb.append(", Latitude=").append(latitude);
-        sb.append(", Longitude=").append(longitude);
-        sb.append(", Message=").append(message);
-        sb.append(", Timestamp=").append(timestamp);
+        sb.append("postId=").append(postId);
+        sb.append(", userId=").append(userId);
+        sb.append(", userName=").append(userName);
+        sb.append(", latitude=").append(latitude);
+        sb.append(", longitude=").append(longitude);
+        sb.append(", message=").append(message);
+        sb.append(", timestamp=").append(timestamp);
 
         return sb.toString();
     }
