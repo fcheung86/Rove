@@ -8,6 +8,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
+import android.location.Location;
 import android.support.v4.app.ListFragment;
 import android.view.View;
 import android.widget.AbsListView;
@@ -18,6 +19,7 @@ import com.fourkins.rove.application.Rove;
 import com.fourkins.rove.posts.Post;
 import com.fourkins.rove.posts.PostAdapter;
 import com.fourkins.rove.posts.PostsManager;
+import com.fourkins.rove.util.LocationUtil;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 
@@ -98,8 +100,12 @@ public class FeedFragment extends ListFragment {
     public void loadFromServer() {
         AsyncHttpClient client = new AsyncHttpClient();
 
+        Location loc = LocationUtil.getInstance(getActivity()).getCurrentLocation();
+        double lat = loc.getLatitude();
+        double lng = loc.getLongitude();
+
         // POSTs to the specified URL with the entity, with text/plain as the content type
-        client.get(Rove.SERVER_BASE_URL + "/posts?lat=44&lng=44&dist=200", new AsyncHttpResponseHandler() {
+        client.get(Rove.SERVER_BASE_URL + "/posts?lat=" + lat + "&lng=" + lng + "&dist=200", new AsyncHttpResponseHandler() {
 
             @Override
             public void onSuccess(String response) {
@@ -117,11 +123,12 @@ public class FeedFragment extends ListFragment {
                     e.printStackTrace();
                 }
 
-                PostAdapter adapter = new PostAdapter(getActivity(), R.layout.list_feed_row, posts);
-                setListAdapter(adapter);
+                if (getActivity() != null) {
+                    PostAdapter adapter = new PostAdapter(getActivity(), R.layout.list_feed_row, posts);
+                    setListAdapter(adapter);
+                }
             }
 
         });
     }
-
 }
