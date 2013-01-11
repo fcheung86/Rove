@@ -9,4 +9,5 @@
     <color name="grey_shadow">#D5D5D5</color>
     <color name="feed_item">#ffffff</color>
     <color name="tab_text_colour">#282e30</color>
+    <color name="stacked_background">#B5B5B5</color>
 </resources>
