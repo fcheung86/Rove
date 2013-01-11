@@ -20,14 +20,11 @@ import com.google.android.gms.maps.SupportMapFragment;
 /**
  * Main Screen for the app.
  * 
- * Contains two tabs:
- * - Feed: Displays lists of posts from other users, in a given area
- * - Map: Displays the Map (powered by Google Map) and plots "pins" for other users' posts
+ * Contains two tabs: - Feed: Displays lists of posts from other users, in a given area - Map: Displays the Map (powered
+ * by Google Map) and plots "pins" for other users' posts
  * 
- * Also configures menu option:
- * - Add: Add new posts for current location (shows on Action Bar)
- * - Logout: Log out from current user, redirects to login screen (sub-menu)
- * - Settings (sub-menu)
+ * Also configures menu option: - Add: Add new posts for current location (shows on Action Bar) - Logout: Log out from
+ * current user, redirects to login screen (sub-menu) - Settings (sub-menu)
  */
 public class MainActivity extends FragmentActivity implements ActionBar.TabListener {
 
@@ -38,6 +35,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
     private AppPreferences mAppPrefs;
 
     private FeedFragment mFeedFragment;
+    private SupportMapFragment mMapFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,9 +50,19 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.tab_text_colour)));
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
+        // Create instances of each fragment, and hide them
+        mFeedFragment = new FeedFragment();
+        getSupportFragmentManager().beginTransaction().replace(R.id.container, mFeedFragment).commit();
+
+        mMapFragment = new MapFragment();
+        getSupportFragmentManager().beginTransaction().add(R.id.container, mMapFragment).hide(mMapFragment).commit();
+
         // For each of the sections in the app, add a tab to the action bar.
+        // IMPORTANT: Must be done AFTER instantiating Fragments; these will trigger onTabSelected which references the
+        // Fragments
         actionBar.addTab(actionBar.newTab().setText(R.string.feed_section).setTabListener(this));
         actionBar.addTab(actionBar.newTab().setText(R.string.map_section).setTabListener(this));
+
     }
 
     protected void onStart() {
@@ -127,12 +135,15 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
             mapLayout.setLayoutParams(mapParams);
             linearLayout.setLayoutParams(params);
 
-            mFeedFragment = new FeedFragment();
-            getSupportFragmentManager().beginTransaction().replace(R.id.container, mFeedFragment).commit();
+            // FragmentTransaction can be done in one line
+            getSupportFragmentManager().beginTransaction().show(mFeedFragment).hide(mMapFragment).commit();
             break;
         case 1: // "Map"
-            SupportMapFragment mapFragment = new MapFragment();
-            getSupportFragmentManager().beginTransaction().replace(R.id.container, mapFragment).commit();
+            // FragmentTransaction can be done on separate lines
+            android.support.v4.app.FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.hide(mFeedFragment);
+            ft.show(mMapFragment);
+            ft.commit();
             break;
         default:
             return;
