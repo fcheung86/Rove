@@ -25,7 +25,6 @@ import com.loopj.android.http.AsyncHttpResponseHandler;
 
 /**
  * "Feed" Tab (under Main Screen) Displays list of posts for a given area.
- * 
  */
 public class FeedFragment extends ListFragment {
 
@@ -93,7 +92,7 @@ public class FeedFragment extends ListFragment {
 
     public void loadFromLocal() {
         List<Post> posts = mPostsManager.getAllPosts();
-        PostAdapter adapter = new PostAdapter(getActivity(), R.layout.list_feed_row, posts);
+        PostAdapter adapter = new PostAdapter(getActivity(), R.layout.feedfragment_listview_item, posts);
         setListAdapter(adapter);
     }
 
@@ -124,7 +123,7 @@ public class FeedFragment extends ListFragment {
                 }
 
                 if (getActivity() != null) {
-                    PostAdapter adapter = new PostAdapter(getActivity(), R.layout.list_feed_row, posts);
+                    PostAdapter adapter = new PostAdapter(getActivity(), R.layout.feedfragment_listview_item, posts);
                     setListAdapter(adapter);
                 }
             }

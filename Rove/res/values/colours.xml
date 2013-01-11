@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Generic colours -->
+    <color name="white">#ffffff</color>
+
+    <!-- UI elements colours -->
+    <color name="grey_background">#E5E5E5</color>
+    <color name="grey_shadow">#D5D5D5</color>
+    <color name="feed_item">#ffffff</color>
+    <color name="tab_text_colour">#282e30</color>
+</resources>

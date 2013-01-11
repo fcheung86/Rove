@@ -5,7 +5,6 @@ import java.util.List;
 import android.content.Context;
 import android.database.Cursor;
 
-
 public class PostsManager {
 
     private PostsDataSource ds;

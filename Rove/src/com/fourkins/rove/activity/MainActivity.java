@@ -18,11 +18,16 @@ import com.fourkins.rove.fragments.MapFragment;
 import com.google.android.gms.maps.SupportMapFragment;
 
 /**
- * Main Screen for the app. Contains two tabs: - Feed: Displays lists of posts from other users, in a given area - Map:
- * Displays the Map (powered by Google Map) and plots "pins" for other users' posts
+ * Main Screen for the app.
  * 
- * Also configures menu option - Add: Add new posts for current location (shows on Action Bar) - Logout: Log out from
- * current user, redirects to login screen (sub-menu) - Settings (sub-menu)
+ * Contains two tabs:
+ * - Feed: Displays lists of posts from other users, in a given area
+ * - Map: Displays the Map (powered by Google Map) and plots "pins" for other users' posts
+ * 
+ * Also configures menu option:
+ * - Add: Add new posts for current location (shows on Action Bar)
+ * - Logout: Log out from current user, redirects to login screen (sub-menu)
+ * - Settings (sub-menu)
  */
 public class MainActivity extends FragmentActivity implements ActionBar.TabListener {
 
@@ -44,9 +49,9 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         // Set up the action bar to show tabs.
         final ActionBar actionBar = getActionBar();
         actionBar.setStackedBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.grey_background)));
-        actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.black)));
+        actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.tab_text_colour)));
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-        
+
         // For each of the sections in the app, add a tab to the action bar.
         actionBar.addTab(actionBar.newTab().setText(R.string.feed_section).setTabListener(this));
         actionBar.addTab(actionBar.newTab().setText(R.string.map_section).setTabListener(this));

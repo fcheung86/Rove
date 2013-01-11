@@ -14,50 +14,4 @@
         android:contentDescription="@string/rove_logo"
         android:src="@drawable/splash" />
 
-    <TextView
-        android:id="@+id/brought_to_you"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/author1"
-        android:layout_centerHorizontal="true"
-        android:text="@string/brought_to_you_by"
-        android:textColor="#ffffffff" />
-
-    <TextView
-        android:id="@+id/author1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/author2"
-        android:layout_centerHorizontal="true"
-        android:text="@string/farran"
-        android:textColor="#ffffffff" />
-
-    <TextView
-        android:id="@+id/author2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/author3"
-        android:layout_centerHorizontal="true"
-        android:text="@string/justin"
-        android:textColor="#ffffffff" />
-
-    <TextView
-        android:id="@+id/author3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/author4"
-        android:layout_centerHorizontal="true"
-        android:text="@string/mark"
-        android:textColor="#ffffffff" />
-
-    <TextView
-        android:id="@+id/author4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/author2"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="20dp"
-        android:text="@string/phong"
-        android:textColor="#ffffffff" />
-
-</RelativeLayout>
+</RelativeLayout>
