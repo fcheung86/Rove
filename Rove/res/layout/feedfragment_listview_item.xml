@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/grey_background"
+    android:orientation="vertical"
+    android:paddingLeft="8dp"
+    android:paddingRight="8dp"
+    android:paddingBottom="4dp"
+    android:paddingTop="4dp"  >
+	
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/post_shadow"
+        android:orientation="vertical"
+        android:paddingBottom="2dp"
+        android:paddingRight="2dp" >
+	        
+	    <LinearLayout
+	        xmlns:android="http://schemas.android.com/apk/res/android"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:background="@drawable/post_shape"
+	        android:orientation="vertical"
+	        android:paddingBottom="8dp"
+	        android:paddingRight="8dp"
+	        android:paddingTop="8dp"
+	        android:weightSum="1" >
+	
+	        <TextView
+	            android:id="@+id/row_id"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:visibility="gone" />
+	
+	        <ImageView
+	            android:id="@+id/ic_pin"
+	            android:layout_width="fill_parent"
+	            android:layout_height="48dp"
+	            android:orientation="vertical"
+	            android:layout_marginLeft="5dp"
+	            android:contentDescription="@string/ic_pin"
+	            android:src="@drawable/ic_pin"
+	            android:layout_weight="0.60" >
+	        </ImageView>
+	
+	        <LinearLayout
+	            xmlns:android="http://schemas.android.com/apk/res/android"
+	            android:layout_width="fill_parent"
+	            android:layout_height="wrap_content"
+	            android:orientation="vertical"
+	            android:layout_weight="0.30" >
+	
+	            <LinearLayout
+	                xmlns:android="http://schemas.android.com/apk/res/android"
+	                android:layout_width="fill_parent"
+	                android:layout_height="wrap_content"
+	                android:orientation="vertical" >
+	
+	                <TextView
+	                    android:id="@+id/row_username"
+	                    android:layout_width="fill_parent"
+	                    android:layout_height="0dp"
+	                    android:layout_marginLeft="5dp"
+	                    android:layout_weight="1"
+	                    android:textColor="#AFAFAF"
+	                    android:textSize="18sp"
+	                    android:hint="@string/username" />
+					
+	                <LinearLayout
+		                xmlns:android="http://schemas.android.com/apk/res/android"
+		                android:layout_width="fill_parent"
+		                android:layout_height="wrap_content"
+		                android:orientation="horizontal"
+		                android:layout_marginLeft="5dp" >
+	                
+	                    <TextView
+		                    android:id="@+id/row_distance_name"
+		                    android:layout_width="wrap_content"
+		                    android:layout_height="wrap_content"
+		                    android:text="@string/row_distance_name"
+		                    android:textColor="#AFAFAF"
+		                    android:textSize="18sp"
+		                    android:orientation="horizontal" />
+	                    
+	                    <TextView
+		                    android:id="@+id/row_distance"
+		                    android:layout_width="wrap_content"
+		                    android:layout_height="wrap_content"
+		                    android:hint="number"
+		                    android:textColor="#AFAFAF"
+		                    android:textSize="18sp"
+		                    android:orientation="horizontal" />
+	                    
+	                </LinearLayout>
+	                
+	                <LinearLayout
+		                xmlns:android="http://schemas.android.com/apk/res/android"
+		                android:layout_width="fill_parent"
+		                android:layout_height="wrap_content"
+		                android:orientation="horizontal"
+		                android:layout_marginLeft="5dp" >
+	                
+	                    <TextView
+		                    android:id="@+id/row_address_name"
+		                    android:layout_width="wrap_content"
+		                    android:layout_height="wrap_content"
+		                    android:text="@string/row_address_name"
+		                    android:textColor="#AFAFAF"
+		                    android:textSize="18sp"
+		                    android:orientation="horizontal" />
+	                    
+	                    <TextView
+		                    android:id="@+id/row_address"
+		                    android:layout_width="wrap_content"
+		                    android:layout_height="wrap_content"
+		                    android:hint="address name"
+		                    android:textColor="#AFAFAF"
+		                    android:textSize="18sp"
+		                    android:orientation="horizontal" />
+	                    
+	                </LinearLayout>  
+	                
+	            </LinearLayout>
+	            
+	            <TextView
+	                android:id="@+id/row_message"
+	                android:layout_width="fill_parent"
+	                android:layout_height="wrap_content"
+	                android:layout_marginLeft="5dp"
+	                android:textSize="20sp"
+	                android:hint="@string/msg" />
+	            
+	        </LinearLayout>
+    	</LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

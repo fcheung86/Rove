@@ -91,15 +91,17 @@ public class FeedFragment extends ListFragment {
     }
 
     public void loadFromLocal() {
+        
+        Location currentLocation = LocationUtil.getInstance(getActivity()).getCurrentLocation();
         List<Post> posts = mPostsManager.getAllPosts();
-        PostAdapter adapter = new PostAdapter(getActivity(), R.layout.feedfragment_listview_item, posts);
+        PostAdapter adapter = new PostAdapter(getActivity(), R.layout.feedfragment_listview_item, posts, currentLocation);
         setListAdapter(adapter);
     }
 
     public void loadFromServer() {
         AsyncHttpClient client = new AsyncHttpClient();
 
-        Location loc = LocationUtil.getInstance(getActivity()).getCurrentLocation();
+        final Location loc = LocationUtil.getInstance(getActivity()).getCurrentLocation();
         double lat = loc.getLatitude();
         double lng = loc.getLongitude();
 
@@ -123,7 +125,7 @@ public class FeedFragment extends ListFragment {
                 }
 
                 if (getActivity() != null) {
-                    PostAdapter adapter = new PostAdapter(getActivity(), R.layout.feedfragment_listview_item, posts);
+                    PostAdapter adapter = new PostAdapter(getActivity(), R.layout.feedfragment_listview_item, posts, loc);
                     setListAdapter(adapter);
                 }
             }
