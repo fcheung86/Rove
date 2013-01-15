@@ -4,6 +4,7 @@ import android.app.ActionBar;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -36,6 +37,8 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
     private FeedFragment mFeedFragment;
     private SupportMapFragment mMapFragment;
 
+    private Fragment mSelectedFragment;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +53,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 
         // Create instances of each fragment, and hide them
         mFeedFragment = new FeedFragment();
+        mSelectedFragment = mFeedFragment;
         getSupportFragmentManager().beginTransaction().replace(R.id.container, mFeedFragment).commit();
 
         mMapFragment = new MapFragment();
@@ -105,11 +109,21 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
             return true;
 
         case R.id.menu_load_local:
-            mFeedFragment.loadFromLocal();
+            if (mSelectedFragment instanceof FeedFragment) {
+                ((FeedFragment) mSelectedFragment).loadFromLocal();
+            } else if (mSelectedFragment instanceof MapFragment) {
+                ((MapFragment) mSelectedFragment).loadFromLocal();
+            }
+
             return true;
 
         case R.id.menu_load_server:
-            mFeedFragment.loadFromServer();
+            if (mSelectedFragment instanceof FeedFragment) {
+                ((FeedFragment) mSelectedFragment).loadFromServer();
+            } else if (mSelectedFragment instanceof MapFragment) {
+                ((MapFragment) mSelectedFragment).loadFromServer();
+            }
+
             return true;
 
         default:
@@ -133,16 +147,17 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
             mapLayout.setLayoutParams(mapParams);
             linearLayout.setLayoutParams(params);
 
-            // FragmentTransaction can be done in one line
             getSupportFragmentManager().beginTransaction().show(mFeedFragment).hide(mMapFragment).commit();
+
+            mSelectedFragment = mFeedFragment;
             break;
+
         case 1: // "Map"
-            // FragmentTransaction can be done on separate lines
-            android.support.v4.app.FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            ft.hide(mFeedFragment);
-            ft.show(mMapFragment);
-            ft.commit();
+            getSupportFragmentManager().beginTransaction().show(mMapFragment).hide(mFeedFragment).commit();
+
+            mSelectedFragment = mMapFragment;
             break;
+
         default:
             return;
         }

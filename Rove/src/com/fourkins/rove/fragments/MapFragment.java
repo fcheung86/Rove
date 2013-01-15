@@ -185,4 +185,12 @@ public class MapFragment extends SupportMapFragment {
 
         clearFlag = true;
     }
+
+    public void loadFromLocal() {
+        // TODO load from local sqlite db
+    }
+
+    public void loadFromServer() {
+        // TODO create http client and load results from server
+    }
 }
