@@ -1,12 +1,8 @@
 package com.fourkins.rove.posts;
 
-import java.io.IOException;
 import java.util.List;
-import java.util.Locale;
 
 import android.content.Context;
-import android.location.Address;
-import android.location.Geocoder;
 import android.location.Location;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -57,18 +53,9 @@ public class PostAdapter extends ArrayAdapter<Post> {
             TextView rowdistance = (TextView) view.findViewById(R.id.row_distance);
             rowdistance.setText(" " + String.format("%.1f", resultArray[0]/1000) + " km");
             
-            Geocoder geoCoder = new Geocoder(getContext(), Locale.getDefault());
-            try{
-                List<Address> addresses = geoCoder.getFromLocation(post.getLatitude(), post.getLongitude(), 1);
-                
-                if (addresses.size() > 0) {
-                    TextView row_address = (TextView) view.findViewById(R.id.row_address);
-                    row_address.setText(" " + addresses.get(0).getAddressLine(0) + " ," + addresses.get(0).getAddressLine(1));
-                }
-            }
-            catch (IOException e){
-                
-            }
+            TextView row_address = (TextView) view.findViewById(R.id.row_address);
+            row_address.setText(" " + post.getAddress() + ", " + post.getCity());
+
             //TextView rowLatitude = (TextView) view.findViewById(R.id.row_latitude);
             //rowLatitude.setText(String.format("%.3f", post.getLatitude()));
 

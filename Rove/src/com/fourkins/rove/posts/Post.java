@@ -13,7 +13,10 @@ public class Post {
     private double latitude;
     private double longitude;
     private String message;
+    private String address;
+    private String city;
     private Timestamp timestamp;
+    
 
     public Post() {
 
@@ -28,12 +31,14 @@ public class Post {
             longitude = jsonObject.getDouble("longitude");
             message = jsonObject.getString("message");
             timestamp = new Timestamp(jsonObject.getLong("timestamp"));
+            address = jsonObject.getString("address");
+            city = jsonObject.getString("city");
         } catch (JSONException e) {
             e.printStackTrace();
         }
     }
 
-    public Post(long postId, String userName, double latitude, double longitude, String message, Timestamp timestamp) {
+    public Post(long postId, String userName, double latitude, double longitude, String message, String address, String city, Timestamp timestamp) {
         super();
         this.postId = postId;
         this.username = userName;
@@ -41,15 +46,19 @@ public class Post {
         this.longitude = longitude;
         this.message = message;
         this.timestamp = timestamp;
+        this.address = address;
+        this.city = city;
     }
 
-    public Post(String username, double latitude, double longitude, String message, Timestamp timestamp) {
+    public Post(String username, double latitude, double longitude, String message, String address, String city, Timestamp timestamp) {
         super();
         this.username = username;
         this.latitude = latitude;
         this.longitude = longitude;
         this.message = message;
         this.timestamp = timestamp;
+        this.address = address;
+        this.city = city;
     }
 
     public long getPostId() {
@@ -107,6 +116,23 @@ public class Post {
     public void setTimestamp(Timestamp timestamp) {
         this.timestamp = timestamp;
     }
+    
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+    
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
 
     public JSONObject getJson() {
         JSONObject jObj = new JSONObject();
@@ -116,6 +142,8 @@ public class Post {
             jObj.put("latitude", latitude);
             jObj.put("longitude", longitude);
             jObj.put("message", message);
+            jObj.put("address", address);
+            jObj.put("city", city);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -133,6 +161,8 @@ public class Post {
         sb.append(", latitude=").append(latitude);
         sb.append(", longitude=").append(longitude);
         sb.append(", message=").append(message);
+        sb.append(", address=").append(address);
+        sb.append(", city=").append(city);
         sb.append(", timestamp=").append(timestamp);
 
         return sb.toString();

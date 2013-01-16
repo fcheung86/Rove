@@ -16,7 +16,7 @@ public class PostsDataSource {
     private SQLiteDatabase database;
     private PostsSQLiteHelper dbHelper;
     private String[] allColumns = { PostsSQLiteHelper.COLUMN_ID, PostsSQLiteHelper.COLUMN_USER_NAME, PostsSQLiteHelper.COLUMN_LATITUDE,
-            PostsSQLiteHelper.COLUMN_LONGITUDE, PostsSQLiteHelper.COLUMN_MESSAGE, PostsSQLiteHelper.COLUMN_TIMESTAMP };
+            PostsSQLiteHelper.COLUMN_LONGITUDE, PostsSQLiteHelper.COLUMN_MESSAGE, PostsSQLiteHelper.COLUMN_ADDRESS, PostsSQLiteHelper.COLUMN_CITY, PostsSQLiteHelper.COLUMN_TIMESTAMP };
 
     public PostsDataSource(Context context) {
         dbHelper = new PostsSQLiteHelper(context);
@@ -41,6 +41,8 @@ public class PostsDataSource {
         values.put(PostsSQLiteHelper.COLUMN_LATITUDE, post.getLatitude());
         values.put(PostsSQLiteHelper.COLUMN_LONGITUDE, post.getLongitude());
         values.put(PostsSQLiteHelper.COLUMN_MESSAGE, post.getMessage());
+        values.put(PostsSQLiteHelper.COLUMN_ADDRESS, post.getAddress());
+        values.put(PostsSQLiteHelper.COLUMN_CITY, post.getCity());
         values.put(PostsSQLiteHelper.COLUMN_TIMESTAMP, post.getTimestamp().getTime());
 
         database.insert(PostsSQLiteHelper.TABLE_POSTS, null, values);
@@ -91,7 +93,10 @@ public class PostsDataSource {
         post.setLatitude(cursor.getDouble(2));
         post.setLongitude(cursor.getDouble(3));
         post.setMessage(cursor.getString(4));
-        post.setTimestamp(new Timestamp(cursor.getLong(5)));
+        post.setAddress(cursor.getString(5));
+        post.setCity(cursor.getString(6));
+        post.setTimestamp(new Timestamp(cursor.getLong(7)));
+        
 
         return post;
     }

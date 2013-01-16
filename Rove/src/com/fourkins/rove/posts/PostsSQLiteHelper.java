@@ -13,7 +13,10 @@ public class PostsSQLiteHelper extends SQLiteOpenHelper {
     public static final String COLUMN_LONGITUDE = "longitude";
     public static final String COLUMN_LATITUDE = "latitude";
     public static final String COLUMN_MESSAGE = "message";
+    public static final String COLUMN_ADDRESS = "address";
+    public static final String COLUMN_CITY = "city";
     public static final String COLUMN_TIMESTAMP = "timestamp";
+    
 
     private static final String DATABASE_NAME = "rove.db";
     private static final int VERSION = 1;
@@ -28,7 +31,10 @@ public class PostsSQLiteHelper extends SQLiteOpenHelper {
                 COLUMN_LATITUDE + " real not null, " +
                 COLUMN_LONGITUDE + " real not null, " +
                 COLUMN_MESSAGE + " text not null, " +
+                COLUMN_ADDRESS + " text not null, " +
+                COLUMN_CITY + " text not null, " +
                 COLUMN_TIMESTAMP + " integer not null " +
+                
             ");";    
     //@formatter:on
 
