@@ -1,6 +1,11 @@
 package com.fourkins.rove.fragments;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -15,6 +20,7 @@ import android.widget.TextView;
 
 import com.fourkins.rove.R;
 import com.fourkins.rove.activity.NewPostActivity;
+import com.fourkins.rove.application.Rove;
 import com.fourkins.rove.posts.Post;
 import com.fourkins.rove.posts.PostsManager;
 import com.fourkins.rove.util.LocationUtil;
@@ -30,6 +36,8 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
 
 /**
  * "Map" Tab (under Main Screen) Displays map (Google Map) with "pins" for each post Automatically zooms into the
@@ -187,10 +195,40 @@ public class MapFragment extends SupportMapFragment {
     }
 
     public void loadFromLocal() {
-        // TODO load from local sqlite db
+        posts = mPostsManager.getAllPosts();
+        addMarkers(mMap.getProjection().getVisibleRegion().latLngBounds);
     }
 
     public void loadFromServer() {
-        // TODO create http client and load results from server
+        AsyncHttpClient client = new AsyncHttpClient();
+
+        final Location loc = LocationUtil.getInstance(getActivity()).getCurrentLocation();
+        double lat = loc.getLatitude();
+        double lng = loc.getLongitude();
+
+        // POSTs to the specified URL with the entity, with text/plain as the content type
+        client.get(Rove.SERVER_BASE_URL + "/posts?lat=" + lat + "&lng=" + lng + "&dist=200", new AsyncHttpResponseHandler() {
+
+            @Override
+            public void onSuccess(String response) {
+                // this is the async callback
+                List<Post> postsFromServer = new ArrayList<Post>();
+
+                try {
+                    JSONArray jsonArray = new JSONArray(response);
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject jsonObject = jsonArray.getJSONObject(i);
+                        Post post = new Post(jsonObject);
+                        postsFromServer.add(post);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                posts = postsFromServer;
+                addMarkers(mMap.getProjection().getVisibleRegion().latLngBounds);
+            }
+
+        });
     }
 }
