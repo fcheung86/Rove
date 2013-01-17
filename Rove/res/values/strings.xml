@@ -37,7 +37,7 @@
     <!-- FeedFragment ListView Item -->
     <string name="ic_pin">Pin Icon</string>
     <string name="menu_logout">Logout</string>
-    <string name="row_distance_name">Distance: </string>
-    <string name="row_address_name">Address: </string>
+    <string name="row_distance_name">Distance </string>
+    <string name="row_address_name">Address </string>
 
 </resources>
