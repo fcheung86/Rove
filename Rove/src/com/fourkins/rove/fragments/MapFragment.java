@@ -1,11 +1,6 @@
 package com.fourkins.rove.fragments;
 
-import java.util.ArrayList;
 import java.util.List;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -20,7 +15,6 @@ import android.widget.TextView;
 
 import com.fourkins.rove.R;
 import com.fourkins.rove.activity.NewPostActivity;
-import com.fourkins.rove.application.Rove;
 import com.fourkins.rove.posts.Post;
 import com.fourkins.rove.posts.PostsManager;
 import com.fourkins.rove.util.LocationUtil;
@@ -36,7 +30,6 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 
 /**
@@ -46,18 +39,18 @@ import com.loopj.android.http.AsyncHttpResponseHandler;
  */
 public class MapFragment extends SupportMapFragment {
 
+    public static final String INTENT_LAT = "com.fourkins.rove.LATITUDE";
+    public static final String INTENT_LONG = "com.fourkins.rove.LONGITUDE";
+    public static final String INTENT_FROM_MAP = "com.fourkins.rove.FROMMAP";
+
     private GoogleMap mMap;
     private PostsManager mPostsManager;
-    private LatLngBounds bounds;
-    private List<Post> posts;
-    private boolean clearFlag = true;
+    private LatLngBounds mLatLngBounds;
+    private List<Post> mPosts;
+    private boolean mClearFlag = true;
 
-    LinearLayout linearLayout;
-    LinearLayout mapLayout;
-
-    public static final String intentLat = "com.example.LATITUDE";
-    public static final String intentLong = "com.example.LONGITUDE";
-    public static final String fromMap = "com.example.FROMMAP";
+    private LinearLayout mLinearLayout;
+    private LinearLayout mMapLayout;
 
     public MapFragment() {
 
@@ -73,8 +66,8 @@ public class MapFragment extends SupportMapFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup viewGroup, Bundle bundle) {
         View view = super.onCreateView(inflater, viewGroup, bundle);
 
-        linearLayout = (LinearLayout) getActivity().findViewById(R.id.detailmapinfo);
-        mapLayout = (LinearLayout) getActivity().findViewById(R.id.emptyView);
+        mLinearLayout = (LinearLayout) getActivity().findViewById(R.id.detailmapinfo);
+        mMapLayout = (LinearLayout) getActivity().findViewById(R.id.emptyView);
 
         setUpMapIfNeeded();
 
@@ -84,7 +77,7 @@ public class MapFragment extends SupportMapFragment {
     @Override
     public void onResume() {
         super.onResume();
-        posts = mPostsManager.getAllPosts();
+        mPosts = mPostsManager.getAllPosts();
         addMarkers(mMap.getProjection().getVisibleRegion().latLngBounds);
     }
 
@@ -104,7 +97,7 @@ public class MapFragment extends SupportMapFragment {
 
             // Check if we were successful in obtaining the map.
             if (mMap != null) {
-                posts = mPostsManager.getAllPosts();
+                mPosts = mPostsManager.getAllPosts();
             }
         }
     }
@@ -114,8 +107,8 @@ public class MapFragment extends SupportMapFragment {
         return new OnCameraChangeListener() {
             @Override
             public void onCameraChange(CameraPosition position) {
-                bounds = mMap.getProjection().getVisibleRegion().latLngBounds;
-                addMarkers(bounds);
+                mLatLngBounds = mMap.getProjection().getVisibleRegion().latLngBounds;
+                addMarkers(mLatLngBounds);
             }
         };
     }
@@ -127,21 +120,21 @@ public class MapFragment extends SupportMapFragment {
                 LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT, 1.25f);
                 LayoutParams mapParams = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT, 0.75f);
 
-                final TextView user = (TextView) linearLayout.findViewById(R.id.detail_map_user_display);
-                final TextView latitudeDisplay = (TextView) linearLayout.findViewById(R.id.detail_map_latitude_display);
-                final TextView longitudeDisplay = (TextView) linearLayout.findViewById(R.id.detail_map_longitude_display);
-                final TextView comment = (TextView) linearLayout.findViewById(R.id.detail_map_message_display);
+                final TextView user = (TextView) mLinearLayout.findViewById(R.id.detail_map_user_display);
+                final TextView latitudeDisplay = (TextView) mLinearLayout.findViewById(R.id.detail_map_latitude_display);
+                final TextView longitudeDisplay = (TextView) mLinearLayout.findViewById(R.id.detail_map_longitude_display);
+                final TextView comment = (TextView) mLinearLayout.findViewById(R.id.detail_map_message_display);
 
                 user.setText(marker.getTitle());
                 latitudeDisplay.setText(Double.toString(marker.getPosition().latitude));
                 longitudeDisplay.setText(Double.toString(marker.getPosition().longitude));
                 comment.setText(marker.getSnippet());
 
-                mapLayout.setLayoutParams(mapParams);
-                linearLayout.setLayoutParams(params);
+                mMapLayout.setLayoutParams(mapParams);
+                mLinearLayout.setLayoutParams(params);
 
                 if (!marker.getTitle().isEmpty()) {
-                    clearFlag = false;
+                    mClearFlag = false;
                     return false;
                 } else {
                     return true;
@@ -155,9 +148,9 @@ public class MapFragment extends SupportMapFragment {
             @Override
             public void onMapLongClick(LatLng latlng) {
                 Intent intent = new Intent(getActivity(), NewPostActivity.class);
-                intent.putExtra(intentLat, latlng.latitude);
-                intent.putExtra(intentLong, latlng.longitude);
-                intent.putExtra(fromMap, 1);
+                intent.putExtra(INTENT_LAT, latlng.latitude);
+                intent.putExtra(INTENT_LONG, latlng.longitude);
+                intent.putExtra(INTENT_FROM_MAP, 1);
                 startActivity(intent);
             }
         };
@@ -170,18 +163,18 @@ public class MapFragment extends SupportMapFragment {
                 LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT, 2.0f);
                 LayoutParams mapParams = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT, 0.0f);
 
-                mapLayout.setLayoutParams(mapParams);
-                linearLayout.setLayoutParams(params);
+                mMapLayout.setLayoutParams(mapParams);
+                mLinearLayout.setLayoutParams(params);
             }
         };
     }
 
     public void addMarkers(LatLngBounds latLngBounds) {
-        if (clearFlag == true) {
+        if (mClearFlag == true) {
             mMap.clear();
         }
 
-        for (Post item : posts) {
+        for (Post item : mPosts) {
 
             if (latLngBounds.southwest.latitude < item.getLatitude() && latLngBounds.southwest.longitude < item.getLongitude()) {
                 if (latLngBounds.northeast.latitude > item.getLatitude() && latLngBounds.northeast.longitude > item.getLongitude()) {
@@ -191,41 +184,20 @@ public class MapFragment extends SupportMapFragment {
             }
         }
 
-        clearFlag = true;
+        mClearFlag = true;
     }
 
     public void loadFromLocal() {
-        posts = mPostsManager.getAllPosts();
+        mPosts = mPostsManager.getAllPosts();
         addMarkers(mMap.getProjection().getVisibleRegion().latLngBounds);
     }
 
     public void loadFromServer() {
-        AsyncHttpClient client = new AsyncHttpClient();
-
-        final Location loc = LocationUtil.getInstance(getActivity()).getCurrentLocation();
-        double lat = loc.getLatitude();
-        double lng = loc.getLongitude();
-
-        // POSTs to the specified URL with the entity, with text/plain as the content type
-        client.get(Rove.SERVER_BASE_URL + "/posts?lat=" + lat + "&lng=" + lng + "&dist=200", new AsyncHttpResponseHandler() {
+        mPostsManager.getPostsFromServer(new AsyncHttpResponseHandler() {
 
             @Override
             public void onSuccess(String response) {
-                // this is the async callback
-                List<Post> postsFromServer = new ArrayList<Post>();
-
-                try {
-                    JSONArray jsonArray = new JSONArray(response);
-                    for (int i = 0; i < jsonArray.length(); i++) {
-                        JSONObject jsonObject = jsonArray.getJSONObject(i);
-                        Post post = new Post(jsonObject);
-                        postsFromServer.add(post);
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-                posts = postsFromServer;
+                mPosts = mPostsManager.convertJsonToPosts(response);
                 addMarkers(mMap.getProjection().getVisibleRegion().latLngBounds);
             }
 

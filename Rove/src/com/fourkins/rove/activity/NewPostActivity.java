@@ -50,10 +50,10 @@ public class NewPostActivity extends Activity {
         setContentView(R.layout.activity_new_post);
 
         Intent intent = getIntent();
-        if (intent.getIntExtra(MapFragment.fromMap, 0) == 1) {
-            fromMap = intent.getIntExtra(MapFragment.fromMap, 0);
-            latitudefromMap = intent.getDoubleExtra(MapFragment.intentLat, 0);
-            longitudefromMap = intent.getDoubleExtra(MapFragment.intentLong, 0);
+        if (intent.getIntExtra(MapFragment.INTENT_FROM_MAP, 0) == 1) {
+            fromMap = intent.getIntExtra(MapFragment.INTENT_FROM_MAP, 0);
+            latitudefromMap = intent.getDoubleExtra(MapFragment.INTENT_LAT, 0);
+            longitudefromMap = intent.getDoubleExtra(MapFragment.INTENT_LONG, 0);
 
             final EditText latitudeText = (EditText) findViewById(R.id.edit_latitude);
             final EditText longitudeText = (EditText) findViewById(R.id.edit_longitude);
