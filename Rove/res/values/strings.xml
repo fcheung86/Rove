@@ -16,6 +16,7 @@
     <string name="error_invalid_password">This password is too short</string>
     <string name="error_incorrect_password">This password is incorrect</string>
     <string name="error_field_required">This field is required</string>
+    <string name="register">Register</string>
 
     <!-- MainActivity -->
     <string name="feed_section">Feed</string>
@@ -37,5 +38,13 @@
     <!-- FeedFragment ListView Item -->
     <string name="ic_pin">Pin Icon</string>
     <string name="menu_logout">Logout</string>
+
+	<!-- NewUserActivity -->
+    <string name="title_activity_new_user">NewUserActivity</string>
+    <string name="new_name">Name:</string>
+    <string name="new_username">Username:</string>
+    <string name="new_email">Email:</string>
+    <string name="new_password">Password:</string>
+    <string name="new_confirm">Confirm Password:</string>
 
 </resources>

@@ -1,5 +1,13 @@
 package com.fourkins.rove.activity;
 
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
@@ -18,6 +26,10 @@ import android.widget.TextView;
 
 import com.fourkins.rove.R;
 import com.fourkins.rove.application.AppPreferences;
+import com.fourkins.rove.application.Rove;
+import com.fourkins.rove.users.User;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
 
 /**
  * Activity which displays a login screen to the user. (Code is from SDK template)
@@ -27,6 +39,8 @@ public class LoginActivity extends Activity {
      * A dummy authentication store containing known user names and passwords. TODO: remove after connecting to a real
      * authentication system.
      */
+    private static final Logger LOGGER = Logger.getLogger(LoginActivity.class.getName());
+
     private static final String[] DUMMY_CREDENTIALS = new String[] { "mark.sk.ho@gmail.com:password:Mark", "iceheat710@gmail.com:password:Justin",
             "fcheung86@gmail.com:password:Farran", "pthieu@gmail.com:faggot:Phong" };
     private AppPreferences mAppPrefs;
@@ -86,6 +100,7 @@ public class LoginActivity extends Activity {
                 attemptLogin();
             }
         });
+
     }
 
     @Override
@@ -135,6 +150,14 @@ public class LoginActivity extends Activity {
             mEmailView.setError(getString(R.string.error_invalid_email));
             focusView = mEmailView;
             cancel = true;
+        }
+
+        // DEMO OVERRIDE
+        if (mEmail.equals("demo")) {
+            cancel = false;
+            // Reset errors.
+            mEmailView.setError(null);
+            mPasswordView.setError(null);
         }
 
         if (cancel) {
@@ -189,28 +212,80 @@ public class LoginActivity extends Activity {
      * Represents an asynchronous login/registration task used to authenticate the user.
      */
     public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
+        private String encryptedPassword;
+        private AsyncHttpClient client;
+        private boolean authenticated = false;
+        private String username_tmp;
+
         @Override
         protected Boolean doInBackground(Void... params) {
-            // TODO: attempt authentication against a network service.
+            // DEMO OVERRIDE
+            if (mEmail.equals("demo") && mPassword.equals("demo")) {
+                userName = "demo";
+                return true;
+            }
+            client = new AsyncHttpClient();
+
+            LOGGER.log(Level.INFO, "Verifying User");
 
             try {
+                // Get "salt" for given user
+                client.get(Rove.SERVER_BASE_URL + "/users?email=" + mEmail, new AsyncHttpResponseHandler() {
+
+                    @Override
+                    public void onSuccess(String response) {
+                        // this is the async callback
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            User user = new User(jsonObject);
+                            username_tmp = user.getUsername();
+                            encryptedPassword = user.getHash(mPassword, user.getSalt());
+                            LOGGER.log(Level.INFO, "Username:" + user.getUsername());
+                            LOGGER.log(Level.INFO, "Hashed Password:" + encryptedPassword);
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        } catch (NoSuchAlgorithmException e) {
+                            // TODO Auto-generated catch block
+                            e.printStackTrace();
+                        } catch (UnsupportedEncodingException e) {
+                            // TODO Auto-generated catch block
+                            e.printStackTrace();
+                        }
+                        if (encryptedPassword == null) {
+                            return;
+                        }
+                        // Verify password from server
+                        client.get(Rove.SERVER_BASE_URL + "/users/verify?email=" + mEmail + "&password=" + encryptedPassword,
+                                new AsyncHttpResponseHandler() {
+
+                                    @Override
+                                    public void onSuccess(String response) {
+                                        // this is the async callback
+                                        LOGGER.log(Level.INFO, response);
+                                        authenticated = Boolean.parseBoolean(response);
+                                        userName = username_tmp;
+                                    }
+
+                                });
+
+                    }
+
+                });
+
                 // Simulate network access. ****Remove when accessing real server****
-                Thread.sleep(2000);
+                Thread.sleep(500);
             } catch (InterruptedException e) {
                 return false;
             }
 
-            for (String credential : DUMMY_CREDENTIALS) {
-                String[] pieces = credential.split(":");
-                if (pieces[0].equals(mEmail)) {
-                    // Account exists, return true if the password matches.
-                    userName = pieces[2];
-                    return pieces[1].equals(mPassword);
-                }
-            }
+            /*
+             * for (String credential : DUMMY_CREDENTIALS) { String[] pieces = credential.split(":"); if
+             * (pieces[0].equals(mEmail)) { // Account exists, return true if the password matches. userName =
+             * pieces[2]; return pieces[1].equals(mPassword); } }
+             */
 
-            // TODO: register the new account here.
-            return false;
+            return authenticated;
         }
 
         @Override
@@ -235,5 +310,10 @@ public class LoginActivity extends Activity {
             mAuthTask = null;
             showProgress(false);
         }
+    }
+
+    public void registerUser(View view) {
+        Intent newUserIntent = new Intent(this, NewUserActivity.class);
+        startActivity(newUserIntent);
     }
 }
