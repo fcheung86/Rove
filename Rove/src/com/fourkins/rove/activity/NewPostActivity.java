@@ -1,13 +1,18 @@
 package com.fourkins.rove.activity;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.sql.Timestamp;
+import java.util.List;
+import java.util.Locale;
 
 import org.apache.http.entity.StringEntity;
 
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
 import android.view.View;
@@ -45,10 +50,10 @@ public class NewPostActivity extends Activity {
         setContentView(R.layout.activity_new_post);
 
         Intent intent = getIntent();
-        if (intent.getIntExtra(MapFragment.fromMap, 0) == 1) {
-            fromMap = intent.getIntExtra(MapFragment.fromMap, 0);
-            latitudefromMap = intent.getDoubleExtra(MapFragment.intentLat, 0);
-            longitudefromMap = intent.getDoubleExtra(MapFragment.intentLong, 0);
+        if (intent.getIntExtra(MapFragment.INTENT_FROM_MAP, 0) == 1) {
+            fromMap = intent.getIntExtra(MapFragment.INTENT_FROM_MAP, 0);
+            latitudefromMap = intent.getDoubleExtra(MapFragment.INTENT_LAT, 0);
+            longitudefromMap = intent.getDoubleExtra(MapFragment.INTENT_LONG, 0);
 
             final EditText latitudeText = (EditText) findViewById(R.id.edit_latitude);
             final EditText longitudeText = (EditText) findViewById(R.id.edit_longitude);
@@ -78,7 +83,8 @@ public class NewPostActivity extends Activity {
 
         double latitude = 0;
         double longitude = 0;
-
+        Address submitAddress = null;
+        
         // If new post initiated from Map (ie. by holding location on the map)
         if (fromMap == 1) {
             latitude = latitudefromMap;
@@ -91,7 +97,18 @@ public class NewPostActivity extends Activity {
         // String user = (String) userText.getText().toString();
         String message = messageText.getText().toString();
 
-        Post post = new Post(mUserName, latitude, longitude, message, new Timestamp(System.currentTimeMillis()));
+        Geocoder geoCoder = new Geocoder(this.getApplicationContext(), Locale.getDefault());
+        try {
+            List<Address> addresses = geoCoder.getFromLocation(latitude, longitude, 1);
+            
+            if (addresses.size() > 0) {
+                submitAddress = addresses.get(0);
+            }
+        } catch (IOException e) {
+
+        }
+
+        Post post = new Post(mUserName, latitude, longitude, message, submitAddress.getAddressLine(0), submitAddress.getAddressLine(1), new Timestamp(System.currentTimeMillis()));
         mPostsManager.insertPost(post);
 
         finish();
@@ -104,6 +121,8 @@ public class NewPostActivity extends Activity {
 
         double latitude = 0;
         double longitude = 0;
+        
+        Address submitAddress = null;
 
         if (fromMap == 1) {
             // If new post initiated from Map (ie. by holding location on the map)
@@ -116,8 +135,19 @@ public class NewPostActivity extends Activity {
         }
 
         String message = messageText.getText().toString();
+        
+        Geocoder geoCoder = new Geocoder(this.getBaseContext(), Locale.getDefault());
+        try {
+            List<Address> addresses = geoCoder.getFromLocation(latitude, longitude, 1);
+            
+            if (addresses.size() > 0) {
+                submitAddress = addresses.get(0);
+            }
+        } catch (IOException e) {
 
-        Post post = new Post(mUserName, latitude, longitude, message, new Timestamp(System.currentTimeMillis()));
+        }
+        
+        Post post = new Post(mUserName, latitude, longitude, message, submitAddress.getAddressLine(0), submitAddress.getAddressLine(1), new Timestamp(System.currentTimeMillis()));
 
         try {
             // creates the Entity used for POST, converting the Post object into JSON

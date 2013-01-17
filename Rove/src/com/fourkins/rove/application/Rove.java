@@ -18,7 +18,7 @@ public class Rove extends Application {
      * If the client and server is running in the same local network, the IP should most likely be 192.168.x.x too, run
      * 'ipconfig' to see what the IP is
      */
-    public static final String SERVER_BASE_URL = "http://192.168.x.x:8080/RoveServer";
+    public static final String SERVER_BASE_URL = "http://192.168.3.10:8080/RoveServer";
 
     private String userName = null;
 

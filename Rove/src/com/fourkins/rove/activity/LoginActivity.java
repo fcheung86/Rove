@@ -48,7 +48,7 @@ public class LoginActivity extends Activity {
     /**
      * The default email to populate the email field with.
      */
-    public static final String EXTRA_EMAIL = "com.example.android.authenticatordemo.extra.EMAIL";
+    public static final String EXTRA_EMAIL = "com.fourkins.rove.email";
 
     /**
      * Keep track of the login task to ensure we can cancel it if requested.

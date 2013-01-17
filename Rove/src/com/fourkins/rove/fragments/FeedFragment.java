@@ -1,11 +1,6 @@
 package com.fourkins.rove.fragments;
 
-import java.util.ArrayList;
 import java.util.List;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import android.app.Activity;
 import android.location.Location;
@@ -15,12 +10,10 @@ import android.widget.AbsListView;
 import android.widget.ListView;
 
 import com.fourkins.rove.R;
-import com.fourkins.rove.application.Rove;
 import com.fourkins.rove.posts.Post;
 import com.fourkins.rove.posts.PostAdapter;
 import com.fourkins.rove.posts.PostsManager;
 import com.fourkins.rove.util.LocationUtil;
-import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 
 /**
@@ -29,7 +22,7 @@ import com.loopj.android.http.AsyncHttpResponseHandler;
 public class FeedFragment extends ListFragment {
 
     private PostsManager mPostsManager;
-    public static final String postIdValue = "com.example.POSTIDVALUE";
+    public static final String postIdValue = "com.fourkins.rove.POSTIDVALUE";
     private View footerView;
 
     public FeedFragment() {
@@ -91,39 +84,23 @@ public class FeedFragment extends ListFragment {
     }
 
     public void loadFromLocal() {
+
+        Location currentLocation = LocationUtil.getInstance(getActivity()).getCurrentLocation();
         List<Post> posts = mPostsManager.getAllPosts();
-        PostAdapter adapter = new PostAdapter(getActivity(), R.layout.feedfragment_listview_item, posts);
+        PostAdapter adapter = new PostAdapter(getActivity(), R.layout.feedfragment_listview_item, posts, currentLocation);
         setListAdapter(adapter);
     }
 
     public void loadFromServer() {
-        AsyncHttpClient client = new AsyncHttpClient();
-
-        Location loc = LocationUtil.getInstance(getActivity()).getCurrentLocation();
-        double lat = loc.getLatitude();
-        double lng = loc.getLongitude();
-
-        // POSTs to the specified URL with the entity, with text/plain as the content type
-        client.get(Rove.SERVER_BASE_URL + "/posts?lat=" + lat + "&lng=" + lng + "&dist=200", new AsyncHttpResponseHandler() {
+        mPostsManager.getPostsFromServer(new AsyncHttpResponseHandler() {
 
             @Override
             public void onSuccess(String response) {
-                // this is the async callback
-                List<Post> posts = new ArrayList<Post>();
-
-                try {
-                    JSONArray jsonArray = new JSONArray(response);
-                    for (int i = 0; i < jsonArray.length(); i++) {
-                        JSONObject jsonObject = jsonArray.getJSONObject(i);
-                        Post post = new Post(jsonObject);
-                        posts.add(post);
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+                Location loc = LocationUtil.getInstance(getActivity()).getCurrentLocation();
+                List<Post> posts = mPostsManager.convertJsonToPosts(response);
 
                 if (getActivity() != null) {
-                    PostAdapter adapter = new PostAdapter(getActivity(), R.layout.feedfragment_listview_item, posts);
+                    PostAdapter adapter = new PostAdapter(getActivity(), R.layout.feedfragment_listview_item, posts, loc);
                     setListAdapter(adapter);
                 }
             }
