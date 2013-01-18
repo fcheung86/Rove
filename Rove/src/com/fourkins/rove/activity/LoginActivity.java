@@ -41,8 +41,6 @@ public class LoginActivity extends Activity {
      */
     private static final Logger LOGGER = Logger.getLogger(LoginActivity.class.getName());
 
-    private static final String[] DUMMY_CREDENTIALS = new String[] { "mark.sk.ho@gmail.com:password:Mark", "iceheat710@gmail.com:password:Justin",
-            "fcheung86@gmail.com:password:Farran", "pthieu@gmail.com:faggot:Phong" };
     private AppPreferences mAppPrefs;
     private String userName = "";
     /**
@@ -152,13 +150,14 @@ public class LoginActivity extends Activity {
             cancel = true;
         }
 
-        // DEMO OVERRIDE
+        // /////// DEMO OVERRIDE/////////
         if (mEmail.equals("demo")) {
             cancel = false;
             // Reset errors.
             mEmailView.setError(null);
             mPasswordView.setError(null);
         }
+        // ///////////////////////////////
 
         if (cancel) {
             // There was an error; don't attempt login and focus the first
@@ -215,21 +214,23 @@ public class LoginActivity extends Activity {
         private String encryptedPassword;
         private AsyncHttpClient client;
         private boolean authenticated = false;
-        private String username_tmp;
+        private String username_tmp; // For use of "permanent login" username
 
         @Override
         protected Boolean doInBackground(Void... params) {
-            // DEMO OVERRIDE
+            // ////// DEMO OVERRIDE////////
             if (mEmail.equals("demo") && mPassword.equals("demo")) {
                 userName = "demo";
                 return true;
             }
+            // ///////////////////////////
+
             client = new AsyncHttpClient();
 
             LOGGER.log(Level.INFO, "Verifying User");
 
             try {
-                // Get "salt" for given user
+                // Get "salt" for given user from server DB
                 client.get(Rove.SERVER_BASE_URL + "/users?email=" + mEmail, new AsyncHttpResponseHandler() {
 
                     @Override
@@ -252,10 +253,13 @@ public class LoginActivity extends Activity {
                             // TODO Auto-generated catch block
                             e.printStackTrace();
                         }
+
+                        // If user doesn't exist, then no "encrypted password" will be generated. Return login fail
                         if (encryptedPassword == null) {
                             return;
                         }
-                        // Verify password from server
+
+                        // If password is successfully "encrypted", verify password with server
                         client.get(Rove.SERVER_BASE_URL + "/users/verify?email=" + mEmail + "&password=" + encryptedPassword,
                                 new AsyncHttpResponseHandler() {
 
@@ -278,12 +282,6 @@ public class LoginActivity extends Activity {
             } catch (InterruptedException e) {
                 return false;
             }
-
-            /*
-             * for (String credential : DUMMY_CREDENTIALS) { String[] pieces = credential.split(":"); if
-             * (pieces[0].equals(mEmail)) { // Account exists, return true if the password matches. userName =
-             * pieces[2]; return pieces[1].equals(mPassword); } }
-             */
 
             return authenticated;
         }

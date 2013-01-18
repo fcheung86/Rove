@@ -3,9 +3,45 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center_horizontal"
-    android:onClick="registerNewUser"
     tools:context=".NewUserActivity" >
+    
+    <TextView
+        android:id="@+id/realNameTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/userNameTextView"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="59dp"
+        android:text="@string/new_name" />
 
+    <EditText
+        android:id="@+id/realNameEditText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/realNameTextView"
+        android:layout_alignBottom="@+id/realNameTextView"
+        android:layout_toRightOf="@+id/userNameTextView"
+        android:ems="10" />
+
+    <EditText
+        android:id="@+id/userNameEditText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/userNameTextView"
+        android:layout_alignBottom="@+id/userNameTextView"
+        android:layout_toRightOf="@+id/userNameTextView"
+        android:ems="10"
+        android:inputType="textPersonName" />
+
+    <TextView
+        android:id="@+id/userNameTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/realNameEditText"
+        android:layout_marginTop="19dp"
+        android:text="@string/new_username" />
+    
     <TextView
         android:id="@+id/emailTextView"
         android:layout_width="wrap_content"
@@ -26,25 +62,6 @@
         android:inputType="textEmailAddress" />
 
     <EditText
-        android:id="@+id/userNameEditText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/userNameTextView"
-        android:layout_alignBottom="@+id/userNameTextView"
-        android:layout_toRightOf="@+id/userNameTextView"
-        android:ems="10"
-        android:inputType="textPersonName" />
-
-    <TextView
-        android:id="@+id/userNameTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/realNameEditText"
-        android:layout_marginTop="19dp"
-        android:text="@string/new_username" />
-
-    <EditText
         android:id="@+id/passwordEditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -63,24 +80,6 @@
         android:layout_alignLeft="@+id/passwordEditText"
         android:ems="10"
         android:inputType="textPassword" />
-
-    <TextView
-        android:id="@+id/realNameTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/userNameTextView"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="59dp"
-        android:text="@string/new_name" />
-
-    <EditText
-        android:id="@+id/realNameEditText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/realNameTextView"
-        android:layout_alignBottom="@+id/realNameTextView"
-        android:layout_toRightOf="@+id/userNameTextView"
-        android:ems="10" />
 
     <TextView
         android:id="@+id/passowrdTextView"

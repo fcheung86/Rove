@@ -42,7 +42,7 @@
     <string name="row_address_name">Address </string>
     
    	<!-- NewUserActivity -->
-    <string name="title_activity_new_user">NewUserActivity</string>
+    <string name="title_activity_new_user">Register User</string>
     <string name="new_name">Name:</string>
     <string name="new_username">Username:</string>
     <string name="new_email">Email:</string>
