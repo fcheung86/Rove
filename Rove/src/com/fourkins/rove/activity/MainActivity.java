@@ -103,7 +103,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 
         case R.id.menu_logout: // Logout: Simply remove AppPreference "user", and redirect back to login screen
             mAppPrefs.saveUser("");
-            Intent loginIntent = new Intent(MainActivity.this, com.fourkins.rove.activity.LoginActivity.class);
+            Intent loginIntent = new Intent(MainActivity.this, com.fourkins.rove.activity.SplashScreenActivity.class);
             finish();
             startActivity(loginIntent);
             return true;
