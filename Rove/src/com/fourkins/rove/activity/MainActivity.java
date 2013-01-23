@@ -188,31 +188,4 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
     @Override
     public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
     }
-
-    public void ToggleFeedDetail() {
-        LinearLayout feed_detail = (LinearLayout) findViewById(R.id.detailmapinfo);
-        Animation animation;
-
-        Rove rove = (Rove) getApplication();
-        final boolean flagFeedDetail = rove.getFlagFeedDetail();
-
-        if (flagFeedDetail == false) {
-            // if feed_detail at bottom, open
-            animation = new TranslateAnimation(Animation.RELATIVE_TO_PARENT, 0.0f, Animation.RELATIVE_TO_PARENT, 0.0f, Animation.RELATIVE_TO_PARENT,
-                    1.0f, Animation.RELATIVE_TO_PARENT, 0.4f);
-            animation.setDuration(500);
-            animation.setFillAfter(true);
-            feed_detail.startAnimation(animation);
-            rove.setFlagFeedDetail(true);
-
-        } else {
-            // if at top, close
-            animation = new TranslateAnimation(Animation.RELATIVE_TO_PARENT, 0.0f, Animation.RELATIVE_TO_PARENT, 0.0f, Animation.RELATIVE_TO_PARENT,
-                    0.4f, Animation.RELATIVE_TO_PARENT, 1.0f);
-            animation.setDuration(500);
-            animation.setFillAfter(true);
-            feed_detail.startAnimation(animation);
-            rove.setFlagFeedDetail(false);
-        }
-    }
 }

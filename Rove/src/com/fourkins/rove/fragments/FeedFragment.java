@@ -6,10 +6,14 @@ import android.app.Activity;
 import android.location.Location;
 import android.support.v4.app.ListFragment;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.TranslateAnimation;
 import android.widget.AbsListView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import com.fourkins.rove.R;
+import com.fourkins.rove.application.Rove;
 import com.fourkins.rove.posts.Post;
 import com.fourkins.rove.posts.PostAdapter;
 import com.fourkins.rove.posts.PostsManager;
@@ -24,6 +28,8 @@ public class FeedFragment extends ListFragment {
     private PostsManager mPostsManager;
     public static final String postIdValue = "com.fourkins.rove.POSTIDVALUE";
     private View footerView;
+    
+    private LinearLayout mLinearLayout;
 
     public FeedFragment() {
 
@@ -33,6 +39,8 @@ public class FeedFragment extends ListFragment {
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         mPostsManager = new PostsManager(activity);
+        
+        mLinearLayout = (LinearLayout) getActivity().findViewById(R.id.detailmapinfo);
 
         footerView = new View(this.getActivity().getApplicationContext());
         AbsListView.LayoutParams lp = new AbsListView.LayoutParams(0, 0);
@@ -64,7 +72,8 @@ public class FeedFragment extends ListFragment {
                                                                                // "smarter" to get screen height
         }
         this.getListView().smoothScrollToPositionFromTop(position, 0, 250);
-
+        
+        ToggleFeedDetail();
         // commented out the code below, so it won't open the post detail screen
 
         // TextView idView = (TextView) v.findViewById(R.id.row_id);
@@ -81,6 +90,34 @@ public class FeedFragment extends ListFragment {
         // } catch (NumberFormatException e) {
         // Toast.makeText(getActivity(), "Invalid Post", Toast.LENGTH_SHORT).show();
         // }
+    }
+    
+    public void ToggleFeedDetail() {
+        Animation animation;
+
+        Rove rove = (Rove) getActivity().getApplication();
+        final boolean flagFeedDetail = rove.getFlagFeedDetail();
+
+        if (flagFeedDetail == false) {
+            // if feed_detail at bottom, open
+            animation = new TranslateAnimation(Animation.RELATIVE_TO_PARENT, 0.0f, Animation.RELATIVE_TO_PARENT, 0.0f, Animation.RELATIVE_TO_PARENT,
+                    1.0f, Animation.RELATIVE_TO_PARENT, 0.4f);
+            animation.setDuration(500);
+            animation.setFillAfter(true);
+            mLinearLayout.startAnimation(animation);
+            rove.setFlagFeedDetail(true);
+            mLinearLayout.setVisibility(View.VISIBLE);
+
+        } else {
+            // if at top, close
+            animation = new TranslateAnimation(Animation.RELATIVE_TO_PARENT, 0.0f, Animation.RELATIVE_TO_PARENT, 0.0f, Animation.RELATIVE_TO_PARENT,
+                    0.4f, Animation.RELATIVE_TO_PARENT, 1.0f);
+            animation.setDuration(500);
+            animation.setFillAfter(true);
+            mLinearLayout.startAnimation(animation);
+            rove.setFlagFeedDetail(false);
+            mLinearLayout.setVisibility(View.GONE);
+        }
     }
 
     public void loadFromLocal() {
