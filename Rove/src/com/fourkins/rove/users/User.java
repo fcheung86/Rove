@@ -12,7 +12,6 @@ import org.json.JSONObject;
  * - When registering a user, random "salt" is generated.  
  * - Password is salted with this random string, and then hashed.  This password gets stored in server.
  * - When user logs in, the salt for the user is fetched from database.  Use it to salt the password input, and hash.  This hashed password is match server's hashed password.
- * 
  */
 
 public class User {
@@ -24,7 +23,6 @@ public class User {
     // private char gender;
     // private Date birthdate;
     private String email;
-    private String password;
     private String salt;
     private String encryptedPassword;
 
@@ -37,12 +35,8 @@ public class User {
         this.username = username;
         this.realName = realName;
         this.email = email;
-        this.password = password;
 
         SecureRandom random = new SecureRandom();
-        // byte[] bSalt = new byte[45];
-        // random.nextBytes(bSalt);
-        // String sSalt = new String(bSalt, "UTF-8");
         int randomInt = random.nextInt();
 
         this.salt = Integer.toString(randomInt);

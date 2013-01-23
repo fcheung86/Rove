@@ -14,11 +14,14 @@ public class Rove extends Application {
      * 
      * This specifies the location of the Rove Server.
      * 
-     * If you want to run a local server, use something like 192.168.x.x/RoveServer
+     * If you want to run a local server, use something like 192.168.x.x:8080/RoveServer
      */
     public static final String SERVER_BASE_URL = "http://rove.elasticbeanstalk.com";
+    // public static final String SERVER_BASE_URL = "http://192.168.x.x:8080/RoveServer";
 
     private boolean flagFeedDetail = false;
+    private String username = null;
+    private long userId;
 
     public boolean getFlagFeedDetail() {
         return flagFeedDetail;
@@ -28,13 +31,19 @@ public class Rove extends Application {
         flagFeedDetail = FlagFeedDetail;
     }
 
-    private String userName = null;
-
-    public String getUserName() {
-        return userName;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(long userId) {
+        this.userId = userId;
     }
 }

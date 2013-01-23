@@ -84,7 +84,7 @@ public class NewPostActivity extends Activity {
         double latitude = 0;
         double longitude = 0;
         Address submitAddress = null;
-        
+
         // If new post initiated from Map (ie. by holding location on the map)
         if (fromMap == 1) {
             latitude = latitudefromMap;
@@ -100,7 +100,7 @@ public class NewPostActivity extends Activity {
         Geocoder geoCoder = new Geocoder(this.getApplicationContext(), Locale.getDefault());
         try {
             List<Address> addresses = geoCoder.getFromLocation(latitude, longitude, 1);
-            
+
             if (addresses.size() > 0) {
                 submitAddress = addresses.get(0);
             }
@@ -108,7 +108,8 @@ public class NewPostActivity extends Activity {
 
         }
 
-        Post post = new Post(mUserName, latitude, longitude, message, submitAddress.getAddressLine(0), submitAddress.getAddressLine(1), new Timestamp(System.currentTimeMillis()));
+        Post post = new Post(getUserId(), mUserName, latitude, longitude, message, submitAddress.getAddressLine(0), submitAddress.getAddressLine(1),
+                new Timestamp(System.currentTimeMillis()));
         mPostsManager.insertPost(post);
 
         finish();
@@ -121,7 +122,7 @@ public class NewPostActivity extends Activity {
 
         double latitude = 0;
         double longitude = 0;
-        
+
         Address submitAddress = null;
 
         if (fromMap == 1) {
@@ -135,19 +136,20 @@ public class NewPostActivity extends Activity {
         }
 
         String message = messageText.getText().toString();
-        
+
         Geocoder geoCoder = new Geocoder(this.getBaseContext(), Locale.getDefault());
         try {
             List<Address> addresses = geoCoder.getFromLocation(latitude, longitude, 1);
-            
+
             if (addresses.size() > 0) {
                 submitAddress = addresses.get(0);
             }
         } catch (IOException e) {
 
         }
-        
-        Post post = new Post(mUserName, latitude, longitude, message, submitAddress.getAddressLine(0), submitAddress.getAddressLine(1), new Timestamp(System.currentTimeMillis()));
+
+        Post post = new Post(getUserId(), mUserName, latitude, longitude, message, submitAddress.getAddressLine(0), submitAddress.getAddressLine(1),
+                new Timestamp(System.currentTimeMillis()));
 
         try {
             // creates the Entity used for POST, converting the Post object into JSON
@@ -184,5 +186,10 @@ public class NewPostActivity extends Activity {
             latitude.setText(Double.toString(currentLocation.getLatitude()));
             longitude.setText(Double.toString(currentLocation.getLongitude()));
         }
+    }
+
+    private long getUserId() {
+        Rove rove = (Rove) getApplication();
+        return rove.getUserId();
     }
 }

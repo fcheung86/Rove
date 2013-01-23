@@ -16,7 +16,6 @@ public class Post {
     private String address;
     private String city;
     private Timestamp timestamp;
-    
 
     public Post() {
 
@@ -38,20 +37,10 @@ public class Post {
         }
     }
 
-    public Post(long postId, String userName, double latitude, double longitude, String message, String address, String city, Timestamp timestamp) {
+    public Post(long userId, String username, double latitude, double longitude, String message, String address, String city, Timestamp timestamp) {
         super();
-        this.postId = postId;
-        this.username = userName;
-        this.latitude = latitude;
-        this.longitude = longitude;
-        this.message = message;
-        this.timestamp = timestamp;
-        this.address = address;
-        this.city = city;
-    }
 
-    public Post(String username, double latitude, double longitude, String message, String address, String city, Timestamp timestamp) {
-        super();
+        this.userId = userId;
         this.username = username;
         this.latitude = latitude;
         this.longitude = longitude;
@@ -116,7 +105,7 @@ public class Post {
     public void setTimestamp(Timestamp timestamp) {
         this.timestamp = timestamp;
     }
-    
+
     public String getAddress() {
         return address;
     }
@@ -124,7 +113,7 @@ public class Post {
     public void setAddress(String address) {
         this.address = address;
     }
-    
+
     public String getCity() {
         return city;
     }
@@ -133,12 +122,11 @@ public class Post {
         this.city = city;
     }
 
-
     public JSONObject getJson() {
         JSONObject jObj = new JSONObject();
 
         try {
-            jObj.put("userId", 1); // TODO need to put in the real userId
+            jObj.put("userId", userId); // TODO need to put in the real userId
             jObj.put("latitude", latitude);
             jObj.put("longitude", longitude);
             jObj.put("message", message);

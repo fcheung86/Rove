@@ -23,11 +23,8 @@ import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
-import android.view.animation.LayoutAnimationController;
-import android.view.animation.TranslateAnimation;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.fourkins.rove.R;
@@ -42,10 +39,12 @@ public class SplashScreenActivity extends Activity {
     protected int _splashTime = 3000;
     private Thread splashThread;
     private AppPreferences mAppPrefs;
-    
+
     private static final Logger LOGGER = Logger.getLogger(SplashScreenActivity.class.getName());
 
-    private String userName = "";
+    private String username = "";
+    private long userId;
+
     /**
      * The default email to populate the email field with.
      */
@@ -67,31 +66,27 @@ public class SplashScreenActivity extends Activity {
     private View mLoginStatusView;
     private TextView mLoginStatusMessageView;
     private View mLogoView;
-    private ImageView mLogo;
 
     // Trying to make a splash screen here
     @Override
-    // wtf is a savedInstanceState
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mAppPrefs = new AppPreferences(getApplicationContext());
         final String user = mAppPrefs.getUser();
-        
-     // Apparently need to use activity_main, want to use something else
+
+        // Apparently need to use activity_main, want to use something else
         setContentView(R.layout.activity_splash_screen);
-        
+
         mEmail = getIntent().getStringExtra(EXTRA_EMAIL);
         mEmailView = (EditText) findViewById(R.id.email);
         mEmailView.setText(mEmail);
-       
+
         mPasswordView = (EditText) findViewById(R.id.password);
-        
+
         mLoginFormView = findViewById(R.id.login_form);
         mLoginStatusView = findViewById(R.id.login_status);
         mLoginStatusMessageView = (TextView) findViewById(R.id.login_status_message);
         mLogoView = findViewById(R.id.logo_layout);
-        mLogo = (ImageView) findViewById(R.id.logo);
-
 
         splashThread = new Thread() {
             @Override
@@ -100,60 +95,61 @@ public class SplashScreenActivity extends Activity {
                     synchronized (this) {
                         // 5s wait
                         wait(_splashTime);
-                        
+
                         if (user != "") { // If not logged in, bring user to login screen
                             Intent myIntent;
                             myIntent = new Intent(SplashScreenActivity.this, com.fourkins.rove.activity.MainActivity.class);
-                            startActivity(myIntent);  
-                        }
-                        else
-                        {
+                            startActivity(myIntent);
+                        } else {
                             runOnUiThread(new Runnable() {
                                 public void run() {
 
-                                    //RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams)mLogo.getLayoutParams();
-                                    //layoutParams.addRule(RelativeLayout.CENTER_VERTICAL, 0);
-                                    
-                                    //mLogo.setLayoutParams(layoutParams);
-                                    
+                                    // RelativeLayout.LayoutParams layoutParams =
+                                    // (RelativeLayout.LayoutParams)mLogo.getLayoutParams();
+                                    // layoutParams.addRule(RelativeLayout.CENTER_VERTICAL, 0);
+
+                                    // mLogo.setLayoutParams(layoutParams);
+
                                     AnimationSet set = new AnimationSet(true);
-                                    
+
                                     Animation animation = new AlphaAnimation(0.0f, 1.0f);
                                     animation.setDuration(1500);
                                     set.addAnimation(animation);
-                                    
+
                                     AnimationSet set1 = new AnimationSet(true);
-                                    
+
                                     Animation animation1 = new AlphaAnimation(1.0f, 0.0f);
                                     animation1.setDuration(1500);
                                     set1.addAnimation(animation1);
-                                    
-                                   /* AnimationSet set = new AnimationSet(true);
 
-                                    Animation animation = new TranslateAnimation(
-                                        Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f,
-                                        Animation.RELATIVE_TO_SELF, 20.0f, Animation.RELATIVE_TO_SELF, 0.0f
-                                    );
-                                    animation.setDuration(250);
-                                    set.addAnimation(animation);*/
-                                    
+                                    /*
+                                     * AnimationSet set = new AnimationSet(true);
+                                     * 
+                                     * Animation animation = new TranslateAnimation(
+                                     * Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f,
+                                     * Animation.RELATIVE_TO_SELF, 20.0f, Animation.RELATIVE_TO_SELF, 0.0f
+                                     * );
+                                     * animation.setDuration(250);
+                                     * set.addAnimation(animation);
+                                     */
+
                                     mLogoView.startAnimation(animation1);
                                     mLogoView.startAnimation(animation);
                                     mLoginFormView.startAnimation(animation);
                                     mLoginFormView.setVisibility(View.VISIBLE);
 
-                               }
-                           });
-                            
+                                }
+                            });
+
                         }
                     }
                 } catch (InterruptedException e) {
                     // do nothing
-                }                   
+                }
             }
         };
         splashThread.start();
-        
+
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
@@ -164,7 +160,7 @@ public class SplashScreenActivity extends Activity {
                 return false;
             }
         });
-        
+
         findViewById(R.id.sign_in_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -172,7 +168,7 @@ public class SplashScreenActivity extends Activity {
             }
         });
     }
-    
+
     /**
      * Attempts to sign in or register the account specified by the login form. If there are form errors (invalid email,
      * missing fields, etc.), the errors are presented and no actual login attempt is made.
@@ -237,7 +233,7 @@ public class SplashScreenActivity extends Activity {
             mAuthTask.execute((Void) null);
         }
     }
-    
+
     /**
      * Shows the progress UI and hides the login form.
      */
@@ -272,7 +268,6 @@ public class SplashScreenActivity extends Activity {
         }
     }
 
-    
     /**
      * Represents an asynchronous login/registration task used to authenticate the user.
      */
@@ -280,13 +275,14 @@ public class SplashScreenActivity extends Activity {
         private String encryptedPassword;
         private AsyncHttpClient client;
         private boolean authenticated = false;
-        private String username_tmp; // For use of "permanent login" username
+        private String tempUsername; // For use of "permanent login" username
+        private long tempUserId;
 
         @Override
         protected Boolean doInBackground(Void... params) {
             // ////// DEMO OVERRIDE////////
             if (mEmail.equals("demo") && mPassword.equals("demo")) {
-                userName = "demo";
+                username = "demo";
                 return true;
             }
             // ///////////////////////////
@@ -305,7 +301,8 @@ public class SplashScreenActivity extends Activity {
                         try {
                             JSONObject jsonObject = new JSONObject(response);
                             User user = new User(jsonObject);
-                            username_tmp = user.getUsername();
+                            tempUsername = user.getUsername();
+                            tempUserId = user.getUserId();
                             encryptedPassword = user.getHash(mPassword, user.getSalt());
                             LOGGER.log(Level.INFO, "Username:" + user.getUsername());
                             LOGGER.log(Level.INFO, "Hashed Password:" + encryptedPassword);
@@ -334,7 +331,8 @@ public class SplashScreenActivity extends Activity {
                                         // this is the async callback
                                         LOGGER.log(Level.INFO, response);
                                         authenticated = Boolean.parseBoolean(response);
-                                        userName = username_tmp;
+                                        username = tempUsername;
+                                        userId = tempUserId;
                                     }
 
                                 });
@@ -359,7 +357,11 @@ public class SplashScreenActivity extends Activity {
 
             // If login successful, set AppPrefernce "user", so user is permanently logged in.
             if (success) {
-                mAppPrefs.saveUser(userName);
+                mAppPrefs.saveUser(username);
+
+                Rove rove = (Rove) getApplication();
+                rove.setUserId(userId);
+
                 Intent mainIntent = new Intent(SplashScreenActivity.this, com.fourkins.rove.activity.MainActivity.class);
                 finish();
                 startActivity(mainIntent);
