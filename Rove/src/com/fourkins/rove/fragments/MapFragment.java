@@ -9,12 +9,14 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.TranslateAnimation;
 import android.widget.LinearLayout;
-import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 
 import com.fourkins.rove.R;
 import com.fourkins.rove.activity.NewPostActivity;
+import com.fourkins.rove.application.Rove;
 import com.fourkins.rove.posts.Post;
 import com.fourkins.rove.posts.PostsManager;
 import com.fourkins.rove.util.LocationUtil;
@@ -50,7 +52,8 @@ public class MapFragment extends SupportMapFragment {
     private boolean mClearFlag = true;
 
     private LinearLayout mLinearLayout;
-    private LinearLayout mMapLayout;
+
+    Rove rove;
 
     public MapFragment() {
 
@@ -67,7 +70,8 @@ public class MapFragment extends SupportMapFragment {
         View view = super.onCreateView(inflater, viewGroup, bundle);
 
         mLinearLayout = (LinearLayout) getActivity().findViewById(R.id.detailmapinfo);
-        mMapLayout = (LinearLayout) getActivity().findViewById(R.id.emptyView);
+
+        rove = (Rove) getActivity().getApplication();
 
         setUpMapIfNeeded();
 
@@ -117,8 +121,6 @@ public class MapFragment extends SupportMapFragment {
         return new OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(Marker marker) {
-                LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT, 1.25f);
-                LayoutParams mapParams = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT, 0.75f);
 
                 final TextView user = (TextView) mLinearLayout.findViewById(R.id.detail_map_user_display);
                 final TextView latitudeDisplay = (TextView) mLinearLayout.findViewById(R.id.detail_map_latitude_display);
@@ -130,8 +132,13 @@ public class MapFragment extends SupportMapFragment {
                 longitudeDisplay.setText(Double.toString(marker.getPosition().longitude));
                 comment.setText(marker.getSnippet());
 
-                mMapLayout.setLayoutParams(mapParams);
-                mLinearLayout.setLayoutParams(params);
+                Animation animation = new TranslateAnimation(Animation.RELATIVE_TO_PARENT, 0.0f, Animation.RELATIVE_TO_PARENT, 0.0f,
+                        Animation.RELATIVE_TO_PARENT, 1.0f, Animation.RELATIVE_TO_PARENT, 0.4f);
+                animation.setDuration(500);
+                animation.setFillAfter(true);
+                mLinearLayout.startAnimation(animation);
+                rove.setFlagFeedDetail(true);
+                mLinearLayout.setVisibility(View.VISIBLE);
 
                 if (!marker.getTitle().isEmpty()) {
                     mClearFlag = false;
@@ -160,11 +167,13 @@ public class MapFragment extends SupportMapFragment {
         return new OnMapClickListener() {
             @Override
             public void onMapClick(LatLng latlng) {
-                LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT, 2.0f);
-                LayoutParams mapParams = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT, 0.0f);
-
-                mMapLayout.setLayoutParams(mapParams);
-                mLinearLayout.setLayoutParams(params);
+                Animation animation = new TranslateAnimation(Animation.RELATIVE_TO_PARENT, 0.0f, Animation.RELATIVE_TO_PARENT, 0.0f,
+                        Animation.RELATIVE_TO_PARENT, 0.4f, Animation.RELATIVE_TO_PARENT, 1.0f);
+                animation.setDuration(500);
+                animation.setFillAfter(true);
+                mLinearLayout.startAnimation(animation);
+                rove.setFlagFeedDetail(false);
+                mLinearLayout.setVisibility(View.GONE);
             }
         };
     }
