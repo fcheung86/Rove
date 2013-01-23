@@ -12,13 +12,11 @@ public class Rove extends Application {
     /*
      * The base URL of the Rove Server
      * 
-     * This specifies the location of the Rove Server, change the IP, 192.168.x.x, to wherever the Rove Server is
-     * running
+     * This specifies the location of the Rove Server.
      * 
-     * If the client and server is running in the same local network, the IP should most likely be 192.168.x.x too, run
-     * 'ipconfig' to see what the IP is
+     * If you want to run a local server, use something like 192.168.x.x/RoveServer
      */
-    public static final String SERVER_BASE_URL = "http://192.168.3.10:8080/RoveServer";
+    public static final String SERVER_BASE_URL = "http://rove.elasticbeanstalk.com";
 
     private boolean flagFeedDetail = false;
 
