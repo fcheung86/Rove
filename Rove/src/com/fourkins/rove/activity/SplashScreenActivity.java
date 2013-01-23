@@ -117,18 +117,27 @@ public class SplashScreenActivity extends Activity {
                                     //mLogo.setLayoutParams(layoutParams);
                                     
                                     AnimationSet set = new AnimationSet(true);
-
+                                    
                                     Animation animation = new AlphaAnimation(0.0f, 1.0f);
-                                    animation.setDuration(250);
+                                    animation.setDuration(1500);
                                     set.addAnimation(animation);
+                                    
+                                    AnimationSet set1 = new AnimationSet(true);
+                                    
+                                    Animation animation1 = new AlphaAnimation(1.0f, 0.0f);
+                                    animation1.setDuration(1500);
+                                    set1.addAnimation(animation1);
+                                    
+                                   /* AnimationSet set = new AnimationSet(true);
 
-                                    animation = new TranslateAnimation(
+                                    Animation animation = new TranslateAnimation(
                                         Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f,
-                                        Animation.RELATIVE_TO_SELF, 1.0f, Animation.RELATIVE_TO_SELF, 0.0f
+                                        Animation.RELATIVE_TO_SELF, 20.0f, Animation.RELATIVE_TO_SELF, 0.0f
                                     );
                                     animation.setDuration(250);
-                                    set.addAnimation(animation);
-                                                    
+                                    set.addAnimation(animation);*/
+                                    
+                                    mLogoView.startAnimation(animation1);
                                     mLogoView.startAnimation(animation);
                                     mLoginFormView.startAnimation(animation);
                                     mLoginFormView.setVisibility(View.VISIBLE);
@@ -252,14 +261,14 @@ public class SplashScreenActivity extends Activity {
             mLoginFormView.animate().setDuration(shortAnimTime).alpha(show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
                 @Override
                 public void onAnimationEnd(Animator animation) {
-                    mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
+                    mLoginFormView.setVisibility(show ? View.INVISIBLE : View.VISIBLE);
                 }
             });
         } else {
             // The ViewPropertyAnimator APIs are not available, so simply show
             // and hide the relevant UI components.
             mLoginStatusView.setVisibility(show ? View.VISIBLE : View.GONE);
-            mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
+            mLoginFormView.setVisibility(show ? View.INVISIBLE : View.VISIBLE);
         }
     }
 
