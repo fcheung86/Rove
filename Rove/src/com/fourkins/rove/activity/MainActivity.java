@@ -10,12 +10,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
-import android.view.animation.TranslateAnimation;
 import android.widget.LinearLayout;
 
 import com.fourkins.rove.R;
 import com.fourkins.rove.application.AppPreferences;
-import com.fourkins.rove.application.Rove;
 import com.fourkins.rove.fragments.FeedFragment;
 import com.fourkins.rove.fragments.MapFragment;
 import com.google.android.gms.maps.SupportMapFragment;
