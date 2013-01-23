@@ -28,7 +28,7 @@ public class FeedFragment extends ListFragment {
     private PostsManager mPostsManager;
     public static final String postIdValue = "com.fourkins.rove.POSTIDVALUE";
     private View footerView;
-    
+
     private LinearLayout mLinearLayout;
 
     public FeedFragment() {
@@ -39,7 +39,7 @@ public class FeedFragment extends ListFragment {
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         mPostsManager = new PostsManager(activity);
-        
+
         mLinearLayout = (LinearLayout) getActivity().findViewById(R.id.detailmapinfo);
 
         footerView = new View(this.getActivity().getApplicationContext());
@@ -63,7 +63,7 @@ public class FeedFragment extends ListFragment {
     public void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
 
-        if (position < 2) {
+        if (position < 1) {
             footerView.setLayoutParams(new AbsListView.LayoutParams(0, 0)); // footer temporarily "removed" here (proof
                                                                             // of concept), but should be
                                                                             // removed upon closing "detail panel"
@@ -72,7 +72,7 @@ public class FeedFragment extends ListFragment {
                                                                                // "smarter" to get screen height
         }
         this.getListView().smoothScrollToPositionFromTop(position, 0, 250);
-        
+
         ToggleFeedDetail();
         // commented out the code below, so it won't open the post detail screen
 
@@ -91,7 +91,7 @@ public class FeedFragment extends ListFragment {
         // Toast.makeText(getActivity(), "Invalid Post", Toast.LENGTH_SHORT).show();
         // }
     }
-    
+
     public void ToggleFeedDetail() {
         Animation animation;
 
