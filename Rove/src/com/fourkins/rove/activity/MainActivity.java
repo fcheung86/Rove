@@ -8,11 +8,14 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.TranslateAnimation;
 import android.widget.LinearLayout;
-import android.widget.LinearLayout.LayoutParams;
 
 import com.fourkins.rove.R;
 import com.fourkins.rove.application.AppPreferences;
+import com.fourkins.rove.application.Rove;
 import com.fourkins.rove.fragments.FeedFragment;
 import com.fourkins.rove.fragments.MapFragment;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -54,17 +57,21 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         // Create instances of each fragment, and hide them
         mFeedFragment = new FeedFragment();
         mSelectedFragment = mFeedFragment;
-        getSupportFragmentManager().beginTransaction().replace(R.id.container, mFeedFragment).commit();
+        getSupportFragmentManager().beginTransaction().add(R.id.container, mFeedFragment).commit();
 
+        /* commenting this out because it's causing a crash in simulator */
         mMapFragment = new MapFragment();
         getSupportFragmentManager().beginTransaction().add(R.id.container, mMapFragment).hide(mMapFragment).commit();
 
         // For each of the sections in the app, add a tab to the action bar.
         // IMPORTANT: Must be done AFTER instantiating Fragments; these will trigger onTabSelected which references the
         // Fragments
+
+        LinearLayout feed_detail = (LinearLayout) findViewById(R.id.detailmapinfo);
+        feed_detail.setVisibility(View.GONE);
+
         actionBar.addTab(actionBar.newTab().setText(R.string.feed_section).setTabListener(this));
         actionBar.addTab(actionBar.newTab().setText(R.string.map_section).setTabListener(this));
-
     }
 
     protected void onStart() {
@@ -135,29 +142,39 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
     public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
         // When the given tab is selected, show the tab contents in the
         // container view.
+        LinearLayout feed_detail = (LinearLayout) findViewById(R.id.detailmapinfo);
+        Animation animation;
 
         switch (tab.getPosition()) {
         case 0: // "Feed"
+
             LinearLayout linearLayout = (LinearLayout) findViewById(R.id.detailmapinfo);
             LinearLayout mapLayout = (LinearLayout) findViewById(R.id.emptyView);
 
-            LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT, 2f);
-            LayoutParams mapParams = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT, 0f);
+            // LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT,
+            // 2f);
+            // LayoutParams mapParams = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT,
+            // LayoutParams.MATCH_PARENT, 0f);
 
-            mapLayout.setLayoutParams(mapParams);
-            linearLayout.setLayoutParams(params);
+            // mapLayout.setLayoutParams(mapParams);
+            // linearLayout.setLayoutParams(params);
 
             getSupportFragmentManager().beginTransaction().show(mFeedFragment).hide(mMapFragment).commit();
 
             mSelectedFragment = mFeedFragment;
             break;
-
+        /*
+         * Phong's Stuff getSupportFragmentManager().beginTransaction().show(mFeedFragment).commit();
+         * 
+         * mSelectedFragment = mFeedFragment; break;
+         */
         case 1: // "Map"
+
             getSupportFragmentManager().beginTransaction().show(mMapFragment).hide(mFeedFragment).commit();
 
             mSelectedFragment = mMapFragment;
-            break;
 
+            break;
         default:
             return;
         }
@@ -172,4 +189,30 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
     public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
     }
 
+    public void ToggleFeedDetail() {
+        LinearLayout feed_detail = (LinearLayout) findViewById(R.id.detailmapinfo);
+        Animation animation;
+
+        Rove rove = (Rove) getApplication();
+        final boolean flagFeedDetail = rove.getFlagFeedDetail();
+
+        if (flagFeedDetail == false) {
+            // if feed_detail at bottom, open
+            animation = new TranslateAnimation(Animation.RELATIVE_TO_PARENT, 0.0f, Animation.RELATIVE_TO_PARENT, 0.0f, Animation.RELATIVE_TO_PARENT,
+                    1.0f, Animation.RELATIVE_TO_PARENT, 0.4f);
+            animation.setDuration(500);
+            animation.setFillAfter(true);
+            feed_detail.startAnimation(animation);
+            rove.setFlagFeedDetail(true);
+
+        } else {
+            // if at top, close
+            animation = new TranslateAnimation(Animation.RELATIVE_TO_PARENT, 0.0f, Animation.RELATIVE_TO_PARENT, 0.0f, Animation.RELATIVE_TO_PARENT,
+                    0.4f, Animation.RELATIVE_TO_PARENT, 1.0f);
+            animation.setDuration(500);
+            animation.setFillAfter(true);
+            feed_detail.startAnimation(animation);
+            rove.setFlagFeedDetail(false);
+        }
+    }
 }

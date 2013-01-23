@@ -18,6 +18,16 @@ public class Rove extends Application {
      */
     public static final String SERVER_BASE_URL = "http://rove.elasticbeanstalk.com";
 
+    private boolean flagFeedDetail = false;
+
+    public boolean getFlagFeedDetail() {
+        return flagFeedDetail;
+    }
+
+    public void setFlagFeedDetail(boolean FlagFeedDetail) {
+        flagFeedDetail = FlagFeedDetail;
+    }
+
     private String userName = null;
 
     public String getUserName() {
