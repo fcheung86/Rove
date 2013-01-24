@@ -73,7 +73,7 @@ public class FeedFragment extends ListFragment {
         }
         this.getListView().smoothScrollToPositionFromTop(position, 0, 250);
 
-        ToggleFeedDetail();
+        ToggleFeedDetail(position);
         // commented out the code below, so it won't open the post detail screen
 
         // TextView idView = (TextView) v.findViewById(R.id.row_id);
@@ -92,11 +92,12 @@ public class FeedFragment extends ListFragment {
         // }
     }
 
-    public void ToggleFeedDetail() {
+    public void ToggleFeedDetail(int position) {
         Animation animation;
 
         Rove rove = (Rove) getActivity().getApplication();
         final boolean flagFeedDetail = rove.getFlagFeedDetail();
+        final int postDisplayPosition = rove.getPostDisplayPosition();
 
         if (flagFeedDetail == false) {
             // if feed_detail at bottom, open
@@ -107,16 +108,21 @@ public class FeedFragment extends ListFragment {
             mLinearLayout.startAnimation(animation);
             rove.setFlagFeedDetail(true);
             mLinearLayout.setVisibility(View.VISIBLE);
+            rove.setPostDisplayPosition(position);
 
         } else {
             // if at top, close
-            animation = new TranslateAnimation(Animation.RELATIVE_TO_PARENT, 0.0f, Animation.RELATIVE_TO_PARENT, 0.0f, Animation.RELATIVE_TO_PARENT,
-                    0.4f, Animation.RELATIVE_TO_PARENT, 1.0f);
-            animation.setDuration(500);
-            animation.setFillAfter(true);
-            mLinearLayout.startAnimation(animation);
-            rove.setFlagFeedDetail(false);
-            mLinearLayout.setVisibility(View.GONE);
+            if (postDisplayPosition == position) {
+                animation = new TranslateAnimation(Animation.RELATIVE_TO_PARENT, 0.0f, Animation.RELATIVE_TO_PARENT, 0.0f,
+                        Animation.RELATIVE_TO_PARENT, 0.4f, Animation.RELATIVE_TO_PARENT, 1.0f);
+                animation.setDuration(500);
+                animation.setFillAfter(true);
+                mLinearLayout.startAnimation(animation);
+                rove.setFlagFeedDetail(false);
+                mLinearLayout.setVisibility(View.GONE);
+            } else {
+                rove.setPostDisplayPosition(position);
+            }
         }
     }
 

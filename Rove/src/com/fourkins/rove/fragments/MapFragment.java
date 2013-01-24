@@ -50,8 +50,10 @@ public class MapFragment extends SupportMapFragment {
     private LatLngBounds mLatLngBounds;
     private List<Post> mPosts;
     private boolean mClearFlag = true;
+    private boolean markerClick = false;
 
     private LinearLayout mLinearLayout;
+    private LinearLayout mapLinearLayout;
 
     Rove rove;
 
@@ -70,6 +72,7 @@ public class MapFragment extends SupportMapFragment {
         View view = super.onCreateView(inflater, viewGroup, bundle);
 
         mLinearLayout = (LinearLayout) getActivity().findViewById(R.id.detailmapinfo);
+        mapLinearLayout = (LinearLayout) getActivity().findViewById(R.id.emptyView);
 
         rove = (Rove) getActivity().getApplication();
 
@@ -113,6 +116,11 @@ public class MapFragment extends SupportMapFragment {
             public void onCameraChange(CameraPosition position) {
                 mLatLngBounds = mMap.getProjection().getVisibleRegion().latLngBounds;
                 addMarkers(mLatLngBounds);
+
+                if (markerClick) {
+                    mMap.stopAnimation();
+                    markerClick = false;
+                }
             }
         };
     }
@@ -139,7 +147,16 @@ public class MapFragment extends SupportMapFragment {
                 mLinearLayout.startAnimation(animation);
                 rove.setFlagFeedDetail(true);
                 mLinearLayout.setVisibility(View.VISIBLE);
+                
+               /* double temp = marker.getPosition().latitude - 0.0000932067;
+                
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(temp,
+                        marker.getPosition().longitude), 12));
+                marker.showInfoWindow();
 
+                markerClick = true;
+                */
+                
                 if (!marker.getTitle().isEmpty()) {
                     mClearFlag = false;
                     return false;
@@ -167,13 +184,19 @@ public class MapFragment extends SupportMapFragment {
         return new OnMapClickListener() {
             @Override
             public void onMapClick(LatLng latlng) {
-                Animation animation = new TranslateAnimation(Animation.RELATIVE_TO_PARENT, 0.0f, Animation.RELATIVE_TO_PARENT, 0.0f,
-                        Animation.RELATIVE_TO_PARENT, 0.4f, Animation.RELATIVE_TO_PARENT, 1.0f);
-                animation.setDuration(500);
-                animation.setFillAfter(true);
-                mLinearLayout.startAnimation(animation);
-                rove.setFlagFeedDetail(false);
-                mLinearLayout.setVisibility(View.GONE);
+
+                Rove rove = (Rove) getActivity().getApplication();
+                final boolean flagFeedDetail = rove.getFlagFeedDetail();
+
+                if (flagFeedDetail) {
+                    Animation animation = new TranslateAnimation(Animation.RELATIVE_TO_PARENT, 0.0f, Animation.RELATIVE_TO_PARENT, 0.0f,
+                            Animation.RELATIVE_TO_PARENT, 0.4f, Animation.RELATIVE_TO_PARENT, 1.0f);
+                    animation.setDuration(500);
+                    animation.setFillAfter(true);
+                    mLinearLayout.startAnimation(animation);
+                    rove.setFlagFeedDetail(false);
+                    mLinearLayout.setVisibility(View.GONE);
+                }
             }
         };
     }

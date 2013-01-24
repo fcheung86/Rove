@@ -20,17 +20,26 @@ public class Rove extends Application {
     // public static final String SERVER_BASE_URL = "http://192.168.x.x:8080/RoveServer";
 
     private boolean flagFeedDetail = false;
+    private int postDisplayPosition = 0;
     private String username = null;
     private long userId;
 
     public boolean getFlagFeedDetail() {
         return flagFeedDetail;
     }
-
+    
     public void setFlagFeedDetail(boolean FlagFeedDetail) {
         flagFeedDetail = FlagFeedDetail;
     }
 
+    public int getPostDisplayPosition() {
+        return postDisplayPosition;
+    }
+    
+    public void setPostDisplayPosition(int PostDisplayPosition) {
+        postDisplayPosition = PostDisplayPosition;
+    }
+    
     public String getUsername() {
         return username;
     }
