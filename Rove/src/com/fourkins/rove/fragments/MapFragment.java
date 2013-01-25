@@ -11,7 +11,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 
 import com.fourkins.rove.R;
@@ -140,23 +142,46 @@ public class MapFragment extends SupportMapFragment {
                 longitudeDisplay.setText(Double.toString(marker.getPosition().longitude));
                 comment.setText(marker.getSnippet());
 
-                Animation animation = new TranslateAnimation(Animation.RELATIVE_TO_PARENT, 0.0f, Animation.RELATIVE_TO_PARENT, 0.0f,
-                        Animation.RELATIVE_TO_PARENT, 1.0f, Animation.RELATIVE_TO_PARENT, 0.4f);
-                animation.setDuration(500);
-                animation.setFillAfter(true);
-                mLinearLayout.startAnimation(animation);
+                if (!rove.getFlagFeedDetail()) {
+                    Animation animation = new TranslateAnimation(Animation.RELATIVE_TO_PARENT, 0.0f, Animation.RELATIVE_TO_PARENT, 0.0f,
+                            Animation.RELATIVE_TO_PARENT, 1.0f, Animation.RELATIVE_TO_PARENT, 0.4f);
+                    animation.setDuration(500);
+                    animation.setFillAfter(true);
+                    mLinearLayout.startAnimation(animation);
+                    mLinearLayout.setVisibility(View.VISIBLE);
+                    
+                    Thread splashThread = new Thread() {
+                        @Override
+                        public void run() {
+                            try {
+                                synchronized (this) {
+                                    // 5s wait
+                                    wait(500);
+                                    
+                                    getActivity().runOnUiThread(new Runnable() {
+                                        public void run() {
+                                            final double resizeHeight = (double) mapLinearLayout.getHeight() * 0.4;
+                                            
+                                            mapLinearLayout.getLayoutParams().height = (int)resizeHeight;
+                                            mapLinearLayout.requestLayout();
+                                        }
+                                    });
+                                        
+                                }
+                            } catch (InterruptedException e) {
+                                // do nothing
+                            }
+                        }
+                    };
+                    splashThread.start();
+                    
+                    
+                    //mapLinearLayout.startAnimation(animation)
+                    //mapLinearLayout.setLayoutParams(new FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT, (int) resizeHeight));
+                }
+                
                 rove.setFlagFeedDetail(true);
-                mLinearLayout.setVisibility(View.VISIBLE);
-                
-               /* double temp = marker.getPosition().latitude - 0.0000932067;
-                
-                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(temp,
-                        marker.getPosition().longitude), 12));
-                marker.showInfoWindow();
 
-                markerClick = true;
-                */
-                
                 if (!marker.getTitle().isEmpty()) {
                     mClearFlag = false;
                     return false;
@@ -185,10 +210,7 @@ public class MapFragment extends SupportMapFragment {
             @Override
             public void onMapClick(LatLng latlng) {
 
-                Rove rove = (Rove) getActivity().getApplication();
-                final boolean flagFeedDetail = rove.getFlagFeedDetail();
-
-                if (flagFeedDetail) {
+                if (rove.getFlagFeedDetail()) {
                     Animation animation = new TranslateAnimation(Animation.RELATIVE_TO_PARENT, 0.0f, Animation.RELATIVE_TO_PARENT, 0.0f,
                             Animation.RELATIVE_TO_PARENT, 0.4f, Animation.RELATIVE_TO_PARENT, 1.0f);
                     animation.setDuration(500);
@@ -196,6 +218,10 @@ public class MapFragment extends SupportMapFragment {
                     mLinearLayout.startAnimation(animation);
                     rove.setFlagFeedDetail(false);
                     mLinearLayout.setVisibility(View.GONE);
+
+                    double resizeHeight = (double) mapLinearLayout.getHeight() / 0.4;
+
+                    mapLinearLayout.setLayoutParams(new FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT, (int) resizeHeight));
                 }
             }
         };
