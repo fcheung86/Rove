@@ -11,7 +11,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.LinearLayout.LayoutParams;
 
 import com.fourkins.rove.R;
 import com.fourkins.rove.application.AppPreferences;
@@ -145,8 +147,8 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 
         switch (tab.getPosition()) {
         case 0: // "Feed"
-            RemoveDetailScreen();
-            
+            RemoveDetailScreen(false);
+
             getSupportFragmentManager().beginTransaction().show(mFeedFragment).hide(mMapFragment).commit();
 
             mSelectedFragment = mFeedFragment;
@@ -157,8 +159,8 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
          * mSelectedFragment = mFeedFragment; break;
          */
         case 1: // "Map"
-            RemoveDetailScreen();
-            
+            RemoveDetailScreen(true);
+
             getSupportFragmentManager().beginTransaction().show(mMapFragment).hide(mFeedFragment).commit();
 
             mSelectedFragment = mMapFragment;
@@ -169,23 +171,31 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         }
 
     }
-    
-    public void RemoveDetailScreen()
-    {
+
+    public void RemoveDetailScreen(boolean toMap) {
         LinearLayout feed_detail = (LinearLayout) findViewById(R.id.detailmapinfo);
+        LinearLayout mapLinearLayout = (LinearLayout) findViewById(R.id.emptyView);
+
         Animation animation;
         Rove rove = (Rove) getApplication();
-        
-        if( rove.getFlagFeedDetail())
-        {
-            animation = new TranslateAnimation(Animation.RELATIVE_TO_PARENT, 0.0f, Animation.RELATIVE_TO_PARENT, 0.0f, Animation.RELATIVE_TO_PARENT, 0.4f, Animation.RELATIVE_TO_PARENT, 1.0f);
+
+        if (rove.getFlagFeedDetail()) {
+            animation = new TranslateAnimation(Animation.RELATIVE_TO_PARENT, 0.0f, Animation.RELATIVE_TO_PARENT, 0.0f, Animation.RELATIVE_TO_PARENT,
+                    0.4f, Animation.RELATIVE_TO_PARENT, 1.0f);
             animation.setDuration(500);
             animation.setFillAfter(true);
             feed_detail.startAnimation(animation);
             rove.setFlagFeedDetail(false);
             feed_detail.setVisibility(View.GONE);
+
+            if (!toMap) {
+                double resizeHeight = (double) mapLinearLayout.getHeight() / 0.4;
+
+                mapLinearLayout.setLayoutParams(new FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT, (int) resizeHeight));
+            }
         }
     }
+
     @Override
     public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
     }
