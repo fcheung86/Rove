@@ -56,7 +56,7 @@ public class FeedFragment extends ListFragment {
 
         getListView().addFooterView(footerView);
 
-        loadFromLocal();
+        loadFromServer();
     }
 
     @Override

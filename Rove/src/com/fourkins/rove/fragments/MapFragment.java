@@ -86,8 +86,7 @@ public class MapFragment extends SupportMapFragment {
     @Override
     public void onResume() {
         super.onResume();
-        mPosts = mPostsManager.getAllPosts();
-        addMarkers(mMap.getProjection().getVisibleRegion().latLngBounds);
+        loadFromServer();
     }
 
     private void setUpMapIfNeeded() {
@@ -106,7 +105,7 @@ public class MapFragment extends SupportMapFragment {
 
             // Check if we were successful in obtaining the map.
             if (mMap != null) {
-                mPosts = mPostsManager.getAllPosts();
+                loadFromServer();
             }
         }
     }
@@ -149,7 +148,7 @@ public class MapFragment extends SupportMapFragment {
                     animation.setFillAfter(true);
                     mLinearLayout.startAnimation(animation);
                     mLinearLayout.setVisibility(View.VISIBLE);
-                    
+
                     Thread splashThread = new Thread() {
                         @Override
                         public void run() {
@@ -157,16 +156,16 @@ public class MapFragment extends SupportMapFragment {
                                 synchronized (this) {
                                     // 5s wait
                                     wait(500);
-                                    
+
                                     getActivity().runOnUiThread(new Runnable() {
                                         public void run() {
                                             final double resizeHeight = (double) mapLinearLayout.getHeight() * 0.4;
-                                            
-                                            mapLinearLayout.getLayoutParams().height = (int)resizeHeight;
+
+                                            mapLinearLayout.getLayoutParams().height = (int) resizeHeight;
                                             mapLinearLayout.requestLayout();
                                         }
                                     });
-                                        
+
                                 }
                             } catch (InterruptedException e) {
                                 // do nothing
@@ -174,12 +173,12 @@ public class MapFragment extends SupportMapFragment {
                         }
                     };
                     splashThread.start();
-                    
-                    
-                    //mapLinearLayout.startAnimation(animation)
-                    //mapLinearLayout.setLayoutParams(new FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT, (int) resizeHeight));
+
+                    // mapLinearLayout.startAnimation(animation)
+                    // mapLinearLayout.setLayoutParams(new FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT, (int)
+                    // resizeHeight));
                 }
-                
+
                 rove.setFlagFeedDetail(true);
 
                 if (!marker.getTitle().isEmpty()) {
