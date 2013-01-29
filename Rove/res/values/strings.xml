@@ -25,6 +25,8 @@
     <string name="menu_add">Add</string>
     <string name="local">Local</string>
     <string name="server">Server</string>
+    <string name="sort">Sort</string>
+    <string name="popup_menu">Popup Menu</string>
 
     <!-- NewPostActivity -->
     <string name="username">Username:</string>

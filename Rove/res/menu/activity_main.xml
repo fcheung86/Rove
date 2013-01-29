@@ -6,6 +6,12 @@
         android:showAsAction="ifRoom|withText"
         android:title="@string/menu_add"/>
     <item
+        android:id="@+id/menu_Sort"
+        android:orderInCategory="70"
+        android:showAsAction="never"
+        android:actionViewClass="android.widget.ImageButton"
+        android:title="@string/sort"/>
+    <item
         android:id="@+id/menu_load_local"
         android:orderInCategory="80"
         android:showAsAction="never"

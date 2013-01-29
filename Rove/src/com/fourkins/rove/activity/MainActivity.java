@@ -14,6 +14,8 @@ import android.view.animation.TranslateAnimation;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
+import android.widget.PopupMenu;
+import android.widget.Toast;
 
 import com.fourkins.rove.R;
 import com.fourkins.rove.application.AppPreferences;
@@ -110,6 +112,11 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
             startActivity(intent);
             return true;
 
+        case R.id.menu_Sort:
+            View view = findViewById(R.id.popup_view);
+            showPopupMenu(view);
+            return true;
+
         case R.id.menu_logout: // Logout: Simply remove AppPreference "user", and redirect back to login screen
             mAppPrefs.saveUser("");
             Intent loginIntent = new Intent(MainActivity.this, com.fourkins.rove.activity.SplashScreenActivity.class);
@@ -202,5 +209,21 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 
     @Override
     public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
+    }
+
+    private void showPopupMenu(View v) {
+        PopupMenu popupMenu = new PopupMenu(MainActivity.this, v);
+        popupMenu.getMenuInflater().inflate(R.menu.sort_popup_list, popupMenu.getMenu());
+
+        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                Toast.makeText(MainActivity.this, item.toString(), Toast.LENGTH_LONG).show();
+                return true;
+            }
+        });
+
+        popupMenu.show();
     }
 }

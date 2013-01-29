@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+  <group android:id="@+id/sort_popupmenu">
+      <item android:id="@+id/sort_time"
+          android:title="Time"/>
+      <item android:id="@+id/sort_distance"
+          android:title="Distance"/>
+      <item android:id="@+id/sort_comment"
+          android:title="Most Comment"/>
+  </group>
+</menu>
