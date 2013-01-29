@@ -66,7 +66,7 @@ public class PostsManager {
         return posts;
     }
 
-    public Post getPost(long id) {
+    public Post getPost(int id) {
         ds.open();
         Post post = ds.getPost(id);
         ds.close();

@@ -22,12 +22,12 @@ public class Rove extends Application {
     private boolean flagFeedDetail = false;
     private int postDisplayPosition = 0;
     private String username = null;
-    private long userId;
+    private int userId;
 
     public boolean getFlagFeedDetail() {
         return flagFeedDetail;
     }
-    
+
     public void setFlagFeedDetail(boolean FlagFeedDetail) {
         flagFeedDetail = FlagFeedDetail;
     }
@@ -35,11 +35,11 @@ public class Rove extends Application {
     public int getPostDisplayPosition() {
         return postDisplayPosition;
     }
-    
+
     public void setPostDisplayPosition(int PostDisplayPosition) {
         postDisplayPosition = PostDisplayPosition;
     }
-    
+
     public String getUsername() {
         return username;
     }
@@ -48,11 +48,11 @@ public class Rove extends Application {
         this.username = username;
     }
 
-    public long getUserId() {
+    public int getUserId() {
         return userId;
     }
 
-    public void setUserId(long userId) {
+    public void setUserId(int userId) {
         this.userId = userId;
     }
 }

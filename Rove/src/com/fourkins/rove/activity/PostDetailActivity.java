@@ -35,7 +35,7 @@ public class PostDetailActivity extends FragmentActivity {
 
         mPostsManager = new PostsManager(this);
 
-        long postId = intent.getLongExtra(FeedFragment.postIdValue, 0);
+        int postId = intent.getIntExtra(FeedFragment.postIdValue, 0);
         post = mPostsManager.getPost(postId);
 
         setUpMapIfNeeded();

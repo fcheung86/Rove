@@ -15,7 +15,7 @@ import org.json.JSONObject;
  */
 
 public class User {
-    private long userId;
+    private int userId;
     private String username;
     private String realName;
     // private String firstName;
@@ -48,7 +48,7 @@ public class User {
 
     public User(JSONObject jsonObject) {
         try {
-            userId = jsonObject.getLong("userId");
+            userId = jsonObject.getInt("userId");
             username = jsonObject.getString("username");
             realName = jsonObject.getString("realName");
             email = jsonObject.getString("email");
@@ -58,11 +58,11 @@ public class User {
         }
     }
 
-    public void setUserId(long userId) {
+    public void setUserId(int userId) {
         this.userId = userId;
     }
 
-    public long getUserId() {
+    public int getUserId() {
         return userId;
     }
 

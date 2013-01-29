@@ -188,7 +188,7 @@ public class NewPostActivity extends Activity {
         }
     }
 
-    private long getUserId() {
+    private int getUserId() {
         Rove rove = (Rove) getApplication();
         return rove.getUserId();
     }

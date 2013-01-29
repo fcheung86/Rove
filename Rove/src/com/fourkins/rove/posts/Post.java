@@ -7,8 +7,8 @@ import org.json.JSONObject;
 
 public class Post {
 
-    private long postId;
-    private long userId;
+    private int postId;
+    private int userId;
     private String username;
     private double latitude;
     private double longitude;
@@ -23,8 +23,8 @@ public class Post {
 
     public Post(JSONObject jsonObject) {
         try {
-            postId = jsonObject.getLong("postId");
-            userId = jsonObject.getLong("userId");
+            postId = jsonObject.getInt("postId");
+            userId = jsonObject.getInt("userId");
             username = jsonObject.getString("username");
             latitude = jsonObject.getDouble("latitude");
             longitude = jsonObject.getDouble("longitude");
@@ -37,7 +37,7 @@ public class Post {
         }
     }
 
-    public Post(long userId, String username, double latitude, double longitude, String message, String address, String city, Timestamp timestamp) {
+    public Post(int userId, String username, double latitude, double longitude, String message, String address, String city, Timestamp timestamp) {
         super();
 
         this.userId = userId;
@@ -50,19 +50,19 @@ public class Post {
         this.city = city;
     }
 
-    public long getPostId() {
+    public int getPostId() {
         return postId;
     }
 
-    public void setPostId(long postId) {
+    public void setPostId(int postId) {
         this.postId = postId;
     }
 
-    public void setUserId(long userId) {
+    public void setUserId(int userId) {
         this.userId = userId;
     }
 
-    public long getUserId() {
+    public int getUserId() {
         return userId;
     }
 
@@ -126,7 +126,7 @@ public class Post {
         JSONObject jObj = new JSONObject();
 
         try {
-            jObj.put("userId", userId); // TODO need to put in the real userId
+            jObj.put("userId", userId);
             jObj.put("latitude", latitude);
             jObj.put("longitude", longitude);
             jObj.put("message", message);

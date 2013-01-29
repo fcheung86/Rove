@@ -43,7 +43,7 @@ public class SplashScreenActivity extends Activity {
     private static final Logger LOGGER = Logger.getLogger(SplashScreenActivity.class.getName());
 
     private String username = "";
-    private long userId;
+    private int userId;
 
     /**
      * The default email to populate the email field with.
@@ -276,7 +276,7 @@ public class SplashScreenActivity extends Activity {
         private AsyncHttpClient client;
         private boolean authenticated = false;
         private String tempUsername; // For use of "permanent login" username
-        private long tempUserId;
+        private int tempUserId;
 
         @Override
         protected Boolean doInBackground(Void... params) {

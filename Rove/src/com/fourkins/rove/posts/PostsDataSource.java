@@ -16,7 +16,8 @@ public class PostsDataSource {
     private SQLiteDatabase database;
     private PostsSQLiteHelper dbHelper;
     private String[] allColumns = { PostsSQLiteHelper.COLUMN_ID, PostsSQLiteHelper.COLUMN_USER_NAME, PostsSQLiteHelper.COLUMN_LATITUDE,
-            PostsSQLiteHelper.COLUMN_LONGITUDE, PostsSQLiteHelper.COLUMN_MESSAGE, PostsSQLiteHelper.COLUMN_ADDRESS, PostsSQLiteHelper.COLUMN_CITY, PostsSQLiteHelper.COLUMN_TIMESTAMP };
+            PostsSQLiteHelper.COLUMN_LONGITUDE, PostsSQLiteHelper.COLUMN_MESSAGE, PostsSQLiteHelper.COLUMN_ADDRESS, PostsSQLiteHelper.COLUMN_CITY,
+            PostsSQLiteHelper.COLUMN_TIMESTAMP };
 
     public PostsDataSource(Context context) {
         dbHelper = new PostsSQLiteHelper(context);
@@ -70,7 +71,7 @@ public class PostsDataSource {
         return posts;
     }
 
-    public Post getPost(long id) {
+    public Post getPost(int id) {
         String where = PostsSQLiteHelper.COLUMN_ID + "=?";
         String whereArgs[] = new String[] { String.valueOf(id) };
 
@@ -88,7 +89,7 @@ public class PostsDataSource {
     private Post cursorToPost(Cursor cursor) {
         Post post = new Post();
 
-        post.setPostId(cursor.getLong(0));
+        post.setPostId(cursor.getInt(0));
         post.setUsername(cursor.getString(1));
         post.setLatitude(cursor.getDouble(2));
         post.setLongitude(cursor.getDouble(3));
@@ -96,7 +97,6 @@ public class PostsDataSource {
         post.setAddress(cursor.getString(5));
         post.setCity(cursor.getString(6));
         post.setTimestamp(new Timestamp(cursor.getLong(7)));
-        
 
         return post;
     }
