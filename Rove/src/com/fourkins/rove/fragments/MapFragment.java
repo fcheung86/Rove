@@ -52,7 +52,7 @@ public class MapFragment extends SupportMapFragment {
     private LatLngBounds mLatLngBounds;
     private List<Post> mPosts;
     private boolean mClearFlag = true;
-    private boolean markerClick = false;
+    private boolean onResumeFlag = false;
 
     private LinearLayout mLinearLayout;
     private LinearLayout mapLinearLayout;
@@ -86,6 +86,7 @@ public class MapFragment extends SupportMapFragment {
     @Override
     public void onResume() {
         super.onResume();
+        onResumeFlag = true;
         loadFromServer();
     }
 
@@ -115,12 +116,9 @@ public class MapFragment extends SupportMapFragment {
         return new OnCameraChangeListener() {
             @Override
             public void onCameraChange(CameraPosition position) {
-                mLatLngBounds = mMap.getProjection().getVisibleRegion().latLngBounds;
-                addMarkers(mLatLngBounds);
-
-                if (markerClick) {
-                    mMap.stopAnimation();
-                    markerClick = false;
+                if (!onResumeFlag) {
+                    mLatLngBounds = mMap.getProjection().getVisibleRegion().latLngBounds;
+                    addMarkers(mLatLngBounds);
                 }
             }
         };
@@ -256,6 +254,7 @@ public class MapFragment extends SupportMapFragment {
             public void onSuccess(String response) {
                 mPosts = mPostsManager.convertJsonToPosts(response);
                 addMarkers(mMap.getProjection().getVisibleRegion().latLngBounds);
+                onResumeFlag = false;
             }
 
         });
