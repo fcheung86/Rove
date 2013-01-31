@@ -64,10 +64,9 @@ public class FeedFragment extends ListFragment {
         super.onListItemClick(l, v, position, id);
 
         int vHeight = this.getView().getMeasuredHeight();
-        footerView.setLayoutParams(new AbsListView.LayoutParams(0, vHeight - 100)); // Arbitrary large height, but
-                                                                                    // should
-                                                                                    // be
-                                                                                    // "smarter" to get screen height
+        footerView.setLayoutParams(new AbsListView.LayoutParams(0, vHeight - 100)); // Arbitrary large height, but should
+                                                                                   // be
+                                                                                   // "smarter" to get screen height
 
         this.getListView().smoothScrollToPositionFromTop(position, 0, 250);
 
