@@ -63,14 +63,12 @@ public class FeedFragment extends ListFragment {
     public void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
 
-        if (position < 1) {
-            footerView.setLayoutParams(new AbsListView.LayoutParams(0, 0)); // footer temporarily "removed" here (proof
-                                                                            // of concept), but should be
-                                                                            // removed upon closing "detail panel"
-        } else {
-            footerView.setLayoutParams(new AbsListView.LayoutParams(0, 1400)); // Arbitrary large height, but should be
-                                                                               // "smarter" to get screen height
-        }
+        int vHeight = this.getView().getMeasuredHeight();
+        footerView.setLayoutParams(new AbsListView.LayoutParams(0, vHeight - 100)); // Arbitrary large height, but
+                                                                                    // should
+                                                                                    // be
+                                                                                    // "smarter" to get screen height
+
         this.getListView().smoothScrollToPositionFromTop(position, 0, 250);
 
         ToggleFeedDetail(position);
@@ -120,6 +118,27 @@ public class FeedFragment extends ListFragment {
                 mLinearLayout.startAnimation(animation);
                 rove.setFlagFeedDetail(false);
                 mLinearLayout.setVisibility(View.GONE);
+
+                Thread scrollThread = new Thread() {
+                    @Override
+                    public void run() {
+                        try {
+                            synchronized (this) {
+                                wait(500);
+                                getActivity().runOnUiThread(new Runnable() {
+                                    public void run() {
+                                        footerView.setLayoutParams(new AbsListView.LayoutParams(0, 0));
+                                    }
+                                });
+
+                            }
+                        } catch (InterruptedException e) {
+                            // do nothing
+                        }
+                    }
+                };
+                scrollThread.start();
+
             } else {
                 rove.setPostDisplayPosition(position);
             }
