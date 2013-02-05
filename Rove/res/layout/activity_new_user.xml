@@ -21,7 +21,8 @@
         android:layout_alignBaseline="@+id/realNameTextView"
         android:layout_alignBottom="@+id/realNameTextView"
         android:layout_toRightOf="@+id/userNameTextView"
-        android:ems="10" />
+        android:ems="10"
+        android:inputType="textPersonName" />
 
     <EditText
         android:id="@+id/userNameEditText"
@@ -107,7 +108,7 @@
         android:layout_alignRight="@+id/emailEditText"
         android:layout_below="@+id/confirmPasswordTextView"
         android:layout_marginTop="25dp"
-        android:onClick="registerNewUser"
+        android:onClick="attemptRegister"
         android:text="@string/register" />
 
 </RelativeLayout>

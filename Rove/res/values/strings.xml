@@ -50,5 +50,6 @@
     <string name="new_email">Email:</string>
     <string name="new_password">Password:</string>
     <string name="new_confirm">Confirm Password:</string>
+    <string name="error_password_mismatch">Password does not match</string>
 
 </resources>
