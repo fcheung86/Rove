@@ -6,7 +6,6 @@ import java.security.NoSuchAlgorithmException;
 import org.apache.http.entity.StringEntity;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.Menu;
@@ -131,9 +130,9 @@ public class NewUserActivity extends Activity {
 
         finish();
 
-        Intent myIntent;
-        myIntent = new Intent(NewUserActivity.this, com.fourkins.rove.activity.SplashScreenActivity.class);
-        startActivity(myIntent);
+        // Intent myIntent;
+        // myIntent = new Intent(NewUserActivity.this, com.fourkins.rove.activity.SplashScreenActivity.class);
+        // startActivity(myIntent);
 
     }
 }

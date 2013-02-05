@@ -99,6 +99,7 @@ public class SplashScreenActivity extends Activity {
                         if (user != "") { // If not logged in, bring user to login screen
                             Intent myIntent;
                             myIntent = new Intent(SplashScreenActivity.this, com.fourkins.rove.activity.MainActivity.class);
+                            finish();
                             startActivity(myIntent);
                         } else {
                             runOnUiThread(new Runnable() {
