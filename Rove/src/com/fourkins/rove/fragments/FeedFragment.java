@@ -64,13 +64,18 @@ public class FeedFragment extends ListFragment {
         super.onListItemClick(l, v, position, id);
 
         int vHeight = this.getView().getMeasuredHeight();
-        footerView.setLayoutParams(new AbsListView.LayoutParams(0, vHeight - 100)); // Arbitrary large height, but should
-                                                                                   // be
-                                                                                   // "smarter" to get screen height
+        int itemHeight = v.getMeasuredHeight();
+
+        float slideToRatio = (float) ((float) itemHeight / vHeight);
+
+        footerView.setLayoutParams(new AbsListView.LayoutParams(0, vHeight - 100)); // Arbitrary large height, but
+                                                                                    // should
+                                                                                    // be
+                                                                                    // "smarter" to get screen height
 
         this.getListView().smoothScrollToPositionFromTop(position, 0, 250);
 
-        ToggleFeedDetail(position);
+        ToggleFeedDetail(position, slideToRatio);
         // commented out the code below, so it won't open the post detail screen
 
         // TextView idView = (TextView) v.findViewById(R.id.row_id);
@@ -89,7 +94,7 @@ public class FeedFragment extends ListFragment {
         // }
     }
 
-    public void ToggleFeedDetail(int position) {
+    public void ToggleFeedDetail(int position, float slideToRatio) {
         Animation animation;
 
         Rove rove = (Rove) getActivity().getApplication();
@@ -99,7 +104,7 @@ public class FeedFragment extends ListFragment {
         if (flagFeedDetail == false) {
             // if feed_detail at bottom, open
             animation = new TranslateAnimation(Animation.RELATIVE_TO_PARENT, 0.0f, Animation.RELATIVE_TO_PARENT, 0.0f, Animation.RELATIVE_TO_PARENT,
-                    1.0f, Animation.RELATIVE_TO_PARENT, 0.4f);
+                    1.0f, Animation.RELATIVE_TO_PARENT, slideToRatio);
             animation.setDuration(500);
             animation.setFillAfter(true);
             mLinearLayout.startAnimation(animation);
@@ -111,7 +116,7 @@ public class FeedFragment extends ListFragment {
             // if at top, close
             if (postDisplayPosition == position) {
                 animation = new TranslateAnimation(Animation.RELATIVE_TO_PARENT, 0.0f, Animation.RELATIVE_TO_PARENT, 0.0f,
-                        Animation.RELATIVE_TO_PARENT, 0.4f, Animation.RELATIVE_TO_PARENT, 1.0f);
+                        Animation.RELATIVE_TO_PARENT, slideToRatio, Animation.RELATIVE_TO_PARENT, 1.0f);
                 animation.setDuration(500);
                 animation.setFillAfter(true);
                 mLinearLayout.startAnimation(animation);
