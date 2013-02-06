@@ -66,7 +66,7 @@ public class FeedFragment extends ListFragment {
         int vHeight = this.getView().getMeasuredHeight();
         int itemHeight = v.getMeasuredHeight();
 
-        float slideToRatio = (float) ((float) itemHeight / vHeight);
+        float slideToRatio = ((float) itemHeight / vHeight);
 
         footerView.setLayoutParams(new AbsListView.LayoutParams(0, vHeight - 100)); // Arbitrary large height, but
                                                                                     // should
