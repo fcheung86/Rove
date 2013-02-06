@@ -99,6 +99,7 @@ public class SplashScreenActivity extends Activity {
                         if (user != "") { // If not logged in, bring user to login screen
                             Intent myIntent;
                             myIntent = new Intent(SplashScreenActivity.this, com.fourkins.rove.activity.MainActivity.class);
+                            finish();
                             startActivity(myIntent);
                         } else {
                             runOnUiThread(new Runnable() {
@@ -125,11 +126,9 @@ public class SplashScreenActivity extends Activity {
                                     /*
                                      * AnimationSet set = new AnimationSet(true);
                                      * 
-                                     * Animation animation = new TranslateAnimation(
-                                     * Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f,
-                                     * Animation.RELATIVE_TO_SELF, 20.0f, Animation.RELATIVE_TO_SELF, 0.0f
-                                     * );
-                                     * animation.setDuration(250);
+                                     * Animation animation = new TranslateAnimation( Animation.RELATIVE_TO_SELF, 0.0f,
+                                     * Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 20.0f,
+                                     * Animation.RELATIVE_TO_SELF, 0.0f ); animation.setDuration(250);
                                      * set.addAnimation(animation);
                                      */
 
@@ -192,10 +191,6 @@ public class SplashScreenActivity extends Activity {
         // Check for a valid password.
         if (TextUtils.isEmpty(mPassword)) {
             mPasswordView.setError(getString(R.string.error_field_required));
-            focusView = mPasswordView;
-            cancel = true;
-        } else if (mPassword.length() < 4) {
-            mPasswordView.setError(getString(R.string.error_invalid_password));
             focusView = mPasswordView;
             cancel = true;
         }
