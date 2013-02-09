@@ -182,18 +182,20 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
     public void RemoveDetailScreen(boolean toMap) {
         LinearLayout feed_detail = (LinearLayout) findViewById(R.id.detailmapinfo);
         LinearLayout mapLinearLayout = (LinearLayout) findViewById(R.id.emptyView);
+        LinearLayout detailView = (LinearLayout) findViewById(R.id.detailmapinfo_view);
 
         Animation animation;
         Rove rove = (Rove) getApplication();
 
         if (rove.getFlagFeedDetail()) {
             animation = new TranslateAnimation(Animation.RELATIVE_TO_PARENT, 0.0f, Animation.RELATIVE_TO_PARENT, 0.0f, Animation.RELATIVE_TO_PARENT,
-                    0.4f, Animation.RELATIVE_TO_PARENT, 1.0f);
+                    0.0f, Animation.RELATIVE_TO_PARENT, 1.0f);
             animation.setDuration(500);
             animation.setFillAfter(true);
             feed_detail.startAnimation(animation);
             rove.setFlagFeedDetail(false);
             feed_detail.setVisibility(View.GONE);
+            detailView.setClickable(false);
 
             if (!toMap) {
                 double resizeHeight = (double) mapLinearLayout.getHeight() / 0.4;

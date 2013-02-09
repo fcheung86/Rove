@@ -30,6 +30,8 @@ public class FeedFragment extends ListFragment {
     private View footerView;
 
     private LinearLayout mLinearLayout;
+    private LinearLayout transparentView;
+    private LinearLayout detailView;
 
     public FeedFragment() {
 
@@ -41,7 +43,9 @@ public class FeedFragment extends ListFragment {
         mPostsManager = new PostsManager(activity);
 
         mLinearLayout = (LinearLayout) getActivity().findViewById(R.id.detailmapinfo);
-
+        transparentView = (LinearLayout) getActivity().findViewById(R.id.transparent_view);
+        detailView = (LinearLayout) getActivity().findViewById(R.id.detailmapinfo_view);
+        
         footerView = new View(this.getActivity().getApplicationContext());
         AbsListView.LayoutParams lp = new AbsListView.LayoutParams(0, 0);
         footerView.setLayoutParams(lp);
@@ -100,11 +104,20 @@ public class FeedFragment extends ListFragment {
         Rove rove = (Rove) getActivity().getApplication();
         final boolean flagFeedDetail = rove.getFlagFeedDetail();
         final int postDisplayPosition = rove.getPostDisplayPosition();
-
+        int vHeight = this.getView().getMeasuredHeight();
+        
         if (flagFeedDetail == false) {
             // if feed_detail at bottom, open
+            
+            transparentView.setVisibility(View.VISIBLE);
+            transparentView.getLayoutParams().height = (int) (vHeight*slideToRatio);
+            transparentView.requestLayout();
+            detailView.getLayoutParams().height = (int) (vHeight*(1-slideToRatio));
+            detailView.requestLayout();
+            detailView.setClickable(true);
+            
             animation = new TranslateAnimation(Animation.RELATIVE_TO_PARENT, 0.0f, Animation.RELATIVE_TO_PARENT, 0.0f, Animation.RELATIVE_TO_PARENT,
-                    1.0f, Animation.RELATIVE_TO_PARENT, slideToRatio);
+                    1.0f, Animation.RELATIVE_TO_PARENT, 0.0f);
             animation.setDuration(500);
             animation.setFillAfter(true);
             mLinearLayout.startAnimation(animation);
@@ -116,12 +129,13 @@ public class FeedFragment extends ListFragment {
             // if at top, close
             if (postDisplayPosition == position) {
                 animation = new TranslateAnimation(Animation.RELATIVE_TO_PARENT, 0.0f, Animation.RELATIVE_TO_PARENT, 0.0f,
-                        Animation.RELATIVE_TO_PARENT, slideToRatio, Animation.RELATIVE_TO_PARENT, 1.0f);
+                        Animation.RELATIVE_TO_PARENT, 0.0f, Animation.RELATIVE_TO_PARENT, 1.0f);
                 animation.setDuration(500);
                 animation.setFillAfter(true);
                 mLinearLayout.startAnimation(animation);
                 rove.setFlagFeedDetail(false);
                 mLinearLayout.setVisibility(View.GONE);
+                detailView.setClickable(false);
 
                 Thread scrollThread = new Thread() {
                     @Override

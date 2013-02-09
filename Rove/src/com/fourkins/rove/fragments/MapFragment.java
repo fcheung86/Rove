@@ -56,6 +56,8 @@ public class MapFragment extends SupportMapFragment {
 
     private LinearLayout mLinearLayout;
     private LinearLayout mapLinearLayout;
+    private LinearLayout transparentView;
+    private LinearLayout detailView;
 
     Rove rove;
 
@@ -75,6 +77,8 @@ public class MapFragment extends SupportMapFragment {
 
         mLinearLayout = (LinearLayout) getActivity().findViewById(R.id.detailmapinfo);
         mapLinearLayout = (LinearLayout) getActivity().findViewById(R.id.emptyView);
+        transparentView = (LinearLayout) getActivity().findViewById(R.id.transparent_view);
+        detailView = (LinearLayout) getActivity().findViewById(R.id.detailmapinfo_view);
 
         rove = (Rove) getActivity().getApplication();
 
@@ -141,11 +145,16 @@ public class MapFragment extends SupportMapFragment {
 
                 if (!rove.getFlagFeedDetail()) {
                     Animation animation = new TranslateAnimation(Animation.RELATIVE_TO_PARENT, 0.0f, Animation.RELATIVE_TO_PARENT, 0.0f,
-                            Animation.RELATIVE_TO_PARENT, 1.0f, Animation.RELATIVE_TO_PARENT, 0.4f);
+                            Animation.RELATIVE_TO_PARENT, 1.0f, Animation.RELATIVE_TO_PARENT, 0.0f);
                     animation.setDuration(500);
                     animation.setFillAfter(true);
+                    
+                    transparentView.getLayoutParams().height = (int) ((double) mapLinearLayout.getHeight() * 0.4);
+                    transparentView.requestLayout();
+                    
                     mLinearLayout.startAnimation(animation);
                     mLinearLayout.setVisibility(View.VISIBLE);
+                    detailView.setClickable(true);
 
                     Thread splashThread = new Thread() {
                         @Override
@@ -215,6 +224,7 @@ public class MapFragment extends SupportMapFragment {
                     mLinearLayout.startAnimation(animation);
                     rove.setFlagFeedDetail(false);
                     mLinearLayout.setVisibility(View.GONE);
+                    detailView.setClickable(false);
 
                     double resizeHeight = (double) mapLinearLayout.getHeight() / 0.4;
 

@@ -35,103 +35,120 @@
         android:id="@+id/detailmapinfo"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/grey_background"
+        android:background="@android:color/transparent"
         android:orientation="vertical"
-        android:paddingBottom="4dp"
         android:paddingLeft="8dp"
         android:paddingRight="8dp"
         android:paddingTop="4dp" >
-
+		
         <LinearLayout
             xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/transparent_view"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/post_shadow"
-            android:orientation="vertical"
-            android:paddingBottom="2dp"
-            android:paddingRight="2dp" >
-
-            <LinearLayout
-                xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/post_shape"
-                android:orientation="vertical"
-                android:paddingBottom="8dp"
-                android:paddingRight="8dp"
-                android:paddingTop="8dp"
-                android:weightSum="1" >
-
-                <LinearLayout
-                    xmlns:android="http://schemas.android.com/apk/res/android"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp"
-                    android:background="@drawable/post_shape"
-                    android:orientation="vertical" >
-
-                    <TextView
-                        android:id="@+id/detail_map_user"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:ems="10"
-                        android:hint="@string/username"
-                        android:textSize="14sp" />
-
-                    <TextView
-                        android:id="@+id/detail_map_user_display"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:ems="10"
-                        android:textSize="14sp" />
-
-                    <TextView
-                        android:id="@+id/detail_map_latitude"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:ems="10"
-                        android:hint="@string/lat"
-                        android:textSize="14sp" />
-
-                    <TextView
-                        android:id="@+id/detail_map_latitude_display"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:ems="10"
-                        android:textSize="14sp" />
-
-                    <TextView
-                        android:id="@+id/detail_map_longitude"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:ems="10"
-                        android:hint="@string/lng"
-                        android:textSize="14sp" />
-
-                    <TextView
-                        android:id="@+id/detail_map_longitude_display"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:ems="10"
-                        android:textSize="14sp" />
-
-                    <TextView
-                        android:id="@+id/detail_map_message"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:ems="10"
-                        android:hint="@string/msg"
-                        android:textSize="14sp" />
-
-                    <TextView
-                        android:id="@+id/detail_map_message_display"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:ems="10"
-                        android:textSize="14sp" />
-                </LinearLayout>
-            </LinearLayout>
+            android:layout_height="match_parent"
+            android:background="@android:color/transparent"
+            android:orientation="vertical" />
+        
+        <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/detailmapinfo_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clickable="true"
+            android:background="@color/grey_background"
+            android:orientation="vertical" >
+            
+	        <LinearLayout
+	            xmlns:android="http://schemas.android.com/apk/res/android"
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:background="@drawable/post_shadow"
+	            android:orientation="vertical"
+	            android:paddingBottom="2dp"
+	            android:paddingRight="2dp" >
+	
+	            <LinearLayout
+	                xmlns:android="http://schemas.android.com/apk/res/android"
+	                android:layout_width="match_parent"
+	                android:layout_height="wrap_content"
+	                android:background="@drawable/post_shape"
+	                android:orientation="vertical"
+	                android:paddingBottom="8dp"
+	                android:paddingRight="8dp"
+	                android:paddingTop="8dp"
+	                android:weightSum="1" >
+	
+	                <LinearLayout
+	                    xmlns:android="http://schemas.android.com/apk/res/android"
+	                    android:layout_width="match_parent"
+	                    android:layout_height="wrap_content"
+	                    android:layout_marginLeft="5dp"
+	                    android:layout_marginRight="5dp"
+	                    android:background="@drawable/post_shape"
+	                    android:orientation="vertical" >
+	
+	                    <TextView
+	                        android:id="@+id/detail_map_user"
+	                        android:layout_width="match_parent"
+	                        android:layout_height="wrap_content"
+	                        android:ems="10"
+	                        android:hint="@string/username"
+	                        android:textSize="14sp" />
+	
+	                    <TextView
+	                        android:id="@+id/detail_map_user_display"
+	                        android:layout_width="match_parent"
+	                        android:layout_height="wrap_content"
+	                        android:ems="10"
+	                        android:textSize="14sp" />
+	
+	                    <TextView
+	                        android:id="@+id/detail_map_latitude"
+	                        android:layout_width="match_parent"
+	                        android:layout_height="wrap_content"
+	                        android:ems="10"
+	                        android:hint="@string/lat"
+	                        android:textSize="14sp" />
+	
+	                    <TextView
+	                        android:id="@+id/detail_map_latitude_display"
+	                        android:layout_width="match_parent"
+	                        android:layout_height="wrap_content"
+	                        android:ems="10"
+	                        android:textSize="14sp" />
+	
+	                    <TextView
+	                        android:id="@+id/detail_map_longitude"
+	                        android:layout_width="match_parent"
+	                        android:layout_height="wrap_content"
+	                        android:ems="10"
+	                        android:hint="@string/lng"
+	                        android:textSize="14sp" />
+	
+	                    <TextView
+	                        android:id="@+id/detail_map_longitude_display"
+	                        android:layout_width="match_parent"
+	                        android:layout_height="wrap_content"
+	                        android:ems="10"
+	                        android:textSize="14sp" />
+	
+	                    <TextView
+	                        android:id="@+id/detail_map_message"
+	                        android:layout_width="match_parent"
+	                        android:layout_height="wrap_content"
+	                        android:ems="10"
+	                        android:hint="@string/msg"
+	                        android:textSize="14sp" />
+	
+	                    <TextView
+	                        android:id="@+id/detail_map_message_display"
+	                        android:layout_width="match_parent"
+	                        android:layout_height="wrap_content"
+	                        android:ems="10"
+	                        android:textSize="14sp" />
+	                </LinearLayout>
+	            </LinearLayout>
+	       </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 
